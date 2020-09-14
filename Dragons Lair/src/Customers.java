@@ -1,14 +1,19 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -121,7 +126,7 @@ public class Customers extends JPanel {
 		JLabel phoneLabel = new JLabel("Phone Number");
 		phoneLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		phoneLabel.setBounds(10, 97, 119, 14);
-
+		
 		JLabel emailLabel = new JLabel("Email Address");
 		emailLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		emailLabel.setBounds(231, 97, 113, 14);
@@ -196,6 +201,98 @@ public class Customers extends JPanel {
 		add(titleTable);
 		
 
+		/* Action listener for the add account button */
+		AddCustBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JFrame newAcc = new JFrame("Add New Customer");
+				newAcc.setVisible(true);
+				newAcc.setBounds(128, 91, 400, 240);
+				newAcc.setResizable(false);
+				
+				
+				JPanel accPanel = new JPanel();
+				accPanel.setBounds(128, 91, 388, 207);
+				accPanel.setLayout(null);
+				
+				JLabel lblNewLabel = new JLabel("First Name");
+				lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblNewLabel.setBounds(28, 25, 78, 23);
+				accPanel.add(lblNewLabel);
+				
+				JLabel lblLastName = new JLabel("Last Name");
+				lblLastName.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblLastName.setBounds(214, 25, 78, 23);
+				accPanel.add(lblLastName);
+				
+				JLabel lblEmailAddress = new JLabel("Email Address\r\n");
+				lblEmailAddress.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblEmailAddress.setBounds(28, 86, 151, 23);
+				accPanel.add(lblEmailAddress);
+				
+				JLabel lblPhoneNumber = new JLabel("Phone Number");
+				lblPhoneNumber.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblPhoneNumber.setBounds(214, 86, 151, 23);
+				accPanel.add(lblPhoneNumber);
+				
+				JTextField fnameAccField = new JTextField();
+				fnameAccField.setBounds(28, 48, 136, 20);
+				accPanel.add(fnameAccField);
+				fnameAccField.setColumns(10);
+				
+				JTextField emailAccField = new JTextField();
+				emailAccField.setColumns(10);
+				emailAccField.setBounds(28, 109, 136, 20);
+				accPanel.add(emailAccField);
+				
+				JTextField lnameAccField = new JTextField();
+				lnameAccField.setColumns(10);
+				lnameAccField.setBounds(214, 48, 136, 20);
+				accPanel.add(lnameAccField);
+				newAcc.add(accPanel);
+				
+				JTextField phoneAccField = new JTextField();
+				phoneAccField.setBounds(214, 109, 136, 20);
+				accPanel.add(phoneAccField);
+				phoneAccField.setColumns(10);
+				
+				JButton addAcc = new JButton("Add");
+				addAcc.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				
+				
+				addAcc.setBounds(148, 161, 89, 23);
+				accPanel.add(addAcc);
+				
+				addAcc.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						
+						/* Code to add customer account to database */
+						
+						JPanel accAddedPanel = new JPanel();
+						accAddedPanel.setLayout(null);
+						accAddedPanel.setBounds(572, 91, 388, 207);
+						accAddedPanel.setBackground(new Color(240, 240, 240));
+						accPanel.setVisible(false);
+						newAcc.add(accAddedPanel);
+						
+						/* Code to do something if the account is not added */
+						
+						
+						JTextArea txtrAccountHasBeen = new JTextArea();
+						txtrAccountHasBeen.setEditable(false);
+						txtrAccountHasBeen.setBackground(new Color(240, 240, 240));
+						txtrAccountHasBeen.setText("Account has been added!");
+						txtrAccountHasBeen.setBounds(99, 87, 194, 33);
+						accAddedPanel.add(txtrAccountHasBeen);
+						
+					}
+				});
+				
+				
+			}
+		});
+		
 		/* Action listener for when the "Save Changes" button is clicked */
 		saveCustBtn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -205,7 +302,11 @@ public class Customers extends JPanel {
 				if(saveCustBtn.isEnabled()) {
 					
 					
+					
+					
 					/* Code here to pull the new info and update database */
+					
+					
 					
 					saveCustBtn.setEnabled(false);
 					editCustBtn.setEnabled(false);
