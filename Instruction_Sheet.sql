@@ -23,7 +23,7 @@ USE DLC;
 --highlight from Start to END and press F5
 --START A1
 CREATE TABLE "Catalog" (
-  "Description" varchar(50),--varchar(x) standands for variable character (x amount), this example is a string of up to 50 characters
+  "Description" varchar(100),--varchar(x) standands for variable character (x amount), this example is a string of up to 50 characters
   "Issue" varchar(50),--currently I assume that this is the primary key for the table, because it should be unique among all items
   "Disct? Sub" BIT,--BIT is used as a boolean true/false statement
   "Form" BIT,
