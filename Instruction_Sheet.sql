@@ -47,6 +47,7 @@ CREATE TABLE "Customer" (
   "Customer Code" varchar(10),
   "Last Name" varchar(10),
   "First Name" varchar(10),
+  "Email" varchar(20),
   "Address-1" varchar(20),
   "Address-2" varchar(20),
   "City/State" varchar(20),

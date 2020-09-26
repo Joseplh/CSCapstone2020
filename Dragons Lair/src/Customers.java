@@ -4,6 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Array;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,6 +35,7 @@ public class Customers extends JPanel {
 	private JTextField phoneBox;
 	private JTextField emailBox;
 	private JTextField fNameBox;
+	private Controller control;
 
 	public Customers() {
 		setLayout(null);
@@ -42,7 +50,7 @@ public class Customers extends JPanel {
 		customerDetails.setBounds(447, 73, 403, 181);
 
 		customerDetails.setLayout(null);
-
+		
 		/* Button deceleration */
 		JButton AddCustBtn = new JButton("Add New Customer");
 		AddCustBtn.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
@@ -58,7 +66,7 @@ public class Customers extends JPanel {
 		editDelSelectedBtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		editDelSelectedBtn.setBounds(860, 411, 107, 48);
 		add(editDelSelectedBtn);
-
+		
 		JButton saveCustBtn = new JButton("Save");
 		saveCustBtn.setEnabled(false);
 		saveCustBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -87,7 +95,9 @@ public class Customers extends JPanel {
 		exportBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		exportBtn.setBounds(860, 607, 107, 48);
 		add(exportBtn);
-
+	
+		
+		
 		/* Declaring variables for "edit customer info" section */
 		lNameBox = new JTextField();
 		lNameBox.setEditable(false);
@@ -182,7 +192,16 @@ public class Customers extends JPanel {
 		JScrollPane customerScrollPane = new JScrollPane();
 		customerScrollPane.setBounds(10, 65, 415, 590);
 		add(customerScrollPane);
-
+		
+		/* TODO: initialize control variable and query for 
+		 * 		 the 4 columns above. Get String[][] 
+		 * 		 and put it in below instead of the dummy data
+		 *
+		 */
+		
+		control = new Controller();
+		control.select("SELECT * FROM DLC.dbo.Customer");
+		
 		customerTable = new JTable(data, column);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);
@@ -202,8 +221,17 @@ public class Customers extends JPanel {
 					newAcc.setVisible(true);
 					newAcc.setBounds(128, 91, 400, 240);
 					newAcc.setResizable(false);
-					newAcc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+					newAcc.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					
+					/* Action listener for when the add customer frame is closed */
+					newAcc.addWindowListener(new WindowAdapter() {
+						@Override
+						public void windowClosing(WindowEvent e) {
+							AddCustBtn.setEnabled(true);
+						}
+					});
+					
+					/* Creating the panel that will take new customer info */
 					JPanel accPanel = new JPanel();
 					accPanel.setBounds(128, 91, 388, 207);
 					accPanel.setLayout(null);
@@ -255,10 +283,12 @@ public class Customers extends JPanel {
 					addAcc.setBounds(148, 161, 89, 23);
 					accPanel.add(addAcc);
 
+					/* Action listener for when add button clicked on create new customer frame */ 
 					addAcc.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 
-							/* Code to add customer account to database */
+							/* TODO: Code to add customer account to database 
+							 */
 
 							JPanel accAddedPanel = new JPanel();
 							accAddedPanel.setLayout(null);
@@ -292,7 +322,7 @@ public class Customers extends JPanel {
 				/* If the save button has been clicked and it is enabled */
 				if (saveCustBtn.isEnabled()) {
 
-					/* Code here to pull the new info and update database */
+					/* TODO: Code here to pull the new info and update database */
 
 					saveCustBtn.setEnabled(false);
 					editCustBtn.setEnabled(false);

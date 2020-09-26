@@ -20,11 +20,12 @@ public class Titles extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable titleTable;
+	private Controller control;
 
 	public Titles() {
 		setLayout(null);
 		setBackground(Color.LIGHT_GRAY);
-
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.LIGHT_GRAY);
 		panel_1.setBorder(new TitledBorder(
@@ -147,6 +148,12 @@ public class Titles extends JPanel {
 		titleScrollPane.setBounds(10, 63, 459, 592);
 		add(titleScrollPane);
 
+		/* TODO: code here to call controller and put the data 
+		 * 		 into the JTable instead of data
+		 * 
+		 */
+		
+		
 		titleTable = new JTable(data, column);
 		titleTable.setAutoCreateRowSorter(true);
 
@@ -193,7 +200,11 @@ public class Titles extends JPanel {
 					
 					
 					
-					/* Code here to pull the new info and update database */
+					/* TODO: Code here to pull the new info and update database 
+					 * 
+					 * 
+					 * 
+					 */
 					
 					
 					
@@ -261,7 +272,9 @@ public class Titles extends JPanel {
 					
 					
 					
-					/* Code here to remove the title from the database */
+					/* TODO: Code here to remove the title from the database 
+					 * 
+					 */
 					
 					
 				    JOptionPane.showMessageDialog(null, "Title Deleted");
