@@ -1,3 +1,4 @@
+package main.java;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -24,7 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class Customers extends JPanel {
+public class Customers extends JPanel implements Tile {
 	/**
 	 * 
 	 */
@@ -37,7 +38,8 @@ public class Customers extends JPanel {
 	private JTextField fNameBox;
 	private Controller control;
 
-	public Customers() {
+	public Customers(Controller control) {
+		this.control = control;
 		setLayout(null);
 		setBackground(Color.LIGHT_GRAY);
 
@@ -150,40 +152,7 @@ public class Customers extends JPanel {
 		add(customerDetails);
 
 		/* Dummy Data */
-		String data[][] = { { "Jesse", "Schrack", "40234454", "jschrack@unomaha.edu" },
-				{ "John", "Doe", "403499504", "jdoe@unomaha.edu" },
-				{ "John1", "Doe1", "403499504", "jdoe1@unomaha.edu" },
-				{ "John2", "Doe2", "403499504", "jdoe2@unomaha.edu" },
-				{ "John3", "Doe3", "403499504", "jdoe3@unomaha.edu" },
-				{ "John4", "Doe4", "403499504", "jdoe4@unomaha.edu" },
-				{ "John5", "Doe5", "403499504", "jdoe5@unomaha.edu" },
-				{ "John6", "Doe6", "403499504", "jdoe6@unomaha.edu" },
-				{ "John7", "Doe7", "403499504", "jdoe7@unomaha.edu" },
-				{ "John", "Doe", "403499504", "jdoe@unomaha.edu" },
-				{ "John1", "Doe1", "403499504", "jdoe1@unomaha.edu" },
-				{ "John2", "Doe2", "403499504", "jdoe2@unomaha.edu" },
-				{ "John3", "Doe3", "403499504", "jdoe3@unomaha.edu" },
-				{ "John4", "Doe4", "403499504", "jdoe4@unomaha.edu" },
-				{ "John5", "Doe5", "403499504", "jdoe5@unomaha.edu" },
-				{ "John6", "Doe6", "403499504", "jdoe6@unomaha.edu" },
-				{ "John7", "Doe7", "403499504", "jdoe7@unomaha.edu" },
-				{ "John", "Doe", "403499504", "jdoe@unomaha.edu" },
-				{ "John1", "Doe1", "403499504", "jdoe1@unomaha.edu" },
-				{ "John2", "Doe2", "403499504", "jdoe2@unomaha.edu" },
-				{ "John3", "Doe3", "403499504", "jdoe3@unomaha.edu" },
-				{ "John4", "Doe4", "403499504", "jdoe4@unomaha.edu" },
-				{ "John5", "Doe5", "403499504", "jdoe5@unomaha.edu" },
-				{ "John6", "Doe6", "403499504", "jdoe6@unomaha.edu" },
-				{ "John7", "Doe7", "403499504", "jdoe7@unomaha.edu" },
-				{ "John", "Doe", "403499504", "jdoe@unomaha.edu" },
-				{ "John1", "Doe1", "403499504", "jdoe1@unomaha.edu" },
-				{ "John2", "Doe2", "403499504", "jdoe2@unomaha.edu" },
-				{ "John3", "Doe3", "403499504", "jdoe3@unomaha.edu" },
-				{ "John4", "Doe4", "403499504", "jdoe4@unomaha.edu" },
-				{ "John5", "Doe5", "403499504", "jdoe5@unomaha.edu" },
-				{ "John6", "Doe6", "403499504", "jdoe6@unomaha.edu" },
-				{ "John7", "Doe7", "403499504", "jdoe7@unomaha.edu" },
-				{ "John8", "Doe8", "403499504", "jdoe8@unomaha.edu" } };
+		String data[][] = control.getCustomers();
 
 		/* Customer Table Column Names */
 		String column[] = { "Last Name", "First Name", "Phone Number", "Email" };

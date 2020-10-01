@@ -1,7 +1,9 @@
+package main.java;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.net.URL;
 import java.sql.*;
 
 public class Controller {
@@ -10,10 +12,11 @@ public class Controller {
 	private final String jdbcDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	private String jdbcURL = "";
 	
-	
 	public void connect() {
 		try {
-			File file = new File("config.ini");
+			URL config = getClass().getClassLoader().getResource("config.ini");
+			File file = new File(config.toURI());
+			
 			BufferedReader br;
 			br = new BufferedReader(new FileReader(file));
 			if (br.readLine().matches("custom=true")) {
@@ -53,6 +56,10 @@ public class Controller {
 	
 	public boolean isConnected() {
 		return (dbConnection != null);
+	}
+	
+	public String[][] getCustomers() {
+		return new String[0][0];
 	}
 	
 	public String[][] select(String query) {
