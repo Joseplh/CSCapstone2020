@@ -23,21 +23,26 @@ USE DLC;
 --highlight from Start to END and press F5
 --START A1
 CREATE TABLE "Catalog" (
+  "Publisher" varchar(50),
+  "Distributor" varchar(50),
+  "Calalog ID" varchar(50),
   "Description" varchar(100),--varchar(x) standands for variable character (x amount), this example is a string of up to 50 characters
   "Issue" varchar(50),--currently I assume that this is the primary key for the table, because it should be unique among all items
   "Disct? Sub" BIT,--BIT is used as a boolean true/false statement
   "Form" BIT,
-  CONSTRAINT PK_Issue PRIMARY KEY CLUSTERED ("Description")
+  CONSTRAINT PK_Issue PRIMARY KEY CLUSTERED ("Distributor", "Calalog ID")
 );
 
 CREATE TABLE "Order" (
   "Store Code" varchar(10),
   "Customer Code" varchar(10),
-  "Description" text,--text is used for long sentances and paragraphs
+  "Distributor" varchar(50),
+  "Calalog ID" varchar(50),
+  "Description" varchar(100),
   "Issue Start" int,--int is any whole number -1,0,1,2,3 up to 2,147,483,647
   "Issue End" int,
   "Quantity" int,
-  "Cost" money
+  "Cost" money,
   CONSTRAINT PK_Store_Customer PRIMARY KEY CLUSTERED ("Store Code", "Customer Code")
 );
 
@@ -47,17 +52,18 @@ CREATE TABLE "Customer" (
   "Customer Code" varchar(10),
   "Last Name" varchar(10),
   "First Name" varchar(10),
-  "Email" varchar(20),
+  "Email" varchar(30),
   "Address-1" varchar(20),
   "Address-2" varchar(20),
-  "City/State" varchar(20),
+  "City" varchar(20),
+  "State" varchar(20),
   "ZIP" int,
   "Post Code" varchar(10),
   "Phone Cell" varchar(15),
   "Phone Home" varchar(15),
   "Customer ID" varchar(10),
   "Exp. Date" date,--this is a special datatype that handles the formatting for date yyyy/mm/dd
-  "Discount %" decimal(2,2)--deciaml allows for defined number sizes, in this case it can handle xx.xx numbers
+  "Discount %" decimal(2,2),--deciaml allows for defined number sizes, in this case it can handle xx.xx numbers
   CONSTRAINT PK_Customer PRIMARY KEY CLUSTERED ("Customer Code")
 );
 --END A1
