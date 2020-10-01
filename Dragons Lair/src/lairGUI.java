@@ -1,4 +1,3 @@
-package main.java;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -25,12 +24,10 @@ public class lairGUI {
 		});
 
 	}
-	
 	public lairGUI() {
-		Controller control = new Controller();
-		customers = new Customers(control);
-		reports = new Reports(control);
-		titles = new Titles(control);
+		customers = new Customers();
+		reports = new Reports();
+		titles = new Titles();
 		initialize();
 	
 	}

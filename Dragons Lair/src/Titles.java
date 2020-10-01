@@ -1,4 +1,3 @@
-package main.java;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -15,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class Titles extends JPanel implements Tile {
+public class Titles extends JPanel {
 	/**
 	 * 
 	 */
@@ -23,8 +22,7 @@ public class Titles extends JPanel implements Tile {
 	private JTable titleTable;
 	private Controller control;
 
-	public Titles(Controller control) {
-		this.control = control;
+	public Titles() {
 		setLayout(null);
 		setBackground(Color.LIGHT_GRAY);
 		
