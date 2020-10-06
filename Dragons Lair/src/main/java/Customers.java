@@ -152,7 +152,7 @@ public class Customers extends JPanel implements Tile {
 		add(customerDetails);
 
 		/* Dummy Data */
-		String data[][] = control.getCustomers();
+		String data[][];
 
 		/* Customer Table Column Names */
 		String column[] = { "Last Name", "First Name", "Phone Number", "Email" };
@@ -169,8 +169,13 @@ public class Customers extends JPanel implements Tile {
 		 */
 		
 		control = new Controller();
-		control.select("SELECT * FROM DLC.dbo.Customer");
-		
+		data = control.select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM DLC.dbo.Customer");
+		/* loop to show data from query
+		 * for(int i=0; i<data.length; i++) {
+	        for(int j=0; j<data[i].length; j++) {
+	            System.out.println("Values at data["+i+"]["+j+"] is "+data[i][j]);
+	        }
+		}*/
 		customerTable = new JTable(data, column);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);
