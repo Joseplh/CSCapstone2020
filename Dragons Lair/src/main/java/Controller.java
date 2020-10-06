@@ -72,7 +72,7 @@ public class Controller {
 		
 		
 		try {
-			sqlStatement = dbConnection.createStatement();
+			sqlStatement = dbConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		} catch (SQLException e) {
 			System.err.println("Error connecting to the database");
 			e.printStackTrace();
@@ -104,16 +104,17 @@ public class Controller {
 	 * 
 	 */
 	public String[][] format(ResultSet rs){
+		//TODO: domain for data as arraylist or equivilant
 		String[][] data = null;
 		int columns = 0;
-		
-		
-		
-		
-		
-		
+		int rows = 0;
+
 		try {
 			columns = rs.getMetaData().getColumnCount();
+			while(rs.next()) {
+				rows += 1;
+			}
+			rs.first();
 		} catch (SQLException e1) {
 			System.err.println("Error getting metadata on ResultSet");
 			e1.printStackTrace();
@@ -121,12 +122,11 @@ public class Controller {
 		}
 		
 		try {
-			while(rs.next()){
-				for(int i = 1; i < columns; i++) {
-					System.out.print(rs.getString(i) + " ");
-					
+			data = new String[rows][columns];
+			for(int j = 1; j < rows; j++) {
+				for(int k = 1; k < columns; k++) {
+					data[j][k] = rs.getString(k);
 				}
-				System.out.println("");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
