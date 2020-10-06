@@ -1,0 +1,1 @@
+Release Notes: The database has three simple sql tables that hold, "Customers", "Orders", and "Catalog".  The GUI has the general layout.  Within the program there is a connection to the database and it can pull information from the database and put it into a table to be displayed to the user.
