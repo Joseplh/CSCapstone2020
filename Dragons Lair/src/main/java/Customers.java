@@ -168,14 +168,15 @@ public class Customers extends JPanel implements Tile {
 		 *
 		 */
 		
-		control = new Controller();
-		data = control.select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM DLC.dbo.Customer");
+		//control = new Controller();
+		//data = control.select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM DLC.dbo.Customer");
 		/* loop to show data from query
 		 * for(int i=0; i<data.length; i++) {
 	        for(int j=0; j<data[i].length; j++) {
 	            System.out.println("Values at data["+i+"]["+j+"] is "+data[i][j]);
 	        }
 		}*/
+		data = lairGUI.getCust();
 		customerTable = new JTable(data, column);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);

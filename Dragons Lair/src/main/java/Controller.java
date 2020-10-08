@@ -59,7 +59,7 @@ public class Controller {
 	}
 	
 	public String[][] getCustomers() {
-		return new String[0][0];
+		return select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM DLC.dbo.Customer");
 	}
 	
 	public String[][] select(String query) {
