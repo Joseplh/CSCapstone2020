@@ -51,9 +51,6 @@ public class lairGUI {
 		tabbedPane.addTab("Reports", null, reports, null);
 	}
 	
-	public static String[][] getCust(){
-		return control.getCustomers();
-	}
 	public Frame getFrame() {
 		return frame;
 	}

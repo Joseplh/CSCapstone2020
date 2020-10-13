@@ -151,8 +151,8 @@ public class Customers extends JPanel implements Tile {
 		customerDetails.add(emailBox);
 		add(customerDetails);
 
-		/* Dummy Data */
-		String data[][];
+		/* Customer Data */
+		String data[][] = control.getCustomers();
 
 		/* Customer Table Column Names */
 		String column[] = { "Last Name", "First Name", "Phone Number", "Email" };
@@ -162,21 +162,6 @@ public class Customers extends JPanel implements Tile {
 		customerScrollPane.setBounds(10, 65, 415, 590);
 		add(customerScrollPane);
 		
-		/* TODO: initialize control variable and query for 
-		 * 		 the 4 columns above. Get String[][] 
-		 * 		 and put it in below instead of the dummy data
-		 *
-		 */
-		
-		//control = new Controller();
-		//data = control.select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM DLC.dbo.Customer");
-		/* loop to show data from query
-		 * for(int i=0; i<data.length; i++) {
-	        for(int j=0; j<data[i].length; j++) {
-	            System.out.println("Values at data["+i+"]["+j+"] is "+data[i][j]);
-	        }
-		}*/
-		data = lairGUI.getCust();
 		customerTable = new JTable(data, column);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);

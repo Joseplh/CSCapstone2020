@@ -123,25 +123,8 @@ public class Titles extends JPanel implements Tile {
 		lblSpecialOrderNotes.setBounds(216, 87, 149, 14);
 		panel_1.add(lblSpecialOrderNotes);
 
-		/* Dummy Data */
-		String data[][] = { { "Title 1", "1", "", }, { "Title 1", "1.99", "", }, { "Title 2", "2.88", "", },
-				{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
-				{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
-				{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
-				{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
-				{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
-				{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
-				{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
-				{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
-				{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
-				{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
-				{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
-				{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
-				{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
-				{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
-				{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
-				{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
-				{ "Title 39", "2.99", "", }, { "Title 106", "2.99", "", } };
+		/* Titles Data */
+		String data[][] = control.getTitles();
 
 		/* Title Table Column Names */
 		String column[] = { "Title", "Price", "Special Order Notes" };

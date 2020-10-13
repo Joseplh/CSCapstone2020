@@ -62,6 +62,14 @@ public class Controller {
 		return select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM DLC.dbo.Customer");
 	}
 	
+	public String[][] getReports() {
+		return new String[0][0];
+	}
+	
+	public String[][] getTitles() {
+		return new String[0][0];
+	}
+	
 	public String[][] select(String query) {
 		if(!isConnected()) {
 			connect();
