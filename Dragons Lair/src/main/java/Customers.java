@@ -176,6 +176,7 @@ public class Customers extends JPanel implements Tile {
 	            System.out.println("Values at data["+i+"]["+j+"] is "+data[i][j]);
 	        }
 		}*/
+		
 		data = lairGUI.getCust();
 		customerTable = new JTable(data, column);
 		customerTable.setAutoCreateRowSorter(true);
@@ -264,6 +265,7 @@ public class Customers extends JPanel implements Tile {
 
 							/* TODO: Code to add customer account to database 
 							 */
+							lairGUI.insert(fnameAccField.getText(), lnameAccField.getText(), emailAccField.getText(), phoneAccField.getText());
 
 							JPanel accAddedPanel = new JPanel();
 							accAddedPanel.setLayout(null);

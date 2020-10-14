@@ -50,9 +50,17 @@ public class lairGUI {
 		tabbedPane.addTab("Titles", null, titles, null);
 		tabbedPane.addTab("Reports", null, reports, null);
 	}
-	
+	/*
+	 * Returns last name, first name, phone, email of customers
+	 */
 	public static String[][] getCust(){
 		return control.getCustomers();
+	}
+	
+	public static int insert(String first, String last, String email, String phone) {
+		String query = "INSERT INTO DLC.dbo.Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')";
+		control.insert(query);
+		return 1;
 	}
 	public Frame getFrame() {
 		return frame;
