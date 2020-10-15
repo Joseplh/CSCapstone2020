@@ -53,6 +53,12 @@ public class Controller {
 			System.exit(0);
 		}
 	}
+	
+	public int insertCustomer(String first, String last, String email, String phone) {
+		insert("INSERT INTO DLC.dbo.Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
+		return 1;
+	}
+	
 	/*
 	 * Returns true if connected, false if not
 	 */
@@ -64,6 +70,31 @@ public class Controller {
 	 */
 	public String[][] getCustomers() {
 		return select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM DLC.dbo.Customer");
+	}
+	
+	public String[][] getReports() {
+		return new String[0][0];
+	}
+	
+	public String[][] getTitles() {
+		return new String[][] { { "Title 1", "1", "", }, { "Title 1", "1.99", "", }, { "Title 2", "2.88", "", },
+			{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
+			{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
+			{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
+			{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
+			{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
+			{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
+			{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
+			{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
+			{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
+			{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
+			{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
+			{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
+			{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
+			{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
+			{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
+			{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
+			{ "Title 39", "2.99", "", }, { "Title 106", "2.99", "", } }; 
 	}
 	
 	public String[][] select(String query) {
