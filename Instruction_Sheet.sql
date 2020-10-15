@@ -25,19 +25,19 @@ USE DLC;
 CREATE TABLE "Catalog" (
   "Publisher" varchar(50),
   "Distributor" varchar(50),
-  "Calalog ID" varchar(50),
+  "Catalog ID" varchar(50),
   "Description" varchar(100),--varchar(x) standands for variable character (x amount), this example is a string of up to 50 characters
   "Issue" varchar(50),--currently I assume that this is the primary key for the table, because it should be unique among all items
   "Disct? Sub" BIT,--BIT is used as a boolean true/false statement
   "Form" BIT,
-  CONSTRAINT PK_Issue PRIMARY KEY CLUSTERED ("Distributor", "Calalog ID")
+  CONSTRAINT PK_Issue PRIMARY KEY CLUSTERED ("Distributor", "Catalog ID")
 );
 
 CREATE TABLE "Order" (
   "Store Code" varchar(10),
-  "Customer Code" varchar(10),
+  "Customer Code" int FOREIGN KEY REFERENCES "Customer"("Customer Code"),
   "Distributor" varchar(50),
-  "Calalog ID" varchar(50),
+  "Calalog ID" varchar(50)FOREIGN KEY REFERENCES "Catalog"("Catalog ID"),
   "Description" varchar(100),
   "Issue Start" int,--int is any whole number -1,0,1,2,3 up to 2,147,483,647
   "Issue End" int,
@@ -46,10 +46,9 @@ CREATE TABLE "Order" (
   CONSTRAINT PK_Store_Customer PRIMARY KEY CLUSTERED ("Store Code", "Customer Code")
 );
 
-
 CREATE TABLE "Customer" (
   "Store Code" varchar(10),
-  "Customer Code" varchar(10),
+  "Customer Code" int,
   "Last Name" varchar(10),
   "First Name" varchar(10),
   "Email" varchar(30),
