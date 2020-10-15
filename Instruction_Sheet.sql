@@ -35,7 +35,11 @@ CREATE TABLE "Catalog" (
 
 CREATE TABLE "Order" (
   "Store Code" varchar(10),
+<<<<<<< Updated upstream
   "Customer Code" varchar(10),
+=======
+  "Customer Code" int,
+>>>>>>> Stashed changes
   "Distributor" varchar(50),
   "Calalog ID" varchar(50),
   "Description" varchar(100),
