@@ -14,5 +14,11 @@ public class Reports extends JPanel implements Tile {
 		this.control = control;
 		setBackground(Color.LIGHT_GRAY);
 		
+		/* Report Data */
+		String data[][] = control.getReports();
+
+		/* Report Table Column Names */
+		String column[] = { };
+		
 	}
 }
