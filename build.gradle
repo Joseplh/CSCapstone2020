@@ -1,0 +1,20 @@
+buildscript {
+
+}
+
+plugins {
+
+}
+
+ext {
+
+}
+
+apply plugin: "idea"
+apply plugin: "eclipse"
+
+task test {
+    doLast {
+        println "Test"
+    }
+}
