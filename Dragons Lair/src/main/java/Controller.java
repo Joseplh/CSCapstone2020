@@ -12,6 +12,7 @@ public class Controller {
 	private final String jdbcDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	private String jdbcURL = "";
 	
+	
 	public void connect() {
 		try {
 			URL config = getClass().getClassLoader().getResource("config.ini");
