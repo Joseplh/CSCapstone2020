@@ -35,7 +35,15 @@ CREATE TABLE "Catalog" (
 
 CREATE TABLE "Order" (
   "Store Code" varchar(10),
+<<<<<<< HEAD
   "Customer Code" int FOREIGN KEY REFERENCES "Customer"("Customer Code"),
+=======
+<<<<<<< Updated upstream
+  "Customer Code" varchar(10),
+=======
+  "Customer Code" int,
+>>>>>>> Stashed changes
+>>>>>>> Milestone1
   "Distributor" varchar(50),
   "Calalog ID" varchar(50)FOREIGN KEY REFERENCES "Catalog"("Catalog ID"),
   "Description" varchar(100),
@@ -48,7 +56,11 @@ CREATE TABLE "Order" (
 
 CREATE TABLE "Customer" (
   "Store Code" varchar(10),
+<<<<<<< HEAD
   "Customer Code" int,
+=======
+  "Customer Code" int IDENTITY(1,1) Primary Key,
+>>>>>>> Milestone1
   "Last Name" varchar(10),
   "First Name" varchar(10),
   "Email" varchar(30),
@@ -63,6 +75,5 @@ CREATE TABLE "Customer" (
   "Customer ID" varchar(10),
   "Exp. Date" date,--this is a special datatype that handles the formatting for date yyyy/mm/dd
   "Discount %" decimal(2,2),--deciaml allows for defined number sizes, in this case it can handle xx.xx numbers
-  CONSTRAINT PK_Customer PRIMARY KEY CLUSTERED ("Customer Code")
 );
 --END A1
