@@ -59,7 +59,7 @@ CREATE TABLE "Customer" (
   "State" varchar(20),
   "ZIP" int,
   "Post Code" varchar(10),
-  "Phone Cell" varchar(15),
+  "Phone #1" varchar(15),
   "Phone Home" varchar(15),
   "Customer ID" varchar(10),
   "Exp. Date" date,--this is a special datatype that handles the formatting for date yyyy/mm/dd

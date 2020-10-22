@@ -25,7 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class Customers extends JPanel implements Tile {
+public class Customers extends JPanel /*implements Tile*/ {
 	/**
 	 * 
 	 */

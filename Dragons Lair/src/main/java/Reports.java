@@ -3,7 +3,7 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
-public class Reports extends JPanel implements Tile {
+public class Reports extends JPanel /*implements Tile*/ {
 	/**
 	 * 
 	 */

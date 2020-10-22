@@ -55,7 +55,7 @@ public class Controller {
 	}
 	
 	public int insertCustomer(String first, String last, String email, String phone) {
-		insert("INSERT INTO DLC.dbo.Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
+		insert("INSERT INTO Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
 		return 1;
 	}
 	
@@ -69,7 +69,7 @@ public class Controller {
 	 * Returns the following columsn from the customer table
 	 */
 	public String[][] getCustomers() {
-		return select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM DLC.dbo.Customer");
+		return select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer");
 	}
 	
 	public String[][] getReports() {
