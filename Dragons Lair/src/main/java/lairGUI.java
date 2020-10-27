@@ -11,7 +11,7 @@ public class lairGUI {
 	private Customers customers;
 	private Reports reports;
 	private Titles titles;
-
+	private static Controller control;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -27,7 +27,7 @@ public class lairGUI {
 	}
 	
 	public lairGUI() {
-		Controller control = new Controller();
+		control = new Controller();
 		customers = new Customers(control);
 		reports = new Reports(control);
 		titles = new Titles(control);
@@ -50,7 +50,7 @@ public class lairGUI {
 		tabbedPane.addTab("Titles", null, titles, null);
 		tabbedPane.addTab("Reports", null, reports, null);
 	}
-	
+
 	public Frame getFrame() {
 		return frame;
 	}

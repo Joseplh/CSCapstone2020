@@ -25,7 +25,7 @@ USE DLC;
 CREATE TABLE "Catalog" (
   "Publisher" varchar(50),
   "Distributor" varchar(50),
-  "Calalog ID" varchar(50),
+  "Catalog ID" varchar(50),
   "Description" varchar(100),--varchar(x) standands for variable character (x amount), this example is a string of up to 50 characters
   "Issue" varchar(50),--currently I assume that this is the primary key for the table, because it should be unique among all items
   "Disct? Sub" BIT,--BIT is used as a boolean true/false statement
@@ -37,7 +37,7 @@ CREATE TABLE "Order" (
   "Store Code" varchar(10),
   "Customer Code" varchar(10),
   "Distributor" varchar(50),
-  "Calalog ID" varchar(50),
+  "Catalog ID" varchar(50),
   "Description" varchar(100),
   "Issue Start" int,--int is any whole number -1,0,1,2,3 up to 2,147,483,647
   "Issue End" int,
@@ -59,7 +59,7 @@ CREATE TABLE "Customer" (
   "State" varchar(20),
   "ZIP" int,
   "Post Code" varchar(10),
-  "Phone Cell" varchar(15),
+  "Phone #1" varchar(15),
   "Phone Home" varchar(15),
   "Customer ID" varchar(10),
   "Exp. Date" date,--this is a special datatype that handles the formatting for date yyyy/mm/dd
