@@ -166,7 +166,6 @@ public class Controller {
 	
 	
 	public String[][] format(ResultSet rs){
-		//TODO: domain for data as arraylist or equivilant
 		String[][] data = null;
 		int columns = 0;
 		int rows = 0;
@@ -189,6 +188,7 @@ public class Controller {
 				for(int k = 1; k < columns; k++) {
 					data[j][k] = rs.getString(k);
 				}
+				rs.next();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
