@@ -184,8 +184,8 @@ public class Controller {
 		
 		try {
 			data = new String[rows][columns];
-			for(int j = 1; j < rows; j++) {
-				for(int k = 1; k < columns; k++) {
+			for(int j = 0; j < rows; j++) {
+				for(int k = 0; k < columns; k++) {
 					data[j][k] = rs.getString(k);
 				}
 				rs.next();
