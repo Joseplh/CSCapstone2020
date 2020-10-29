@@ -24,7 +24,7 @@ public class lairGUI {
 	private JTextField userPass;
 	private Customers customers;
 	private Reports reports;
-	private Titles titles;
+	private Titles catalog;
 	private static Controller control;
 	private boolean loggedIn;
 	private static lairGUI window;
@@ -45,7 +45,7 @@ public class lairGUI {
 		control = new Controller();
 		customers = new Customers(control);
 		reports = new Reports(control);
-		titles = new Titles(control);
+		catalog = new Titles(control);
 		loggedIn = false;
 		initialize();
 		initializeHome();
@@ -63,7 +63,7 @@ public class lairGUI {
 		frame.getContentPane().add(tabbedPane);
 		
 		tabbedPane.addTab("Customers", null, customers, null);
-		tabbedPane.addTab("Titles", null, titles, null);
+		tabbedPane.addTab("Catalog", null, catalog, null);
 		tabbedPane.addTab("Reports", null, reports, null);
 				
 	}
