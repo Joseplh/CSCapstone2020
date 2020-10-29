@@ -375,6 +375,9 @@ public class Customers extends JPanel implements Tile {
 						"Delete User", JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
 
+					control.deleteCustomer(emailBox.getText());
+					//refresh jtable please
+
 					/* Code here to remove the user from the database */
 
 					JOptionPane.showMessageDialog(null, "Account Deleted");

@@ -58,7 +58,10 @@ public class Controller {
 		insert("INSERT INTO Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
 		return 1;
 	}
-	
+
+
+
+
 	/*
 	 * Returns true if connected, false if not
 	 */
@@ -71,7 +74,12 @@ public class Controller {
 	public String[][] getCustomers() {
 		return select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer");
 	}
-	
+
+	public int deleteCustomer(String email) {
+		insert("DELETE FROM Customer WHERE [Email] = '" + email + "'");
+		return 1;
+	}
+
 	public String[][] getReports() {
 		return new String[0][0];
 	}
