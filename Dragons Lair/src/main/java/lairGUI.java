@@ -29,7 +29,7 @@ public class lairGUI {
 				try {
 					lairGUI window = new lairGUI();
 					window.homeFrame.setVisible(true);
-					//window.frame.setVisible(true);
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
