@@ -151,7 +151,7 @@ public class Customers extends JPanel implements Tile {
 		customerDetails.add(emailBox);
 		add(customerDetails);
 
-		/* Dummy Data */
+		/* Customer Data */
 		String data[][] = control.getCustomers();
 
 		/* Customer Table Column Names */
@@ -258,6 +258,7 @@ public class Customers extends JPanel implements Tile {
 
 							/* TODO: Code to add customer account to database 
 							 */
+							control.insertCustomer(fnameAccField.getText(), lnameAccField.getText(), emailAccField.getText(), phoneAccField.getText());
 
 							JPanel accAddedPanel = new JPanel();
 							accAddedPanel.setLayout(null);

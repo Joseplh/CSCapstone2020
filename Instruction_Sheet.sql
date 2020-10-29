@@ -35,15 +35,7 @@ CREATE TABLE "Catalog" (
 
 CREATE TABLE "Order" (
   "Store Code" varchar(10),
-<<<<<<< HEAD
   "Customer Code" int FOREIGN KEY REFERENCES "Customer"("Customer Code"),
-=======
-<<<<<<< Updated upstream
-  "Customer Code" varchar(10),
-=======
-  "Customer Code" int,
->>>>>>> Stashed changes
->>>>>>> Milestone1
   "Distributor" varchar(50),
   "Calalog ID" varchar(50)FOREIGN KEY REFERENCES "Catalog"("Catalog ID"),
   "Description" varchar(100),
@@ -56,11 +48,7 @@ CREATE TABLE "Order" (
 
 CREATE TABLE "Customer" (
   "Store Code" varchar(10),
-<<<<<<< HEAD
-  "Customer Code" int,
-=======
   "Customer Code" int IDENTITY(1,1) Primary Key,
->>>>>>> Milestone1
   "Last Name" varchar(10),
   "First Name" varchar(10),
   "Email" varchar(30),
@@ -70,7 +58,7 @@ CREATE TABLE "Customer" (
   "State" varchar(20),
   "ZIP" int,
   "Post Code" varchar(10),
-  "Phone Cell" varchar(15),
+  "Phone #1" varchar(15),
   "Phone Home" varchar(15),
   "Customer ID" varchar(10),
   "Exp. Date" date,--this is a special datatype that handles the formatting for date yyyy/mm/dd
