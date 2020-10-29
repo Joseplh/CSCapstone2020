@@ -29,7 +29,7 @@ public class lairGUI {
 				try {
 					lairGUI window = new lairGUI();
 					window.homeFrame.setVisible(true);
-					//window.frame.setVisible(true);
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -79,11 +79,8 @@ public class lairGUI {
 				homeFrame.setBounds(100, 100, 600, 360);
 				homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				homeFrame.getContentPane().setLayout(null);
-				homeFrame.setResizable(true);
-				
+				homeFrame.setResizable(false);
 
-				
-				
 				JButton AddCustBtn = new JButton("Enter");
 				AddCustBtn.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 				AddCustBtn.setBounds(380, 120, 162, 33);
