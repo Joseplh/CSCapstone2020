@@ -64,6 +64,19 @@ CREATE TABLE "Customer" (
   "Customer ID" varchar(10),
   "Exp. Date" date,--this is a special datatype that handles the formatting for date yyyy/mm/dd
   "Discount %" decimal(2,2),--deciaml allows for defined number sizes, in this case it can handle xx.xx numbers
-  CONSTRAINT PK_Customer PRIMARY KEY CLUSTERED ("Customer Code")
 );
+
+CREATE TABLE "User Accounts" (
+	"User ID" int IDENTITY(1,1) Primary Key,
+	"USERNAME" varchar(20),
+	"USERPASS" varchar(20),
+	"First Name" varchar(20),
+	"Last Name" varchar(20),
+	"Security Level" int
+);
+
+INSERT "User Accounts" ("USERNAME", "USERPASS", "First Name", "Last Name", "Security Level")
+VALUES ('Joseplh', 'correctPass', 'Joseph', 'Maxwell', '0');
+select * from "User Accounts";
+
 --END A1
