@@ -35,9 +35,9 @@ CREATE TABLE "Catalog" (
 
 CREATE TABLE "Order" (
   "Store Code" varchar(10),
-  "Customer Code" varchar(10),
+  "Customer Code" int FOREIGN KEY REFERENCES "Customer"("Customer Code"),
   "Distributor" varchar(50),
-  "Catalog ID" varchar(50),
+  "Calalog ID" varchar(50)FOREIGN KEY REFERENCES "Catalog"("Catalog ID"),
   "Description" varchar(100),
   "Issue Start" int,--int is any whole number -1,0,1,2,3 up to 2,147,483,647
   "Issue End" int,
@@ -49,7 +49,7 @@ CREATE TABLE "Order" (
 
 CREATE TABLE "Customer" (
   "Store Code" varchar(10),
-  "Customer Code" varchar(10),
+  "Customer Code" int IDENTITY(1,1) Primary Key,
   "Last Name" varchar(10),
   "First Name" varchar(10),
   "Email" varchar(30),

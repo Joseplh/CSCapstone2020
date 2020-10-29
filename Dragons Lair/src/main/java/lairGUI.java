@@ -7,10 +7,14 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import java.awt.Frame;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class lairGUI {
 
@@ -23,21 +27,20 @@ public class lairGUI {
 	private Titles titles;
 	private static Controller control;
 	private boolean loggedIn;
+	private static lairGUI window;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					lairGUI window = new lairGUI();
+					window = new lairGUI();
 					window.homeFrame.setVisible(true);
-					window.frame.setVisible(true);
+					window.frame.setVisible(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-
-	}
-	
+	}	
 	public lairGUI() {
 		control = new Controller();
 		customers = new Customers(control);
@@ -47,8 +50,7 @@ public class lairGUI {
 		initialize();
 		initializeHome();
 	
-	}
-	
+	}	
 	private void initialize() {
 		frame = new JFrame("Main Page");
 		frame.setBounds(100, 100, 1024, 768);
@@ -65,7 +67,6 @@ public class lairGUI {
 		tabbedPane.addTab("Reports", null, reports, null);
 				
 	}
-
 	public Frame getFrame() {
 		return frame;
 	}
@@ -79,15 +80,12 @@ public class lairGUI {
 				homeFrame.setBounds(100, 100, 600, 360);
 				homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				homeFrame.getContentPane().setLayout(null);
-				homeFrame.setResizable(true);
-				
+				homeFrame.setResizable(false);
 
-				
-				
-				JButton AddCustBtn = new JButton("Enter");
-				AddCustBtn.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
-				AddCustBtn.setBounds(380, 120, 162, 33);
-				homeFrame.add(AddCustBtn);
+				JButton logginButton = new JButton("Enter");
+				logginButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
+				logginButton.setBounds(380, 120, 162, 33);
+				homeFrame.add(logginButton);
 				
 				JLabel labelA = new JLabel("Username");
 				labelA.setBounds(30,80,162,33);
@@ -112,5 +110,15 @@ public class lairGUI {
 				userPass.setBounds(200, 120, 162, 33);
 				userPass.setColumns(10);
 				homeFrame.add(userPass);
+				
+				logginButton.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						if(logginButton.isEnabled()) {
+							window.homeFrame.setVisible(false);
+							window.frame.setVisible(true);
+						}
+					}
+				});
 	}
 }
