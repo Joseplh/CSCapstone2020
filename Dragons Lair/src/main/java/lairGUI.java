@@ -72,7 +72,7 @@ public class lairGUI {
 	public Frame getHomeFrame() {
 		return homeFrame;
 	}
-	public void initializeHome() {
+	private void initializeHome() {
 		//defining the homepage and the frame it is contained by
 				//added by Joseph Maxwell
 				homeFrame = new JFrame("Home Page");
