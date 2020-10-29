@@ -189,6 +189,7 @@ public class Controller {
 				for(int k = 1; k < columns; k++) {
 					data[j][k] = rs.getString(k);
 				}
+				rs.next();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
