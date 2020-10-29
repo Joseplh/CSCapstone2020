@@ -162,15 +162,6 @@ public class Customers extends JPanel implements Tile {
 		customerScrollPane.setBounds(10, 65, 415, 590);
 		add(customerScrollPane);
 		
-		/* TODO: initialize control variable and query for 
-		 * 		 the 4 columns above. Get String[][] 
-		 * 		 and put it in below instead of the dummy data
-		 *
-		 */
-		
-		control = new Controller();
-		control.select("SELECT * FROM DLC.dbo.Customer");
-		
 		customerTable = new JTable(data, column);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);

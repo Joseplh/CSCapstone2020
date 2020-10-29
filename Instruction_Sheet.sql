@@ -30,7 +30,7 @@ CREATE TABLE "Catalog" (
   "Issue" varchar(50),--currently I assume that this is the primary key for the table, because it should be unique among all items
   "Disct? Sub" BIT,--BIT is used as a boolean true/false statement
   "Form" BIT,
-  CONSTRAINT PK_Issue PRIMARY KEY CLUSTERED ("Distributor", "Catalog ID")
+  CONSTRAINT PK_Issue PRIMARY KEY CLUSTERED ("Distributor", "Calalog ID")
 );
 
 CREATE TABLE "Order" (
@@ -45,6 +45,7 @@ CREATE TABLE "Order" (
   "Cost" money,
   CONSTRAINT PK_Store_Customer PRIMARY KEY CLUSTERED ("Store Code", "Customer Code")
 );
+
 
 CREATE TABLE "Customer" (
   "Store Code" varchar(10),
@@ -63,5 +64,6 @@ CREATE TABLE "Customer" (
   "Customer ID" varchar(10),
   "Exp. Date" date,--this is a special datatype that handles the formatting for date yyyy/mm/dd
   "Discount %" decimal(2,2),--deciaml allows for defined number sizes, in this case it can handle xx.xx numbers
+  CONSTRAINT PK_Customer PRIMARY KEY CLUSTERED ("Customer Code")
 );
 --END A1
