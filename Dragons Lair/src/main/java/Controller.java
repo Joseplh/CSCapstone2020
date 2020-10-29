@@ -54,12 +54,47 @@ public class Controller {
 		}
 	}
 	
+	public int insertCustomer(String first, String last, String email, String phone) {
+		insert("INSERT INTO Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
+		return 1;
+	}
+	
+	/*
+	 * Returns true if connected, false if not
+	 */
 	public boolean isConnected() {
 		return (dbConnection != null);
 	}
-	
+	/*
+	 * Returns the following columsn from the customer table
+	 */
 	public String[][] getCustomers() {
+		return select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer");
+	}
+	
+	public String[][] getReports() {
 		return new String[0][0];
+	}
+	
+	public String[][] getTitles() {
+		return new String[][] { { "Title 1", "1", "", }, { "Title 1", "1.99", "", }, { "Title 2", "2.88", "", },
+			{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
+			{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
+			{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
+			{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
+			{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
+			{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
+			{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
+			{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
+			{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
+			{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
+			{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
+			{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
+			{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
+			{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
+			{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
+			{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
+			{ "Title 39", "2.99", "", }, { "Title 106", "2.99", "", } }; 
 	}
 	
 	public String[][] select(String query) {
@@ -90,6 +125,38 @@ public class Controller {
 		
 		return format(rs);
 	}
+	/*
+	 * Method to insert, update, delete info. Returns 0 for statements that return nothing or the row count 
+	 * 
+	 */
+	public int insert(String query) {
+		if(!isConnected()) {
+			connect();
+		}
+		
+		Statement sqlStatement = null;
+		int result = 0;
+		
+		
+		try {
+			sqlStatement = dbConnection.createStatement();
+		} catch (SQLException e) {
+			System.err.println("Error connecting to the database");
+			e.printStackTrace();
+			System.exit(0);
+			
+		}	
+		
+		try {
+			result = sqlStatement.executeUpdate(query);
+		} catch (SQLException e) {
+			System.err.println("Error executing query");
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		return result;
+	}
 	
 	/* TODO: Need a method for taking in an insert, update, delete query
 	 * 		 Maybe return boolean/int depending on if it was successful or not
@@ -98,11 +165,6 @@ public class Controller {
 	 */
 	
 	
-	/* TODO: Need a method that takes in a ResultSet rs and 
-	 *       returns a 2d String array. In order to display 
-	 *       information in a JTable
-	 * 
-	 */
 	public String[][] format(ResultSet rs){
 		//TODO: domain for data as arraylist or equivilant
 		String[][] data = null;

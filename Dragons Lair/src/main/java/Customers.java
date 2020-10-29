@@ -151,7 +151,7 @@ public class Customers extends JPanel implements Tile {
 		customerDetails.add(emailBox);
 		add(customerDetails);
 
-		/* Dummy Data */
+		/* Customer Data */
 		String data[][] = control.getCustomers();
 
 		/* Customer Table Column Names */
@@ -161,15 +161,6 @@ public class Customers extends JPanel implements Tile {
 		JScrollPane customerScrollPane = new JScrollPane();
 		customerScrollPane.setBounds(10, 65, 415, 590);
 		add(customerScrollPane);
-		
-		/* TODO: initialize control variable and query for 
-		 * 		 the 4 columns above. Get String[][] 
-		 * 		 and put it in below instead of the dummy data
-		 *
-		 */
-		
-		control = new Controller();
-		control.select("SELECT * FROM DLC.dbo.Customer");
 		
 		customerTable = new JTable(data, column);
 		customerTable.setAutoCreateRowSorter(true);
@@ -258,6 +249,7 @@ public class Customers extends JPanel implements Tile {
 
 							/* TODO: Code to add customer account to database 
 							 */
+							control.insertCustomer(fnameAccField.getText(), lnameAccField.getText(), emailAccField.getText(), phoneAccField.getText());
 
 							JPanel accAddedPanel = new JPanel();
 							accAddedPanel.setLayout(null);
