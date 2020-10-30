@@ -114,9 +114,15 @@ public class lairGUI {
 				logginButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						System.out.println(userName.getUIClassID());
 						if(logginButton.isEnabled()) {
-							window.homeFrame.setVisible(false);
-							window.frame.setVisible(true);
+							if(control.isAccount(userName.getText(), userPass.getText())) {
+								System.out.println("Match");
+								window.homeFrame.setVisible(false);
+								window.frame.setVisible(true);
+							}
+							else
+								System.out.println("No Match");
 						}
 					}
 				});

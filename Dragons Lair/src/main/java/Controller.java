@@ -53,15 +53,10 @@ public class Controller {
 			System.exit(0);
 		}
 	}
-	
 	public int insertCustomer(String first, String last, String email, String phone) {
 		insert("INSERT INTO Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
 		return 1;
 	}
-
-
-
-
 	/*
 	 * Returns true if connected, false if not
 	 */
@@ -74,16 +69,13 @@ public class Controller {
 	public String[][] getCustomers() {
 		return select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer");
 	}
-
 	public int deleteCustomer(String email) {
 		insert("DELETE FROM Customer WHERE [Email] = '" + email + "'");
 		return 1;
 	}
-
 	public String[][] getReports() {
 		return new String[0][0];
-	}
-	
+	}	
 	public String[][] getTitles() {
 		return new String[][] { { "Title 1", "1", "", }, { "Title 1", "1.99", "", }, { "Title 2", "2.88", "", },
 			{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
@@ -103,8 +95,7 @@ public class Controller {
 			{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
 			{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
 			{ "Title 39", "2.99", "", }, { "Title 106", "2.99", "", } }; 
-	}
-	
+	}	
 	public String[][] select(String query) {
 		if(!isConnected()) {
 			connect();
@@ -164,15 +155,12 @@ public class Controller {
 		}
 		
 		return result;
-	}
-	
+	}	
 	/* TODO: Need a method for taking in an insert, update, delete query
 	 * 		 Maybe return boolean/int depending on if it was successful or not
 	 * 		 executeUpdate(query)
 	 * 
-	 */
-	
-	
+	 */	
 	public String[][] format(ResultSet rs){
 		String[][] data = null;
 		int columns = 0;
@@ -203,6 +191,37 @@ public class Controller {
 			e.printStackTrace();
 		}
 		return data;
+	}
+	protected boolean isAccount(String user, String pass) {
+		//Created by Joseph: This is a sql statement to check if the username and password are valid
+		if(!isConnected()) {
+			connect();
+		}
+		
+		Statement sqlStatement = null;		
+		ResultSet rs = null;
+		
+		try {
+			sqlStatement = dbConnection.createStatement();
+		} catch (SQLException e) {
+			System.err.println("Error connecting to the database");
+			e.printStackTrace();
+			System.exit(0);
+			
+		}	
+		
+		try {
+			rs = sqlStatement.executeQuery("SELECT CASE WHEN EXISTS ( SELECT * FROM [Account] WHERE [User] = '"+user+"' AND [Pass] = '"+pass+"')THEN CAST(1 AS BIT)ELSE CAST(0 AS BIT) END");
+			while(rs.next()) {
+				if(rs.getInt(1) == 1)
+					return true;
+			}
+		} catch (SQLException e) {
+			System.err.println("Error executing query in password check");
+			e.printStackTrace();
+			System.exit(0);
+		}
+		return false;
 	}
 }
 
