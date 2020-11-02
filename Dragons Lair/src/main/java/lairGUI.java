@@ -12,11 +12,20 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class lairGUI {
+	
+	private final int WIDTH = 1024;
+	private final int HEIGHT = 768;
+	
+	private final int LOGIN_WIDTH = 600;
+	private final int LOGIN_HEIGHT = 300;
 
 	private JFrame frame;
 	private JFrame homeFrame;
@@ -53,10 +62,12 @@ public class lairGUI {
 	}	
 	private void initialize() {
 		frame = new JFrame("Main Page");
-		frame.setBounds(100, 100, 1024, 768);
+		frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
+		frame.setVisible(true);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 34, 998, 694);
@@ -77,15 +88,18 @@ public class lairGUI {
 		//defining the homepage and the frame it is contained by
 				//added by Joseph Maxwell
 				homeFrame = new JFrame("Home Page");
-				homeFrame.setBounds(100, 100, 600, 360);
+				homeFrame.setSize(LOGIN_WIDTH, LOGIN_HEIGHT);
+				homeFrame.setLocationRelativeTo(null);
 				homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				homeFrame.getContentPane().setLayout(null);
 				homeFrame.setResizable(false);
+				homeFrame.setVisible(true);
 
-				JButton logginButton = new JButton("Enter");
-				logginButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
-				logginButton.setBounds(380, 120, 162, 33);
-				homeFrame.add(logginButton);
+				JButton loginButton = new JButton("Enter");
+				loginButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
+				loginButton.setBounds(380, 120, 162, 33);
+				homeFrame.add(loginButton);
+				homeFrame.getRootPane().setDefaultButton(loginButton);
 				
 				JLabel labelA = new JLabel("Username");
 				labelA.setBounds(30,80,162,33);
@@ -111,11 +125,10 @@ public class lairGUI {
 				userPass.setColumns(10);
 				homeFrame.add(userPass);
 				
-				logginButton.addMouseListener(new MouseAdapter() {
+				loginButton.addActionListener(new ActionListener() {
 					@Override
-					public void mouseClicked(MouseEvent e) {
-						System.out.println(userName.getUIClassID());
-						if(logginButton.isEnabled()) {
+					public void actionPerformed(ActionEvent e) {
+						if(loginButton.isEnabled()) {
 							if(control.isAccount(userName.getText(), userPass.getText())) {
 								System.out.println("Match");
 								window.homeFrame.setVisible(false);
