@@ -53,6 +53,20 @@ public class Controller {
 			System.exit(0);
 		}
 	}
+	
+	
+	/**
+	 * Handler for adding a request to the database.
+	 * 
+	 * @param title	   The request title.
+	 * @param quantity The request quantity.
+	 * @param issue	   The request issue number.
+	 */
+	public void addRequest(String title, int quantity, int issue) {
+		// TODO: add request info to db
+//		insert("INSERT INTO ([], [], [], [) VALUES('" + user + "', '" + title + "', '" + quantity + "', '" + issue + "')");
+	}
+	
 	public int insertCustomer(String first, String last, String email, String phone) {
 		insert("INSERT INTO Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
 		return 1;
@@ -64,7 +78,7 @@ public class Controller {
 		return (dbConnection != null);
 	}
 	/*
-	 * Returns the following columsn from the customer table
+	 * Returns the following columns from the customer table
 	 */
 	public String[][] getCustomers() {
 		return select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer");
