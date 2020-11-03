@@ -126,10 +126,10 @@ public class lairGUI {
 				homeFrame.add(userPass);
 				
 				loginButton.addActionListener(new ActionListener() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
 						System.out.println(userName.getUIClassID());
-						if(logginButton.isEnabled()) {
+						if(loginButton.isEnabled()) {
 							if(control.isAccount(userName.getText(), security.makeHash(userPass.getText()))) {
 								System.out.println("Match");
 								window.homeFrame.setVisible(false);
