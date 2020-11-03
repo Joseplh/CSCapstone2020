@@ -116,7 +116,7 @@ public class lairGUI {
 					public void mouseClicked(MouseEvent e) {
 						System.out.println(userName.getUIClassID());
 						if(logginButton.isEnabled()) {
-							if(control.isAccount(userName.getText(), userPass.getText())) {
+							if(control.isAccount(userName.getText(), security.makeHash(userPass.getText()))) {
 								System.out.println("Match");
 								window.homeFrame.setVisible(false);
 								window.frame.setVisible(true);
