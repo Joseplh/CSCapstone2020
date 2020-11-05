@@ -1,40 +1,16 @@
 package main.java;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.sql.Array;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
+import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import java.awt.*;
+import java.awt.event.*;
 
 public class Customers extends JPanel implements Tile {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable customerTable;
@@ -43,6 +19,7 @@ public class Customers extends JPanel implements Tile {
 	private JTextField phoneBox;
 	private JTextField emailBox;
 	private JTextField fNameBox;
+	private JTextField ccodeBox;
 	private Controller control;
 
 	private Font font = new Font("Tahoma", Font.BOLD, 14);
@@ -130,6 +107,12 @@ public class Customers extends JPanel implements Tile {
 		fNameBox.setBounds(231, 41, 162, 33);
 		fNameBox.setColumns(10);
 
+		ccodeBox = new JTextField();
+		ccodeBox.setEditable(false);
+		ccodeBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		ccodeBox.setBounds(231, 41, 162, 33);
+		ccodeBox.setColumns(10);
+
 		JLabel fnameLabel = new JLabel("First Name");
 		fnameLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		fnameLabel.setBounds(231, 22, 88, 14);
@@ -154,13 +137,14 @@ public class Customers extends JPanel implements Tile {
 		customerDetails.add(phoneBox);
 		customerDetails.add(fNameBox);
 		customerDetails.add(emailBox);
+		customerDetails.add(ccodeBox);
 		add(customerDetails);
 
 		/* Customer Data */
 		String data[][] = control.getCustomers();
 
 		/* Customer Table Column Names */
-		String column[] = { "Last Name", "First Name", "Phone Number", "Email" };
+		String column[] = {"Last Name", "First Name", "Phone Number", "Email", "Customer Code"};
 
 		/* Adding the scroll bar to the customer Table */
 		JScrollPane customerScrollPane = new JScrollPane();
@@ -300,6 +284,9 @@ public class Customers extends JPanel implements Tile {
 					fNameBox.setEditable(false);
 					phoneBox.setEditable(false);
 					emailBox.setEditable(false);
+					ccodeBox.setEditable(false);
+
+					control.updateCustomer(Integer.parseInt(ccodeBox.getText()), fNameBox.getText(), lNameBox.getText(), emailBox.getText(), phoneBox.getText());
 
 					JOptionPane.showMessageDialog(null, "Changes have been saved!", "Message",
 							JOptionPane.PLAIN_MESSAGE);
@@ -329,6 +316,8 @@ public class Customers extends JPanel implements Tile {
 					fNameBox.setText((String) customerTable.getValueAt(i, 1));
 					phoneBox.setText((String) customerTable.getValueAt(i, 2));
 					emailBox.setText((String) customerTable.getValueAt(i, 3));
+					ccodeBox.setText((String) customerTable.getValueAt(i, 4));
+
 					editCustBtn.setEnabled(true);
 					delCustBtn.setEnabled(true);
 				}
@@ -359,6 +348,7 @@ public class Customers extends JPanel implements Tile {
 				fNameBox.setEditable(false);
 				phoneBox.setEditable(false);
 				emailBox.setEditable(false);
+				ccodeBox.setEditable(false);
 
 				discardBtn.setEnabled(false);
 				saveCustBtn.setEnabled(false);
@@ -368,6 +358,8 @@ public class Customers extends JPanel implements Tile {
 				fNameBox.setText((String) customerTable.getValueAt(i, 1));
 				phoneBox.setText((String) customerTable.getValueAt(i, 2));
 				emailBox.setText((String) customerTable.getValueAt(i, 3));
+				ccodeBox.setText((String) customerTable.getValueAt(i, 4));
+
 			}
 		});
 
@@ -382,7 +374,9 @@ public class Customers extends JPanel implements Tile {
 						"Delete User", JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
 
-					control.deleteCustomer(emailBox.getText());
+					control.deleteCustomer(Integer.parseInt(ccodeBox.getText()));
+					customerTable.revalidate();
+
 					// refresh jtable please
 
 					/* Code here to remove the user from the database */
@@ -495,10 +489,10 @@ public class Customers extends JPanel implements Tile {
 
 	/**
 	 * Handler for center the frame on the screen.
-	 * 
-	 * @param frame The frame to center.
-	 * @param the   frame width.
-	 * @param the   frame height.
+	 *
+	 * @param frame  The frame to center.
+	 * @param width  the frame width.
+	 * @param height frame height.
 	 */
 	private void centerFrame(JComponent frame, int width, int height) {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -517,10 +511,10 @@ public class Customers extends JPanel implements Tile {
 
 	/**
 	 * Handler for center the frame on the screen.
-	 * 
-	 * @param frame The frame to center.
-	 * @param the   frame width.
-	 * @param the   frame height.
+	 *
+	 * @param frame  The frame to center.
+	 * @param width  the frame width.
+	 * @param height frame height.
 	 */
 	private void centerFrame(JFrame frame, int width, int height) {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

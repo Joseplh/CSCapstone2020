@@ -66,27 +66,37 @@ public class Controller {
 		// TODO: add request info to db
 //		insert("INSERT INTO ([], [], [], [) VALUES('" + user + "', '" + title + "', '" + quantity + "', '" + issue + "')");
 	}
-	
+
 	public int insertCustomer(String first, String last, String email, String phone) {
 		insert("INSERT INTO Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
 		return 1;
 	}
+
+	public int deleteCustomer(int ccode) {
+		insert("DELETE FROM Customer WHERE [Customer Code] = " + ccode);
+		return 1;
+	}
+
+	public int updateCustomer(int ccode, String first, String last, String email, String phone) {
+		insert("UPDATE Customer Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
+		return 1;
+	}
+
+
 	/*
 	 * Returns true if connected, false if not
 	 */
 	public boolean isConnected() {
 		return (dbConnection != null);
 	}
+
 	/*
 	 * Returns the following columns from the customer table
 	 */
 	public String[][] getCustomers() {
-		return select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer");
+		return select("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM Customer");
 	}
-	public int deleteCustomer(String email) {
-		insert("DELETE FROM Customer WHERE [Email] = '" + email + "'");
-		return 1;
-	}
+
 	public String[][] getReports() {
 		return new String[0][0];
 	}	
