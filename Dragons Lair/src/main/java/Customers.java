@@ -21,6 +21,10 @@ public class Customers extends JPanel implements Tile {
 	private JTextField fNameBox;
 	private JTextField ccodeBox;
 	private Controller control;
+	private JButton addRequestBtn;
+	
+	private int customerCodeColumn = 4;
+	private int storeCodeColumn;
 
 	private Font font = new Font("Tahoma", Font.BOLD, 14);
 	private Color color = new Color(240, 240, 240);
@@ -299,6 +303,8 @@ public class Customers extends JPanel implements Tile {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
+				addRequestBtn.setEnabled(true);
+
 				/*
 				 * If the text boxes displaying the customer information is editable, warn user
 				 * to save the information
@@ -390,12 +396,13 @@ public class Customers extends JPanel implements Tile {
 	/**
 	 * Handler for adding the request handler and populating the info box.
 	 */
-	private void addRequestHandler() {
-		JButton addRequestBtn = new JButton("Add Request");
+	public void addRequestHandler() {
+		addRequestBtn = new JButton("Add Request");
 		addRequestBtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		addRequestBtn.setBounds(860, 339, 107, 48);
+		addRequestBtn.setEnabled(false);
 		add(addRequestBtn);
-
+			    
 		addRequestBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -434,7 +441,7 @@ public class Customers extends JPanel implements Tile {
 					issueLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 					issueLabel.setBounds(28, 86, 151, 23);
 					addRequestPanel.add(issueLabel);
-
+					
 					JTextField titleField = new JTextField();
 					titleField.setBounds(28, 48, 136, 20);
 					addRequestPanel.add(titleField);
@@ -460,7 +467,8 @@ public class Customers extends JPanel implements Tile {
 					addBtn.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent event) {
 							try {
-								control.addRequest(titleField.getText(), Integer.parseInt(quantityField.getText()),
+								control.addRequest(customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString(), 
+										titleField.getText(), Integer.parseInt(quantityField.getText()),
 										Integer.parseInt(issueField.getText()));
 								createMessage(addRequestFrame, addRequestPanel, "Request successfully created.");
 							} catch (Exception e) {

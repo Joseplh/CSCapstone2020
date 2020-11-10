@@ -58,13 +58,15 @@ public class Controller {
 	/**
 	 * Handler for adding a request to the database.
 	 * 
-	 * @param title	   The request title.
-	 * @param quantity The request quantity.
-	 * @param issue	   The request issue number.
+	 * @param customerCode The unique customer code.
+	 * @param title	   	   The request title.
+	 * @param quantity 	   The request quantity.
+	 * @param issue	   	   The request issue number.
 	 */
-	public void addRequest(String title, int quantity, int issue) {
-		// TODO: add request info to db
-//		insert("INSERT INTO ([], [], [], [) VALUES('" + user + "', '" + title + "', '" + quantity + "', '" + issue + "')");
+	public void addRequest(String customerCode, String title, int quantity, int issue) {
+		// TODO: Add custom store code number
+		insert(String.format("INSERT INTO [DLC].[dbo].[Order]([Store Code], [Customer Code], Description, [Issue Start], "
+				+ "[Issue End], Quantity) VALUES('%s','%s','%s',%d,%d,%d)", "dl2", customerCode, title, issue, issue, quantity));
 	}
 
 	public int insertCustomer(String first, String last, String email, String phone) {
