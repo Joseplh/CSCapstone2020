@@ -396,7 +396,7 @@ public class Customers extends JPanel implements Tile {
 	/**
 	 * Handler for adding the request handler and populating the info box.
 	 */
-	public void addRequestHandler() {
+	private void addRequestHandler() {
 		addRequestBtn = new JButton("Add Request");
 		addRequestBtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		addRequestBtn.setBounds(860, 339, 107, 48);
