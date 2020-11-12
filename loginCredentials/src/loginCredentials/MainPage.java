@@ -165,14 +165,14 @@ public class MainPage {
 	}
 	protected void changePass(String user, String newPass) {
 		// TODO Auto-generated method stub
-		control.insert("UPDATE [Account] SET [Pass] = '" + security.makeHash(newPass) + "' WHERE [User] = '"+ user +"';");
+		control.execute("UPDATE [Account] SET [Pass] = '" + security.makeHash(newPass) + "' WHERE [User] = '"+ user +"';");
 	}
 	protected void delAccount(String delUser) {
 		// TODO Auto-generated method stub
-		control.insert("DELETE FROM [Account] WHERE [User] = '" + delUser + "';");
+		control.execute("DELETE FROM [Account] WHERE [User] = '" + delUser + "';");
 	}
 	protected void addAccount(String addUser, String addPass) {
 		// TODO Auto-generated method stub
-		control.insert("INSERT INTO [Account] ([User],[Pass]) VALUES ('"+addUser+"','"+security.makeHash(addPass)+"');");
+		control.execute("INSERT INTO [Account] ([User],[Pass]) VALUES ('"+addUser+"','"+security.makeHash(addPass)+"');");
 	}
 }

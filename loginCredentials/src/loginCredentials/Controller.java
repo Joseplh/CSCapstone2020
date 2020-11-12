@@ -70,24 +70,14 @@ public class Controller {
 		return (dbConnection != null);
 	}
 	/*
-	 * Returns the following columns from the customer table
-	 */
-	public int deleteCustomer(String email) {
-		insert("DELETE FROM Customer WHERE [Email] = '" + email + "'");
-		return 1;
-	}
-	/*
 	 * Method to insert, update, delete info. Returns 0 for statements that return nothing or the row count 
 	 * 
 	 */
-	public int insert(String query) {
+	public void execute(String query) {
 		if(!isConnected()) {
 			connect();
 		}
-		
 		Statement sqlStatement = null;
-		int result = 0;
-		
 		
 		try {
 			sqlStatement = dbConnection.createStatement();
@@ -95,18 +85,15 @@ public class Controller {
 			System.err.println("Error connecting to the database");
 			e.printStackTrace();
 			System.exit(0);
-			
-		}	
+		}
 		
 		try {
-			result = sqlStatement.executeUpdate(query);
+			sqlStatement.execute(query);
 		} catch (SQLException e) {
 			System.err.println("Error executing query");
 			e.printStackTrace();
 			System.exit(0);
 		}
-		
-		return result;
 	}	
 	/* TODO: Need a method for taking in an insert, update, delete query
 	 * 		 Maybe return boolean/int depending on if it was successful or not
