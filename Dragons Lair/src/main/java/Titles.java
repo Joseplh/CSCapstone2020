@@ -1,17 +1,9 @@
 package main.java;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -22,20 +14,29 @@ public class Titles extends JPanel implements Tile {
 	private static final long serialVersionUID = 1L;
 	private JTable titleTable;
 	private Controller control;
+	private JTextField titleField;
+	private JTextField disctSubField;
+	private JTextField distributorField;
+	private JTextField tCodeField;
+	private String[][] data;
+
+	private String[][] fetchData(){
+		return data = control.getTitles();
+	}
 
 	public Titles(Controller control) {
 		this.control = control;
 		setLayout(null);
 		setBackground(Color.LIGHT_GRAY);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.LIGHT_GRAY);
-		panel_1.setBorder(new TitledBorder(
+		JPanel titlePanel = new JPanel();
+		titlePanel.setBackground(Color.LIGHT_GRAY);
+		titlePanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Title Details", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
-		panel_1.setBounds(505, 117, 459, 168);
-		add(panel_1);
-		panel_1.setLayout(null);
+		titlePanel.setBounds(505, 117, 459, 168);
+		add(titlePanel);
+		titlePanel.setLayout(null);
 
 		/* Button deceleration */
 		JButton addTitleBtn = new JButton("Add New Title");
@@ -86,88 +87,78 @@ public class Titles extends JPanel implements Tile {
 		add(txtrThisTitleCurrently);
 
 		/* TextField deceleration */
-		JTextField titleField = new JTextField();
+		titleField = new JTextField();
 		titleField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		titleField.setEditable(false);
 		titleField.setColumns(10);
-		titleField.setBounds(10, 43, 162, 33);
-		panel_1.add(titleField);
+		titleField.setBounds(10, 43, 440, 33);
 
-		JTextField priceField = new JTextField();
-		priceField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		priceField.setEditable(false);
-		priceField.setColumns(10);
-		priceField.setBounds(10, 112, 97, 33);
-		panel_1.add(priceField);
+		disctSubField = new JTextField();
+		disctSubField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		disctSubField.setEditable(false);
+		disctSubField.setColumns(10);
+		disctSubField.setBounds(10, 112, 97, 33);
 
-		JTextField notesField = new JTextField();
-		notesField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		notesField.setEditable(false);
-		notesField.setColumns(10);
-		notesField.setBounds(216, 112, 230, 33);
-		panel_1.add(notesField);
+		distributorField = new JTextField();
+		distributorField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		distributorField.setEditable(false);
+		distributorField.setColumns(10);
+		distributorField.setBounds(115, 112, 200, 33);
+
+		tCodeField = new JTextField();
+		tCodeField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tCodeField.setEditable(false);
+		tCodeField.setColumns(10);
+		tCodeField.setBounds(331, 112, 100, 33);
 
 		/* Label deceleration */
 		JLabel lblTitle = new JLabel("Title");
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTitle.setBounds(10, 22, 29, 17);
-		panel_1.add(lblTitle);
+		lblTitle.setBounds(10, 22, 82, 17);
 
-		JLabel lblPrice = new JLabel("Price");
-		lblPrice.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblPrice.setBounds(10, 87, 82, 14);
-		panel_1.add(lblPrice);
+		JLabel lblDistributor = new JLabel("Distributor");
+		lblDistributor.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDistributor.setBounds(115, 87, 82, 14);
 
-		JLabel lblSpecialOrderNotes = new JLabel("Special Order Notes");
-		lblSpecialOrderNotes.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblSpecialOrderNotes.setBounds(216, 87, 149, 14);
-		panel_1.add(lblSpecialOrderNotes);
+		JLabel lblDisctSub = new JLabel("Disct? Sub");
+		lblDisctSub.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDisctSub.setBounds(10, 87, 82, 14);
 
-		/* Dummy Data */
-		String data[][] = { { "Title 1", "1", "", }, { "Title 1", "1.99", "", }, { "Title 2", "2.88", "", },
-				{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
-				{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
-				{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
-				{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
-				{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
-				{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
-				{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
-				{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
-				{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
-				{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
-				{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
-				{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
-				{ "Title 3", "3.00", "", }, { "Title 4", "3", "", }, { "Title 5", "7.8", "", },
-				{ "Title 6", "1.9", "", }, { "Title 7", "1.1", "", }, { "Title 78", "1.2", "", },
-				{ "Title 101", "1.3", "", }, { "Title 1110", "1.5", "", }, { "Title 1394", "1.5", "", },
-				{ "Title 17", "2.99", "Special notes here :", }, { "Title 59", "2.99", "", },
-				{ "Title 39", "2.99", "", }, { "Title 106", "2.99", "", } };
+		JLabel lblTCode = new JLabel("Catalog ID");
+		lblTCode.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTCode.setBounds(331, 87, 82, 14);
+
+		titlePanel.add(titleField);
+		titlePanel.add(disctSubField);
+		titlePanel.add(distributorField);
+		titlePanel.add(tCodeField);
+		titlePanel.add(lblTitle);
+		titlePanel.add(lblDisctSub);
+		titlePanel.add(lblDistributor);
+		titlePanel.add(lblTCode);
+
+		/* Title Data */
+		data = fetchData();
 
 		/* Title Table Column Names */
-		String column[] = { "Title", "Price", "Special Order Notes" };
+		String column[] = { "Title", "Disct? Sub", "Distributor", "Catalog ID"};
 
 		JScrollPane titleScrollPane = new JScrollPane();
 		titleScrollPane.setBounds(10, 63, 459, 592);
 		add(titleScrollPane);
-
-		/* TODO: code here to call controller and put the data 
-		 * 		 into the JTable instead of data
-		 * 
-		 */
-		
 		
 		titleTable = new JTable(data, column);
 		titleTable.setAutoCreateRowSorter(true);
 
 		titleScrollPane.setViewportView(titleTable);
 		
-		/* Listener for when a cell is selected from the customerTable */
+		/* Listener for when a cell is selected from the titleTable */
 		titleTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
 				/*
-				 * If the text boxes displaying the customer information is editable, warn user
+				 * If the text boxes displaying the title information is editable, warn user
 				 * to save the information
 				 */
 				if (titleField.isEditable()) {
@@ -180,17 +171,130 @@ public class Titles extends JPanel implements Tile {
 				else {
 					int i = titleTable.getSelectedRow();
 					titleField.setText((String) titleTable.getValueAt(i, 0));
-					priceField.setText((String) titleTable.getValueAt(i, 1));
-					notesField.setText((String) titleTable.getValueAt(i, 2));
-					
+					disctSubField.setText((String) titleTable.getValueAt(i, 1));
+					distributorField.setText((String) titleTable.getValueAt(i,2));
+					tCodeField.setText((String) titleTable.getValueAt(i,3));
+
+
 					editTitleBtn.setEnabled(true);
 					delTitleBtn.setEnabled(true);
 				}
 
 			}
 		});
-		
-		
+
+		addTitleBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (addTitleBtn.isEnabled()) {
+
+					addTitleBtn.setEnabled(false);
+					JFrame newTitlePanel = new JFrame("Add New Customer");
+					newTitlePanel.setVisible(true);
+					newTitlePanel.setBounds(128, 91, 400, 240);
+					newTitlePanel.setResizable(false);
+					newTitlePanel.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+					/* Action listener for when the add customer frame is closed */
+					newTitlePanel.addWindowListener(new WindowAdapter() {
+						@Override
+						public void windowClosing(WindowEvent e) {
+							addTitleBtn.setEnabled(true);
+						}
+					});
+
+					/* Creating the panel that will take new customer info */
+					JPanel titlePanel = new JPanel();
+					titlePanel.setBounds(128, 91, 388, 207);
+					titlePanel.setLayout(null);
+
+
+
+					JLabel newTitleLabel = new JLabel("Title");
+					newTitleLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					newTitleLabel.setBounds(28, 25, 78, 23);
+					titlePanel.add(newTitleLabel);
+
+					JLabel newDistributorLabel = new JLabel("Distributor");
+					newDistributorLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					newDistributorLabel.setBounds(28, 76, 151, 23);
+					titlePanel.add(newDistributorLabel);
+
+					JLabel newDisctSubLabel = new JLabel("Disct? Sub");
+					newDisctSubLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					newDisctSubLabel.setBounds(214, 76, 151, 23);
+					titlePanel.add(newDisctSubLabel);
+
+					JLabel newTCodeLabel = new JLabel("Catalog ID");
+					newTCodeLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					newTCodeLabel.setBounds(28, 116, 151, 23);
+					titlePanel.add(newTCodeLabel);
+
+
+
+					JTextField newTitleField = new JTextField();
+					newTitleField.setBounds(28, 48, 332, 20);
+					newTitleField.setColumns(10);
+					titlePanel.add(newTitleField);
+
+					JTextField newDistributorField = new JTextField();
+					newDistributorField.setBounds(28, 99, 136, 20);
+					newDistributorField.setColumns(10);
+					titlePanel.add(newDistributorField);
+
+					JTextField newDisctSubField = new JTextField();
+					newDisctSubField.setBounds(214, 99, 136, 20);
+					newDisctSubField.setColumns(10);
+					titlePanel.add(newDisctSubField);
+
+					JTextField newTCodeField = new JTextField();
+					newTCodeField.setBounds(28, 139, 136, 20);
+					newTCodeField.setColumns(10);
+					titlePanel.add(newTCodeField);
+
+
+
+					JButton addTitlePanelBtn = new JButton("Add");
+					addTitlePanelBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					addTitlePanelBtn.setBounds(148, 161, 89, 23);
+					titlePanel.add(addTitlePanelBtn);
+
+
+
+					newTitlePanel.add(titlePanel);
+
+
+
+					/* Action listener for when add button clicked on create new customer frame */
+					addTitlePanelBtn.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+
+							control.insertTitle(newTitleField.getText(), newDistributorField.getText(), newDisctSubField.getText(), newTCodeField.getText());
+
+							JPanel accAddedPanel = new JPanel();
+							accAddedPanel.setLayout(null);
+							accAddedPanel.setBounds(572, 91, 388, 207);
+							accAddedPanel.setBackground(new Color(240, 240, 240));
+							titlePanel.setVisible(false);
+							newTitlePanel.add(accAddedPanel);
+
+							/* Code to do something if the account is not added */
+
+							JTextArea txtrAccountHasBeen = new JTextArea();
+							txtrAccountHasBeen.setEditable(false);
+							txtrAccountHasBeen.setBackground(new Color(240, 240, 240));
+							txtrAccountHasBeen.setText("Title has been added!");
+							txtrAccountHasBeen.setBounds(99, 87, 194, 33);
+							accAddedPanel.add(txtrAccountHasBeen);
+							addTitleBtn.setEnabled(true);
+
+						}
+					});
+
+				}
+			}
+		});
+
 		/* Action listener for when the "Save Changes" button is clicked */
 		saveBtn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -198,26 +302,20 @@ public class Titles extends JPanel implements Tile {
 				
 				/* If the save button has been clicked and it is enabled */
 				if(saveBtn.isEnabled()) {
-					
-					
-					
-					
-					/* TODO: Code here to pull the new info and update database 
-					 * 
-					 * 
-					 * 
-					 */
-					
-					
-					
+
 					saveBtn.setEnabled(false);
 					editTitleBtn.setEnabled(false);
 					discardBtn.setEnabled(false);
 					
 					titleField.setEditable(false);
-					notesField.setEditable(false);
-					priceField.setEditable(false);
-					
+					disctSubField.setEditable(false);
+					distributorField.setEditable(false);
+					tCodeField.setEditable(false);
+
+					control.updateTitle(titleField.getText(), disctSubField.getText(), tCodeField.getText());
+					data = fetchData();
+					titleTable.revalidate();
+
 					JOptionPane.showMessageDialog(null,
 						    "Changes have been saved!",
 						    "Message",
@@ -232,9 +330,7 @@ public class Titles extends JPanel implements Tile {
 			public void mouseClicked(MouseEvent e) {
 
 				titleField.setEditable(true);
-				notesField.setEditable(true);
-				priceField.setEditable(true);
-				
+				disctSubField.setEditable(true);
 
 				saveBtn.setEnabled(true);
 				discardBtn.setEnabled(true);
@@ -246,8 +342,7 @@ public class Titles extends JPanel implements Tile {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				titleField.setEditable(false);
-				notesField.setEditable(false);
-				priceField.setEditable(false);
+				disctSubField.setEditable(false);
 
 				
 				discardBtn.setEnabled(false);
@@ -255,9 +350,8 @@ public class Titles extends JPanel implements Tile {
 				
 				int i = titleTable.getSelectedRow();
 				titleField.setText((String) titleTable.getValueAt(i, 0));
-				priceField.setText((String) titleTable.getValueAt(i, 1));
-				notesField.setText((String) titleTable.getValueAt(i, 2));
-				
+				disctSubField.setText((String) titleTable.getValueAt(i, 1));
+
 				
 			}
 		});
@@ -270,19 +364,12 @@ public class Titles extends JPanel implements Tile {
 				/* If they want to delete an account */
 				int reply = JOptionPane.showConfirmDialog(null, "Are you sure you would like to delete the selected title from the system? This can't be undone.", "Delete Title", JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
-					
-					
-					
-					
-					/* TODO: Code here to remove the title from the database 
-					 * 
-					 */
-					
+
+					control.deleteTitle(tCodeField.getText());
 					
 				    JOptionPane.showMessageDialog(null, "Title Deleted");
 				}
 			}
 		});
-		
 	}
 }

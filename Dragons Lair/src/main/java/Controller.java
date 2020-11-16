@@ -54,14 +54,71 @@ public class Controller {
 		}
 	}
 	
+	
+	/**
+	 * Handler for adding a request to the database.
+	 * 
+	 * @param customerCode The unique customer code.
+	 * @param title	   	   The request title.
+	 * @param quantity 	   The request quantity.
+	 * @param issue	   	   The request issue number.
+	 */
+	public void addRequest(String customerCode, String title, int quantity, int issue) {
+		// TODO: Add custom store code number
+		insert(String.format("INSERT INTO [DLC].[dbo].[Order]([Store Code], [Customer Code], Description, [Issue Start], "
+				+ "[Issue End], Quantity) VALUES('%s','%s','%s',%d,%d,%d)", "dl2", customerCode, title, issue, issue, quantity));
+	}
+
+	public int insertCustomer(String first, String last, String email, String phone) {
+		insert("INSERT INTO Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
+		return 1;
+	}
+
+	public int deleteCustomer(int ccode) {
+		insert("DELETE FROM Customer WHERE [Customer Code] = " + ccode);
+		return 1;
+	}
+
+	public int updateCustomer(int ccode, String first, String last, String email, String phone) {
+		insert("UPDATE Customer Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
+		return 1;
+	}
+
+	public int insertTitle(String title, String distr, String sub, String tCode) {
+		insert("INSERT INTO Catalog([Description], [Distributor], [Disct? Sub], [Calalog ID]) VALUES('" + title + "', '" + distr + "', '" + sub + "', '" + tCode + "')");
+		return 1;
+	}
+
+	public int deleteTitle(String tCode) {
+		insert("DELETE FROM Catalog WHERE [Calalog ID] = '" + tCode + "'");
+		return 1;
+	}
+
+	public int updateTitle(String title, String sub, String tCode) {
+		insert("UPDATE Catalog Set [Description] = '" + title + "', [Disct? Sub] = '" + sub + "' WHERE [Calalog ID] = '" + tCode + "'");
+		return 1;
+	}
+
+	/*
+	 * Returns true if connected, false if not
+	 */
 	public boolean isConnected() {
 		return (dbConnection != null);
 	}
-	
+
+	/*
+	 * Returns the following columns from the customer table
+	 */
 	public String[][] getCustomers() {
-		return new String[0][0];
+		return select("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM Customer");
 	}
-	
+
+	public String[][] getReports() {
+		return new String[0][0];
+	}	
+	public String[][] getTitles() {
+		return select("SELECT [Description], [Disct? Sub], [Distributor], [Calalog ID] FROM Catalog");
+	}	
 	public String[][] select(String query) {
 		if(!isConnected()) {
 			connect();
@@ -90,21 +147,44 @@ public class Controller {
 		
 		return format(rs);
 	}
-	
+	/*
+	 * Method to insert, update, delete info. Returns 0 for statements that return nothing or the row count 
+	 * 
+	 */
+	public int insert(String query) {
+		if(!isConnected()) {
+			connect();
+		}
+		
+		Statement sqlStatement = null;
+		int result = 0;
+		
+		
+		try {
+			sqlStatement = dbConnection.createStatement();
+		} catch (SQLException e) {
+			System.err.println("Error connecting to the database");
+			e.printStackTrace();
+			System.exit(0);
+			
+		}	
+		
+		try {
+			result = sqlStatement.executeUpdate(query);
+		} catch (SQLException e) {
+			System.err.println("Error executing query");
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		return result;
+	}	
 	/* TODO: Need a method for taking in an insert, update, delete query
 	 * 		 Maybe return boolean/int depending on if it was successful or not
 	 * 		 executeUpdate(query)
-	 * 
-	 */
-	
-	
-	/* TODO: Need a method that takes in a ResultSet rs and 
-	 *       returns a 2d String array. In order to display 
-	 *       information in a JTable
-	 * 
+	 *
 	 */
 	public String[][] format(ResultSet rs){
-		//TODO: domain for data as arraylist or equivilant
 		String[][] data = null;
 		int columns = 0;
 		int rows = 0;
@@ -123,16 +203,48 @@ public class Controller {
 		
 		try {
 			data = new String[rows][columns];
-			for(int j = 1; j < rows; j++) {
-				for(int k = 1; k < columns; k++) {
-					data[j][k] = rs.getString(k);
+			for(int j = 0; j < rows; j++) {
+				for(int k = 0; k < columns; k++) {
+					data[j][k] = rs.getString(k+1);
 				}
+				rs.next();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return data;
+	}
+	protected boolean isAccount(String user, String pass) {
+		//Created by Joseph: This is a sql statement to check if the username and password are valid
+		if(!isConnected()) {
+			connect();
+		}
+		
+		Statement sqlStatement = null;		
+		ResultSet rs = null;
+		
+		try {
+			sqlStatement = dbConnection.createStatement();
+		} catch (SQLException e) {
+			System.err.println("Error connecting to the database");
+			e.printStackTrace();
+			System.exit(0);
+			
+		}	
+		
+		try {
+			rs = sqlStatement.executeQuery("SELECT CASE WHEN EXISTS ( SELECT * FROM [Account] WHERE [User] = '"+user+"' AND [Pass] = '"+pass+"')THEN CAST(1 AS BIT)ELSE CAST(0 AS BIT) END");
+			while(rs.next()) {
+				if(rs.getInt(1) == 1)
+					return true;
+			}
+		} catch (SQLException e) {
+			System.err.println("Error executing query in password check");
+			e.printStackTrace();
+			System.exit(0);
+		}
+		return false;
 	}
 }
 
