@@ -18,6 +18,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class lairGUI {
 	
@@ -98,32 +101,32 @@ public class lairGUI {
 				JButton loginButton = new JButton("Enter");
 				loginButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 				loginButton.setBounds(380, 120, 162, 33);
-				homeFrame.add(loginButton);
+				homeFrame.getContentPane().add(loginButton);
 				homeFrame.getRootPane().setDefaultButton(loginButton);
 				
 				JLabel labelA = new JLabel("Username");
 				labelA.setBounds(30,80,162,33);
 				labelA.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
-				homeFrame.add(labelA);
+				homeFrame.getContentPane().add(labelA);
 				
 				JLabel labelB = new JLabel("Password");
 				labelB.setBounds(200,80,162,33);
 				labelB.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
-				homeFrame.add(labelB);
+				homeFrame.getContentPane().add(labelB);
 				
 				userName = new JTextField();
 				userName.setEditable(true);
 				userName.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				userName.setBounds(30, 120, 162, 33);
 				userName.setColumns(10);
-				homeFrame.add(userName);
+				homeFrame.getContentPane().add(userName);
 
 				userPass = new JTextField();
 				userPass.setEditable(true);
 				userPass.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				userPass.setBounds(200, 120, 162, 33);
 				userPass.setColumns(10);
-				homeFrame.add(userPass);
+				homeFrame.getContentPane().add(userPass);
 				
 				loginButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -141,4 +144,5 @@ public class lairGUI {
 					}
 				});
 	}
+	
 }
