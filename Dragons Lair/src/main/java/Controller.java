@@ -112,10 +112,22 @@ public class Controller {
 	public String[][] getCustomers() {
 		return select("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM Customer");
 	}
-
+	
 	public String[][] getReports() {
 		return new String[0][0];
 	}	
+	
+	/**
+	 * Handler for fetching the requests for a given customer.
+	 * 
+	 * @param customerCode  The customer code.
+	 * @return {String[][]} with the formatted request information.
+	 */
+	public String[][] getRequests(String customerCode) {
+		return select(String.format("Select [Store Code], Description, [Issue Start], [Issue End],"
+				+ " Quantity FROM [DLC].[dbo].[Order] WHERE [Customer Code]=%s", customerCode));
+	}	
+	
 	public String[][] getTitles() {
 		return select("SELECT [Description], [Disct? Sub], [Distributor], [Calalog ID] FROM Catalog");
 	}	

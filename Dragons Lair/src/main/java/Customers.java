@@ -3,6 +3,7 @@ package main.java;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
@@ -22,6 +23,9 @@ public class Customers extends JPanel implements Tile {
 	private JTextField ccodeBox;
 	private Controller control;
 	private JButton addRequestBtn;
+	private DefaultTableModel reportsModel;
+	private String [][] reportsData; 
+	private String reportColumns[];
 	
 	private int customerCodeColumn = 4;
 	private int storeCodeColumn;
@@ -158,10 +162,16 @@ public class Customers extends JPanel implements Tile {
 		customerTable = new JTable(data, column);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);
-
-		titleTable = new JTable();
-		titleTable.setBounds(455, 288, 395, 367);
-		add(titleTable);
+		
+		JScrollPane reportsScrollPane = new JScrollPane();
+		reportsScrollPane.setBounds(455, 288, 395, 367);
+		add(reportsScrollPane);
+		
+		reportColumns = new String[] {"Store Code", "Description", "Issue Start", "Issue End", "Quantity"};
+		reportsModel = new DefaultTableModel(reportsData, reportColumns);
+		titleTable = new JTable(reportsModel);
+		titleTable.setAutoCreateRowSorter(true);
+		reportsScrollPane.setViewportView(titleTable);
 
 		/* Action listener for the add account button */
 		AddCustBtn.addMouseListener(new MouseAdapter() {
@@ -245,6 +255,7 @@ public class Customers extends JPanel implements Tile {
 							 */
 							control.insertCustomer(fnameAccField.getText(), lnameAccField.getText(),
 									emailAccField.getText(), phoneAccField.getText());
+								
 
 							JPanel accAddedPanel = new JPanel();
 							accAddedPanel.setLayout(null);
@@ -304,6 +315,12 @@ public class Customers extends JPanel implements Tile {
 			public void mouseClicked(MouseEvent e) {
 
 				addRequestBtn.setEnabled(true);
+				reportsData = control.getRequests(
+						customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()
+				);
+				
+				reportsModel.setDataVector(reportsData, reportColumns);
+				titleTable.setModel(reportsModel);
 
 				/*
 				 * If the text boxes displaying the customer information is editable, warn user
@@ -471,6 +488,12 @@ public class Customers extends JPanel implements Tile {
 										titleField.getText(), Integer.parseInt(quantityField.getText()),
 										Integer.parseInt(issueField.getText()));
 								createMessage(addRequestFrame, addRequestPanel, "Request successfully created.");
+								reportsData = control.getRequests(
+										customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()
+								);
+								
+								reportsModel.setDataVector(reportsData, reportColumns);
+								titleTable.setModel(reportsModel);
 							} catch (Exception e) {
 								createMessage(addRequestFrame, addRequestPanel, "Request could not be created.");
 							}
