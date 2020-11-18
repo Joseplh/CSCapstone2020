@@ -5,8 +5,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
 public class reader {
 	static String title;
 	static int issue;
@@ -37,7 +35,7 @@ public class reader {
 		input.readLine();
 		input.readLine();
 		input.readLine();
-		int counter = 5;
+		//int counter = 5;
 		int pos;
 		
 		while((line = input.readLine()) != null) {
