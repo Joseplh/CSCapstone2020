@@ -133,7 +133,7 @@ public class lairGUI {
 						// TODO Auto-generated method stub
 						System.out.println(userName.getUIClassID());
 						if(loginButton.isEnabled()) {
-							if(control.isAccount(userName.getText(), Security.makeHash(userPass.getText()))) {
+							if(control.isAccount(userName.getText(), security.makeHash(userPass.getText()))) {
 								System.out.println("Match");
 								window.homeFrame.setVisible(false);
 								window.frame.setVisible(true);
