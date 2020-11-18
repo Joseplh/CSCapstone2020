@@ -1,16 +1,22 @@
 package main.java;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileFilter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Reports extends JPanel implements Tile {
 	/**
@@ -374,5 +380,41 @@ public class Reports extends JPanel implements Tile {
 		
 		/* End of monthly breakdown */
 		
+		export_customers_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			    String filePath = saveFile(monthly_breakdown, "Customers");
+			    String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};
+			    String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer";
+			    control.exportCustomers(query, filePath, "Customers", columns);
+			}
+			
+		});
+		
+		
+		
+	}
+	/*
+	 * Opens a file chooser and gets a directory to save a file to.
+	 * Returns a string with chosen path + given name
+	 */
+	private String saveFile(JPanel panel, String name){
+		String path = null;
+		String choosertitle = "Select Save Location";
+		JFileChooser chooser = new JFileChooser(); 
+	    chooser.setCurrentDirectory(new java.io.File("."));
+	    chooser.setDialogTitle(choosertitle);
+	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	    chooser.setAcceptAllFileFilterUsed(false);
+
+	    if (chooser.showSaveDialog(panel) == JFileChooser.APPROVE_OPTION) { 
+	    	path = chooser.getSelectedFile().getAbsolutePath();
+	    	path += "\\" + name + "_" + control.getDate() + ".xlsx";
+	    	
+	    }
+	    else {
+	    	System.out.println("No Selection ");
+	     }
+	    System.out.println(path);
+		return path;
 	}
 }

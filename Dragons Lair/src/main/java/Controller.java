@@ -2,9 +2,19 @@ package main.java;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Controller {
 
@@ -251,6 +261,73 @@ public class Controller {
 			System.exit(0);
 		}
 		return false;
+	}
+	
+	public boolean exportCustomers(String query, String path, String name, String[] columns) {
+		//String customers[][] = select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer");
+		String result[][] = select(query);
+
+		int rows = result.length;
+		int rowCount = 1;
+		int columnCount = 0;
+		int i = 0;
+		int z = 0;
+		
+		
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		Sheet sheet = workbook.createSheet(name);
+		
+		//Header font
+		Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short) 14);
+        headerFont.setColor(IndexedColors.RED.getIndex());
+        
+        // Header data
+        Row headerRow = sheet.createRow(0);
+        Cell headerCell;
+        for(i=0; i<columns.length; i++) {
+        	headerCell = headerRow.createCell(i);
+        	headerCell.setCellValue(columns[i]);
+        }
+ 
+        i = 0;
+        while(i < rows) {
+        	
+        	Row row = sheet.createRow(rowCount++);
+        	columnCount = 0;
+        	for(z=0; z<columns.length; z++) {
+        		Cell cell = row.createCell(columnCount++);
+            	cell.setCellValue(result[i][z]);
+            	
+        	}
+        	i++;
+        }
+        
+        try {
+			FileOutputStream outputStream = new FileOutputStream(path);
+			workbook.write(outputStream);
+			workbook.close();
+		} catch (IOException e) {
+			System.out.println("Datababse error:");
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+	/*
+	 * Returns todays date in the form of a string
+	 * 							MM-DD-YYYY
+	 */
+	public String getDate() {
+		String todaysDate = null;
+		
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        Date date = new Date();
+        todaysDate = dateFormat.format(date);
+        
+		return todaysDate;
+	
 	}
 }
 

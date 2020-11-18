@@ -96,7 +96,7 @@ public class Customers extends JPanel implements Tile {
 		lNameBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lNameBox.setBounds(10, 41, 162, 33);
 		lNameBox.setColumns(10);
-
+		
 		phoneBox = new JTextField();
 		phoneBox.setEditable(false);
 		phoneBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -148,6 +148,10 @@ public class Customers extends JPanel implements Tile {
 		customerDetails.add(ccodeBox);
 		add(customerDetails);
 
+		//control.exportCustomers();
+		
+		
+		
 		/* Customer Data */
 		String data[][] = control.getCustomers();
 
