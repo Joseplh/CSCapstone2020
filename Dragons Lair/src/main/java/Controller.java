@@ -68,35 +68,29 @@ public class Controller {
 		insert(String.format("INSERT INTO [DLC].[dbo].[Order]([Store Code], [Customer Code], Description, [Issue Start], "
 				+ "[Issue End], Quantity) VALUES('%s','%s','%s',%d,%d,%d)", "dl2", customerCode, title, issue, issue, quantity));
 	}
-
+	//altered the insert statements to directly return as opposed to a useless one: Joseph
 	public int insertCustomer(String first, String last, String email, String phone) {
-		insert("INSERT INTO Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
-		return 1;
+		return insert("INSERT INTO Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
 	}
 
 	public int deleteCustomer(int ccode) {
-		insert("DELETE FROM Customer WHERE [Customer Code] = " + ccode);
-		return 1;
+		return insert("DELETE FROM Customer WHERE [Customer Code] = " + ccode);
 	}
 
 	public int updateCustomer(int ccode, String first, String last, String email, String phone) {
-		insert("UPDATE Customer Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
-		return 1;
+		return insert("UPDATE Customer Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
 	}
 
 	public int insertTitle(String title, String distr, String sub, String tCode) {
-		insert("INSERT INTO Catalog([Description], [Distributor], [Disct? Sub], [Calalog ID]) VALUES('" + title + "', '" + distr + "', '" + sub + "', '" + tCode + "')");
-		return 1;
+		return insert("INSERT INTO Catalog([Description], [Distributor], [Disct? Sub], [Calalog ID]) VALUES('" + title + "', '" + distr + "', '" + sub + "', '" + tCode + "')");
 	}
 
 	public int deleteTitle(String tCode) {
-		insert("DELETE FROM Catalog WHERE [Calalog ID] = '" + tCode + "'");
-		return 1;
+		return insert("DELETE FROM Catalog WHERE [Calalog ID] = '" + tCode + "'");
 	}
 
 	public int updateTitle(String title, String sub, String tCode) {
-		insert("UPDATE Catalog Set [Description] = '" + title + "', [Disct? Sub] = '" + sub + "' WHERE [Calalog ID] = '" + tCode + "'");
-		return 1;
+		return insert("UPDATE Catalog Set [Description] = '" + title + "', [Disct? Sub] = '" + sub + "' WHERE [Calalog ID] = '" + tCode + "'");
 	}
 
 	/*
