@@ -16,7 +16,7 @@ public class reader {
 	public void read() throws IOException {
 		BufferedReader input = null;
 		try {
-			String fileName = "BLONDO_20190725.csv";
+			String fileName = "MILLARD_20190822.csv";
 			 input = new BufferedReader(new FileReader(fileName));
 		}catch(FileNotFoundException err) {
 			err.printStackTrace();
@@ -173,15 +173,19 @@ public class reader {
 			System.out.print(/*cola+","+colb+","+*/colc/*+","+cold+","+cole+","+colf+","+colg+","+colh+","+coli*/+"\n");
 			title = "";//clean data input and set to defaults
 			issue = -1;
-			unique = true;
+			unique = false;
 			description = colc;
 			title = parseTitle(colc);
 			System.out.print(title + " | Issue:"+ issue + "\n");
 			//if(counter++ == 300)
 				//break;
-			System.out.println("INSERT INTO Catalog ([Catalog ID], Distributor, Description, Issue, [Unique Print], Flag, Title) "+
-					"VALUES('"+colb+"', '"+coli+"', '"+description+"', '"+issue+"', "+"0, 0, '"+ title + "');\n" + counter++);
-			control.insert("INSERT INTO Catalog ([Catalog ID], Distributor, Description, Issue, [Unique Print], Flag, Title) "+
+			if(colc.contains(" VAR"))
+				unique = true;
+			if(unique)
+				control.insert("INSERT INTO Catalog ([Catalog ID], Distributor, Description, Issue, [Unique Print], Flag, Title) "+
+							"VALUES('"+colb+"', '"+coli+"', '"+description+"', '"+issue+"', "+"1, 0, '"+ title + "');");
+			else
+				control.insert("INSERT INTO Catalog ([Catalog ID], Distributor, Description, Issue, [Unique Print], Flag, Title) "+
 							"VALUES('"+colb+"', '"+coli+"', '"+description+"', '"+issue+"', "+"0, 0, '"+ title + "');");
 		}
 	}
