@@ -382,7 +382,7 @@ public class Reports extends JPanel implements Tile {
 		
 		export_customers_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    String filePath = saveFile(monthly_breakdown, "Customers");
+			    String filePath = control.saveFile(monthly_breakdown, "Customers");
 			    String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};
 			    String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer";
 			    control.exportCustomers(query, filePath, "Customers", columns);
@@ -393,28 +393,5 @@ public class Reports extends JPanel implements Tile {
 		
 		
 	}
-	/*
-	 * Opens a file chooser and gets a directory to save a file to.
-	 * Returns a string with chosen path + given name
-	 */
-	private String saveFile(JPanel panel, String name){
-		String path = null;
-		String choosertitle = "Select Save Location";
-		JFileChooser chooser = new JFileChooser(); 
-	    chooser.setCurrentDirectory(new java.io.File("."));
-	    chooser.setDialogTitle(choosertitle);
-	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-	    chooser.setAcceptAllFileFilterUsed(false);
-
-	    if (chooser.showSaveDialog(panel) == JFileChooser.APPROVE_OPTION) { 
-	    	path = chooser.getSelectedFile().getAbsolutePath();
-	    	path += "\\" + name + "_" + control.getDate() + ".xlsx";
-	    	
-	    }
-	    else {
-	    	System.out.println("No Selection ");
-	     }
-	    System.out.println(path);
-		return path;
-	}
+	
 }

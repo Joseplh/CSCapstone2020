@@ -12,6 +12,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -308,12 +311,38 @@ public class Controller {
 			FileOutputStream outputStream = new FileOutputStream(path);
 			workbook.write(outputStream);
 			workbook.close();
+			outputStream.close();
 		} catch (IOException e) {
 			System.out.println("Datababse error:");
 			e.printStackTrace();
 		}
 
 		return true;
+	}
+	
+	/*
+	 * Opens a file chooser and gets a directory to save a file to.
+	 * Returns a string with chosen path + given name
+	 */
+	public String saveFile(JPanel panel, String name){
+		String path = null;
+		String choosertitle = "Select Save Location";
+		JFileChooser chooser = new JFileChooser(); 
+	    chooser.setCurrentDirectory(new java.io.File("."));
+	    chooser.setDialogTitle(choosertitle);
+	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	    chooser.setAcceptAllFileFilterUsed(false);
+
+	    if (chooser.showSaveDialog(panel) == JFileChooser.APPROVE_OPTION) { 
+	    	path = chooser.getSelectedFile().getAbsolutePath();
+	    	path += "\\" + name + "_" + getDate() + ".xlsx";
+	    	
+	    }
+	    else {
+	    	System.out.println("No Selection ");
+	     }
+	    System.out.println(path);
+		return path;
 	}
 	/*
 	 * Returns todays date in the form of a string

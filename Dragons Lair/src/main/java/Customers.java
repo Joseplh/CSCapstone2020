@@ -148,9 +148,6 @@ public class Customers extends JPanel implements Tile {
 		customerDetails.add(ccodeBox);
 		add(customerDetails);
 
-		//control.exportCustomers();
-		
-		
 		
 		/* Customer Data */
 		String data[][] = control.getCustomers();
@@ -166,6 +163,7 @@ public class Customers extends JPanel implements Tile {
 		customerTable = new JTable(data, column);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);
+		customerTable.getTableHeader().setReorderingAllowed(false);
 		
 		JScrollPane reportsScrollPane = new JScrollPane();
 		reportsScrollPane.setBounds(455, 288, 395, 367);
@@ -175,6 +173,7 @@ public class Customers extends JPanel implements Tile {
 		reportsModel = new DefaultTableModel(reportsData, reportColumns);
 		titleTable = new JTable(reportsModel);
 		titleTable.setAutoCreateRowSorter(true);
+		titleTable.getTableHeader().setReorderingAllowed(false);
 		reportsScrollPane.setViewportView(titleTable);
 
 		/* Action listener for the add account button */
@@ -313,6 +312,14 @@ public class Customers extends JPanel implements Tile {
 			}
 		});
 
+		exportBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 	String filePath = control.saveFile(customerDetails, "Customers");
+				    String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};
+				    String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer";
+				    control.exportCustomers(query, filePath, "Customers", columns);
+			}
+		});
 		/* Listener for when a cell is selected from the customerTable */
 		customerTable.addMouseListener(new MouseAdapter() {
 			@Override

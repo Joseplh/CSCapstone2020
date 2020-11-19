@@ -9,7 +9,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class security {
+public class Security {
 	private final static String salt="r4nd0m94r649373x7u53df0r7h354174ndi55upp053d7063r3411y10n9507h47i73n5ur35453cur3h45h";
 	public static String makeHash(String password) {
 		String hash = "";
