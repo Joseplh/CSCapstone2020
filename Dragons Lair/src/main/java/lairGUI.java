@@ -29,6 +29,9 @@ public class lairGUI {
 	
 	private final int LOGIN_WIDTH = 600;
 	private final int LOGIN_HEIGHT = 300;
+	
+	private JLabel todaysDate = new JLabel("Today's Date: ");
+	private JLabel actualDate;
 
 	private JFrame frame;
 	private JFrame homeFrame;
@@ -59,11 +62,15 @@ public class lairGUI {
 		reports = new Reports(control);
 		catalog = new Titles(control);
 		loggedIn = false;
+		
+		
 		initialize();
 		initializeHome();
+		
 	
 	}	
 	private void initialize() {
+		
 		frame = new JFrame("Main Page");
 		frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);
@@ -71,6 +78,16 @@ public class lairGUI {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
+		
+        
+        actualDate = new JLabel(control.getDate());
+        actualDate.setFont(new Font("Tahoma", Font.BOLD, 14));
+        actualDate.setBounds(878, 21, 90, 14);
+		frame.getContentPane().add(actualDate);
+		
+		todaysDate.setFont(new Font("Tahoma", Font.BOLD, 14));
+		todaysDate.setBounds(776, 21, 103, 14);
+		frame.getContentPane().add(todaysDate);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 34, 998, 694);
@@ -144,5 +161,4 @@ public class lairGUI {
 					}
 				});
 	}
-	
 }

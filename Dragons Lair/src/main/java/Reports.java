@@ -264,21 +264,6 @@ public class Reports extends JPanel implements Tile {
 				
 		/* End of new week pulls */
 		
-		// Creating todays date
-		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-        Date date = new Date();
-        dateFormat.format(date);
-        
-		JLabel date_label = new JLabel("Today's Date:");
-		date_label.setFont(new Font("Tahoma", Font.BOLD, 14));
-		date_label.setBounds(738, 11, 103, 14);
-		new_week_pulls.add(date_label);
-		
-		JLabel label = new JLabel(dateFormat.format(date));
-		label.setFont(new Font("Tahoma", Font.BOLD, 14));
-		label.setBounds(840, 11, 90, 14);
-		new_week_pulls.add(label);
-		
 		
 		/* monthly breakdown */
 		
