@@ -266,9 +266,27 @@ public class Controller {
 		return false;
 	}
 	
-	public boolean exportCustomers(String query, String path, String name, String[] columns) {
-		//String customers[][] = select("SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer");
-		String result[][] = select(query);
+	/**
+	 * Exports given data to an .xlsx file, written to a specified destination 'path'
+	 * 
+	 * @param in     	String[][] dataset to export to excel, null if using 'query'
+	 * @param query 	Query to execute, null if using 'in'
+	 * @param path      Directory path where file is saved
+	 * @param name		Name of file
+	 * @param columns	Column names.
+	 */
+	public boolean exportCustomers(String[][] in, String query, String path, String name, String[] columns) {
+		String result[][] = null;
+		
+		if(in != null && query == null) {
+			result = in;
+		}
+		else {
+			result = select(query);
+		}
+	    
+	
+		
 
 		int rows = result.length;
 		int rowCount = 1;

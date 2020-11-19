@@ -382,10 +382,14 @@ public class Reports extends JPanel implements Tile {
 		
 		export_customers_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			    String filePath = control.saveFile(monthly_breakdown, "Customers");
-			    String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};
-			    String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer";
-			    control.exportCustomers(query, filePath, "Customers", columns);
+			    if (filePath != null) {
+			    	String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};
+				    String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer";
+				    control.exportCustomers(null, query, filePath, "Customers", columns);
+			    }
+			    
 			}
 			
 		});

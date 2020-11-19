@@ -27,6 +27,8 @@ public class Customers extends JPanel implements Tile {
 	private String [][] reportsData; 
 	private String reportColumns[];
 	
+	private int lastnameCodeColumn = 0;
+	private int firstnameCodeColumn = 1;
 	private int customerCodeColumn = 4;
 	private int storeCodeColumn;
 
@@ -118,7 +120,7 @@ public class Customers extends JPanel implements Tile {
 		ccodeBox = new JTextField();
 		ccodeBox.setEditable(false);
 		ccodeBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ccodeBox.setBounds(231, 41, 162, 33);
+		
 		ccodeBox.setColumns(10);
 
 		JLabel fnameLabel = new JLabel("First Name");
@@ -314,10 +316,23 @@ public class Customers extends JPanel implements Tile {
 
 		exportBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 	String filePath = control.saveFile(customerDetails, "Customers");
-				    String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};
-				    String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer";
-				    control.exportCustomers(query, filePath, "Customers", columns);
+					
+				if(customerTable.getSelectedRow() != -1) {
+					String last = customerTable.getValueAt(customerTable.getSelectedRow(), lastnameCodeColumn).toString();
+					String first = customerTable.getValueAt(customerTable.getSelectedRow(), firstnameCodeColumn).toString();
+					String filePath = control.saveFile(customerDetails, last + "_" + first);
+
+					if (filePath != null) {
+						String columns[] = { "Store Code", "Description", "Issue Start", "Issue End", "Quantity" };
+						control.exportCustomers(
+								control.getRequests(customerTable
+										.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()),
+								null, filePath, "Customers", columns);
+					}
+				}
+				
+					
+					
 			}
 		});
 		/* Listener for when a cell is selected from the customerTable */
