@@ -275,7 +275,7 @@ public class Controller {
 	 * @param name		Name of file
 	 * @param columns	Column names.
 	 */
-	public boolean exportCustomers(String[][] in, String query, String path, String name, String[] columns) {
+	public boolean exportXLSX(String[][] in, String query, String path, String name, String[] columns) {
 		String result[][] = null;
 		
 		if(in != null && query == null) {

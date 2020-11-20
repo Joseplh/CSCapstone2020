@@ -372,7 +372,7 @@ public class Reports extends JPanel implements Tile {
 			    if (filePath != null) {
 			    	String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};
 				    String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer";
-				    control.exportCustomers(null, query, filePath, "Customers", columns);
+				    control.exportXLSX(null, query, filePath, "Customers", columns);
 			    }
 			    
 			}

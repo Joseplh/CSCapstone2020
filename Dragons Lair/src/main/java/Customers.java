@@ -324,7 +324,7 @@ public class Customers extends JPanel implements Tile {
 
 					if (filePath != null) {
 						String columns[] = { "Store Code", "Description", "Issue Start", "Issue End", "Quantity" };
-						control.exportCustomers(
+						control.exportXLSX(
 								control.getRequests(customerTable
 										.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()),
 								null, filePath, "Customers", columns);
