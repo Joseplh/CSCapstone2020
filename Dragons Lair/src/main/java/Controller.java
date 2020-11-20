@@ -93,28 +93,56 @@ public class Controller {
 	public int updateCustomer(int ccode, String first, String last, String email, String phone) {
 		return insert("UPDATE Customer Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
 	}
-
+	/**
+	 * Returns the following columns from the customer table.
+	 * 
+	 * @param title  	Title for the new title
+	 * @param distr  	Distributor for new title
+	 * @param sub  		Distc Sub for new title
+	 * @param tcode  	Key for the title in the catalog table
+	 * @return {int} 	0 or row count, negative if error.
+	 */
 	public int insertTitle(String title, String distr, String sub, String tCode) {
 		return insert("INSERT INTO Catalog([Description], [Distributor], [Disct? Sub], [Calalog ID]) VALUES('" + title + "', '" + distr + "', '" + sub + "', '" + tCode + "')");
 	}
-
+	/**
+	 * Deletes a title from the Catalog table
+	 * 
+	 * @param tcode  	Key for the title in the catalog table
+	 * @return {int} 	0 or row count, negative if error.
+	 */
 	public int deleteTitle(String tCode) {
 		return insert("DELETE FROM Catalog WHERE [Calalog ID] = '" + tCode + "'");
 	}
-
+	
+	/**
+	 * Returns the following columns from the customer table.
+	 * 
+	 * @param title  	New title for a given title in the Catalog table
+	 * @param sub  		New Distinct Sub value
+	 * @param tcode  	Key for the title in the catalog table
+	 * @return {int} 	0 or row count, negative if error.
+	 */
 	public int updateTitle(String title, String sub, String tCode) {
 		return insert("UPDATE Catalog Set [Description] = '" + title + "', [Disct? Sub] = '" + sub + "' WHERE [Calalog ID] = '" + tCode + "'");
 	}
 
-	/*
-	 * Returns true if connected, false if not
+
+	/**
+	 * Determines whether the database is connected of not
+	 * 
+	 * @return {boolean} True if connected, false if not
 	 */
 	public boolean isConnected() {
 		return (dbConnection != null);
 	}
 
-	/*
-	 * Returns the following columns from the customer table
+	
+	/**
+	 * Returns the following columns from the customer table.
+	 * 
+	 * @param customerCode  	The customer code.
+	 * @return {String[][]} 	Contains the given query ResultSet.
 	 */
 	public String[][] getCustomers() {
 		return select("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM Customer");
@@ -127,17 +155,29 @@ public class Controller {
 	/**
 	 * Handler for fetching the requests for a given customer.
 	 * 
-	 * @param customerCode  The customer code.
-	 * @return {String[][]} with the formatted request information.
+	 * @param customerCode  	The customer code.
+	 * @return {String[][]} 	Contains the given query ResultSet.
 	 */
 	public String[][] getRequests(String customerCode) {
 		return select(String.format("Select [Store Code], Description, [Issue Start], [Issue End],"
 				+ " Quantity FROM [DLC].[dbo].[Order] WHERE [Customer Code]=%s", customerCode));
-	}	
+	}
 	
+	/**
+	 * Calls method to query the Titles from the database. Returns String[][]. 
+	 * 
+	 * @return {String} 2D array of the titles from database.
+	 */
 	public String[][] getTitles() {
 		return select("SELECT [Description], [Disct? Sub], [Distributor], [Calalog ID] FROM Catalog");
-	}	
+	}
+	
+	/**
+	 * Executes a given query and returns the resultset as a String[][].
+	 *  
+	 * @param query				Query to be executed.
+	 * @return {String[][]} 	2D array of the given query.
+	 */
 	public String[][] select(String query) {
 		if(!isConnected()) {
 			connect();
@@ -166,9 +206,12 @@ public class Controller {
 		
 		return format(rs);
 	}
-	/*
-	 * Method to insert, update, delete info. Returns 0 for statements that return nothing or the row count 
+
+	/**
+	 * Method to insert, update, delete info. Returns 0 for statements that return nothing or the row count.
 	 * 
+	 * @param query		Query to execute. 
+	 * @return {int} 	0 or row count, negative if error.
 	 */
 	public int insert(String query) {
 		if(!isConnected()) {
@@ -198,10 +241,11 @@ public class Controller {
 		
 		return result;
 	}	
-	/* TODO: Need a method for taking in an insert, update, delete query
-	 * 		 Maybe return boolean/int depending on if it was successful or not
-	 * 		 executeUpdate(query)
-	 *
+	/**
+	 * Converts a given ResultSet to String[][]
+	 * 
+	 * @param rs	ResultSet to be converted
+	 * @return 		{String[][]} Given ResultSet converted 
 	 */
 	public String[][] format(ResultSet rs){
 		String[][] data = null;
@@ -234,6 +278,8 @@ public class Controller {
 		}
 		return data;
 	}
+	
+	
 	protected boolean isAccount(String user, String pass) {
 		//Created by Joseph: This is a sql statement to check if the username and password are valid
 		if(!isConnected()) {
@@ -274,10 +320,11 @@ public class Controller {
 	 * @param path      Directory path where file is saved
 	 * @param name		Name of file
 	 * @param columns	Column names.
+	 * @return {boolean} True if export was succesful, false otherwise
 	 */
 	public boolean exportXLSX(String[][] in, String query, String path, String name, String[] columns) {
 		String result[][] = null;
-		
+		boolean confirmed = false;
 		if(in != null && query == null) {
 			result = in;
 		}
@@ -285,9 +332,6 @@ public class Controller {
 			result = select(query);
 		}
 	    
-	
-		
-
 		int rows = result.length;
 		int rowCount = 1;
 		int columnCount = 0;
@@ -330,17 +374,22 @@ public class Controller {
 			workbook.write(outputStream);
 			workbook.close();
 			outputStream.close();
+			confirmed = true;
 		} catch (IOException e) {
 			System.out.println("Datababse error:");
+			confirmed = false;
 			e.printStackTrace();
 		}
 
-		return true;
+		return confirmed;
 	}
 	
-	/*
-	 * Opens a file chooser and gets a directory to save a file to.
-	 * Returns a string with chosen path + given name
+	/**
+	 * Opens up a file chooser for a user to select save destination. Returns path
+	 * 
+	 * @param panel		Parent component of the dialog
+	 * @param name		String to name saved file
+	 * @return {String} Full path to save location
 	 */
 	public String saveFile(JPanel panel, String name){
 		String path = null;
@@ -350,7 +399,6 @@ public class Controller {
 	    chooser.setDialogTitle(choosertitle);
 	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 	    chooser.setAcceptAllFileFilterUsed(false);
-
 	    if (chooser.showSaveDialog(panel) == JFileChooser.APPROVE_OPTION) { 
 	    	path = chooser.getSelectedFile().getAbsolutePath();
 	    	path += "\\" + name + "_" + getDate() + ".xlsx";
@@ -362,9 +410,13 @@ public class Controller {
 	    System.out.println(path);
 		return path;
 	}
-	/*
-	 * Returns todays date in the form of a string
-	 * 							MM-DD-YYYY
+	
+	/**
+	 * Returns todays date(string) in the format "MM-DD-YYYY"
+	 * 
+	 * @param panel		Parent component of the dialog
+	 * @param name		String to name saved file
+	 * @return {String} Todays date "MM-DD-YYYY"
 	 */
 	public String getDate() {
 		String todaysDate = null;
