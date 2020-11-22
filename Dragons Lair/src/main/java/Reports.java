@@ -1,16 +1,22 @@
 package main.java;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileFilter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Reports extends JPanel implements Tile {
 	/**
@@ -258,21 +264,6 @@ public class Reports extends JPanel implements Tile {
 				
 		/* End of new week pulls */
 		
-		// Creating todays date
-		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-        Date date = new Date();
-        dateFormat.format(date);
-        
-		JLabel date_label = new JLabel("Today's Date:");
-		date_label.setFont(new Font("Tahoma", Font.BOLD, 14));
-		date_label.setBounds(738, 11, 103, 14);
-		new_week_pulls.add(date_label);
-		
-		JLabel label = new JLabel(dateFormat.format(date));
-		label.setFont(new Font("Tahoma", Font.BOLD, 14));
-		label.setBounds(840, 11, 90, 14);
-		new_week_pulls.add(label);
-		
 		
 		/* monthly breakdown */
 		
@@ -374,5 +365,22 @@ public class Reports extends JPanel implements Tile {
 		
 		/* End of monthly breakdown */
 		
+		export_customers_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			    String filePath = control.saveFile(monthly_breakdown, "Customers");
+			    if (filePath != null) {
+			    	String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};
+				    String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer";
+				    control.exportXLSX(null, query, filePath, "Customers", columns);
+			    }
+			    
+			}
+			
+		});
+		
+		
+		
 	}
+	
 }

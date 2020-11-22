@@ -27,6 +27,8 @@ public class Customers extends JPanel implements Tile {
 	private String [][] reportsData; 
 	private String reportColumns[];
 
+	private int lastnameCodeColumn = 0;
+	private int firstnameCodeColumn = 1;
 	private int customerCodeColumn = 4;
 	private int storeCodeColumn;
 
@@ -118,7 +120,7 @@ public class Customers extends JPanel implements Tile {
 		ccodeBox = new JTextField();
 		ccodeBox.setEditable(false);
 		ccodeBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ccodeBox.setBounds(231, 41, 162, 33);
+
 		ccodeBox.setColumns(10);
 
 		JLabel fnameLabel = new JLabel("First Name");
@@ -148,6 +150,7 @@ public class Customers extends JPanel implements Tile {
 		customerDetails.add(ccodeBox);
 		add(customerDetails);
 
+
 		/* Customer Data */
 		String data[][] = control.getCustomers();
 
@@ -162,6 +165,8 @@ public class Customers extends JPanel implements Tile {
 		customerTable = new JTable(data, column);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);
+		customerTable.getTableHeader().setReorderingAllowed(false);
+
 
 		customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
 		customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
@@ -175,6 +180,7 @@ public class Customers extends JPanel implements Tile {
 		reportsModel = new DefaultTableModel(reportsData, reportColumns);
 		titleTable = new JTable(reportsModel);
 		titleTable.setAutoCreateRowSorter(true);
+		titleTable.getTableHeader().setReorderingAllowed(false);
 		reportsScrollPane.setViewportView(titleTable);
 
 		titleTable.getColumnModel().getColumn(0).setPreferredWidth(3);
@@ -319,6 +325,27 @@ public class Customers extends JPanel implements Tile {
 			}
 		});
 
+		exportBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if(customerTable.getSelectedRow() != -1) {
+					String last = customerTable.getValueAt(customerTable.getSelectedRow(), lastnameCodeColumn).toString();
+					String first = customerTable.getValueAt(customerTable.getSelectedRow(), firstnameCodeColumn).toString();
+					String filePath = control.saveFile(customerDetails, last + "_" + first);
+
+					if (filePath != null) {
+						String columns[] = { "Store Code", "Description", "Issue Start", "Issue End", "Quantity" };
+						control.exportXLSX(
+								control.getRequests(customerTable
+										.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()),
+								null, filePath, "Customers", columns);
+					}
+				}
+
+
+
+			}
+		});
 		/* Listener for when a cell is selected from the customerTable */
 		customerTable.addMouseListener(new MouseAdapter() {
 			@Override

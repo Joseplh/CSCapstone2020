@@ -149,6 +149,7 @@ public class Titles extends JPanel implements Tile {
 		
 		titleTable = new JTable(data, column);
 		titleTable.setAutoCreateRowSorter(true);
+		titleTable.getTableHeader().setReorderingAllowed(false);
 
 		titleScrollPane.setViewportView(titleTable);
 		
