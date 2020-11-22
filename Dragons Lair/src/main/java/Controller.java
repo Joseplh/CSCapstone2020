@@ -57,16 +57,20 @@ public class Controller {
 	
 	/**
 	 * Handler for adding a request to the database.
-	 * 
+	 *
+	 * @param storeCode    The unique store code.
 	 * @param customerCode The unique customer code.
-	 * @param title	   	   The request title.
-	 * @param quantity 	   The request quantity.
-	 * @param issue	   	   The request issue number.
+	 * @param title        The request title.
+	 * @param comments     Any additional comments.
+	 * @param issueStart   The first requested issue number (-1 means no specified start issue).
+	 * @param issueEnd     The last requested issue number (-1 means ongoing indefinitely).
+	 * @param quantity     The request quantity.
+	 * @param cost         The cost of the requested title.
 	 */
-	public void addRequest(String customerCode, String title, int quantity, int issue) {
+	public void addRequest(String storeCode, String customerCode, String title, String comments, int issueStart, int issueEnd, int quantity, float cost) {
 		// TODO: Add custom store code number
-		insert(String.format("INSERT INTO [DLC].[dbo].[Order]([Store Code], [Customer Code], Description, [Issue Start], "
-				+ "[Issue End], Quantity) VALUES('%s','%s','%s',%d,%d,%d)", "dl2", customerCode, title, issue, issue, quantity));
+		insert(String.format("INSERT INTO [newDLC].[dbo].[Order]([Store Code], [Customer Code], Title, Comments, "
+				+ "[Issue Start], [Issue End], Quantity, Cost) VALUES('%s', '%s', '%s', '%s', %d, %d, %d, %f)", storeCode, customerCode, title, comments, issueStart, issueEnd, quantity, cost));
 	}
 
 	public int insertCustomer(String first, String last, String email, String phone) {
@@ -112,27 +116,32 @@ public class Controller {
 	public String[][] getCustomers() {
 		return select("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM Customer");
 	}
-	
+
 	public String[][] getReports() {
 		return new String[0][0];
-	}	
-	
+	}
+
 	/**
 	 * Handler for fetching the requests for a given customer.
-	 * 
-	 * @param customerCode  The customer code.
+	 *
+	 * @param customerCode The customer code.
 	 * @return {String[][]} with the formatted request information.
 	 */
 	public String[][] getRequests(String customerCode) {
-		return select(String.format("Select [Store Code], Description, [Issue Start], [Issue End],"
-				+ " Quantity FROM [DLC].[dbo].[Order] WHERE [Customer Code]=%s", customerCode));
-	}	
-	
+		return select(String.format("Select [Store Code], Title, [Issue Start], [Issue End],"
+				+ " Quantity, Cost, Comments FROM [newDLC].[dbo].[Order] WHERE [Customer Code]=%s", customerCode));
+	}
+
+	public String[][] getIndividualTitles() {
+		return select(String.format("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Catalog]"));
+	}
+
 	public String[][] getTitles() {
 		return select("SELECT [Description], [Disct? Sub], [Distributor], [Calalog ID] FROM Catalog");
-	}	
+	}
+
 	public String[][] select(String query) {
-		if(!isConnected()) {
+		if (!isConnected()) {
 			connect();
 		}
 		

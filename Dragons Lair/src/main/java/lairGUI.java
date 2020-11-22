@@ -1,23 +1,9 @@
 package main.java;
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
 
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-
-import java.awt.Frame;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class lairGUI {
 	
@@ -63,20 +49,20 @@ public class lairGUI {
 	private void initialize() {
 		frame = new JFrame("Main Page");
 		frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 34, 998, 694);
+		tabbedPane.setBounds(10, 64, 998, 794);
 		frame.getContentPane().add(tabbedPane);
-		
+
 		tabbedPane.addTab("Customers", null, customers, null);
 		tabbedPane.addTab("Catalog", null, catalog, null);
 		tabbedPane.addTab("Reports", null, reports, null);
-				
+
 	}
 	public Frame getFrame() {
 		return frame;
