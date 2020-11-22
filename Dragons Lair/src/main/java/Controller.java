@@ -1,23 +1,15 @@
 package main.java;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import javax.swing.*;
+import java.io.*;
 import java.net.URL;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Controller {
 
@@ -180,7 +172,6 @@ public class Controller {
 		return select("SELECT [Description], [Disct? Sub], [Distributor], [Calalog ID] FROM Catalog");
 	}
 
-	}
 
 	/**
 	 * Executes a given query and returns the resultset as a String[][].
