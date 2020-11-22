@@ -74,7 +74,7 @@ public class lairGUI {
 		frame.getContentPane().add(todaysDate);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 64, 998, 794);
+		tabbedPane.setBounds(10, 34, 998, 694);
 		frame.getContentPane().add(tabbedPane);
 
 		tabbedPane.addTab("Customers", null, customers, null);
