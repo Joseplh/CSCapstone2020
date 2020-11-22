@@ -6,9 +6,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-
-import model.CustomersTableModel;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -165,12 +162,7 @@ public class Customers extends JPanel implements Tile {
 		customerScrollPane.setBounds(10, 65, 415, 590);
 		add(customerScrollPane);
 
-		
-		CustomersTableModel newModel = new CustomersTableModel();
-		newModel.set(control.getCustomers2());
-		
-		customerTable = new JTable(newModel);
-		//customerTable.removeColumn(customerTable.getColumnModel().getColumn(4));
+		customerTable = new JTable(data, column);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);
 		customerTable.getTableHeader().setReorderingAllowed(false);
@@ -198,9 +190,9 @@ public class Customers extends JPanel implements Tile {
 		titleTable.getColumnModel().getColumn(4).setPreferredWidth(3);
 
 		/* Action listener for the add account button */
-		AddCustBtn.addActionListener(new ActionListener() {
+		AddCustBtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				if (AddCustBtn.isEnabled()) {
 
 					AddCustBtn.setEnabled(false);
@@ -273,23 +265,30 @@ public class Customers extends JPanel implements Tile {
 					/* Action listener for when add button clicked on create new customer frame */
 					addAcc.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							String[] newCust = {lnameAccField.getText(),fnameAccField.getText(),phoneAccField.getText(),emailAccField.getText(), null};
-							int result1 = control.insertCustomer(fnameAccField.getText(), lnameAccField.getText(),
+
+							/*
+							 * TODO: Code to add customer account to database
+							 */
+							control.insertCustomer(fnameAccField.getText(), lnameAccField.getText(),
 									emailAccField.getText(), phoneAccField.getText());
-							
-							newAcc.dispose();
-			
-							
-							if(result1 >= 0) { 
-								JOptionPane.showMessageDialog(null, "Account has been added!", "Account added",
-									JOptionPane.PLAIN_MESSAGE);	
-								AddCustBtn.setEnabled(true);
-								newModel.insert(newCust);
-							}
-							else {
-								JOptionPane.showMessageDialog(null, "Account not added!", "Account NOT added",
-										JOptionPane.PLAIN_MESSAGE);	
-							}	
+								
+
+							JPanel accAddedPanel = new JPanel();
+							accAddedPanel.setLayout(null);
+							accAddedPanel.setBounds(572, 91, 388, 207);
+							accAddedPanel.setBackground(new Color(240, 240, 240));
+							accPanel.setVisible(false);
+							newAcc.add(accAddedPanel);
+
+							/* Code to do something if the account is not added */
+
+							JTextArea txtrAccountHasBeen = new JTextArea();
+							txtrAccountHasBeen.setEditable(false);
+							txtrAccountHasBeen.setBackground(new Color(240, 240, 240));
+							txtrAccountHasBeen.setText("Account has been added!");
+							txtrAccountHasBeen.setBounds(99, 87, 194, 33);
+							accAddedPanel.add(txtrAccountHasBeen);
+							AddCustBtn.setEnabled(true);
 
 						}
 					});
@@ -299,9 +298,9 @@ public class Customers extends JPanel implements Tile {
 		});
 
 		/* Action listener for when the "Save Changes" button is clicked */
-		saveCustBtn.addActionListener(new ActionListener() {
+		saveCustBtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 
 				/* If the save button has been clicked and it is enabled */
 				if (saveCustBtn.isEnabled()) {
@@ -318,10 +317,8 @@ public class Customers extends JPanel implements Tile {
 					emailBox.setEditable(false);
 					ccodeBox.setEditable(false);
 
-					control.updateCustomer(Integer.parseInt(customerTable.getModel().getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()), fNameBox.getText(), lNameBox.getText(), emailBox.getText(), phoneBox.getText());
-					String[] updateCust = {lNameBox.getText(), fNameBox.getText(), phoneBox.getText(), emailBox.getText(), customerTable.getModel().getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()};
-					newModel.update(customerTable.convertRowIndexToModel(customerTable.getSelectedRow()), updateCust);
-					
+					control.updateCustomer(Integer.parseInt(ccodeBox.getText()), fNameBox.getText(), lNameBox.getText(), emailBox.getText(), phoneBox.getText());
+
 					JOptionPane.showMessageDialog(null, "Changes have been saved!", "Message",
 							JOptionPane.PLAIN_MESSAGE);
 				}
@@ -356,8 +353,7 @@ public class Customers extends JPanel implements Tile {
 
 				addRequestBtn.setEnabled(true);
 				reportsData = control.getRequests(
-						//customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()
-						customerTable.getModel().getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()
+						customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()
 				);
 
 				reportsModel.setDataVector(reportsData, reportColumns);
@@ -386,8 +382,7 @@ public class Customers extends JPanel implements Tile {
 					fNameBox.setText((String) customerTable.getValueAt(i, 1));
 					phoneBox.setText((String) customerTable.getValueAt(i, 2));
 					emailBox.setText((String) customerTable.getValueAt(i, 3));
-					//ccodeBox.setText((String) customerTable.getValueAt(i, 4));
-					
+					ccodeBox.setText((String) customerTable.getValueAt(i, 4));
 
 					editCustBtn.setEnabled(true);
 					delCustBtn.setEnabled(true);
@@ -397,9 +392,9 @@ public class Customers extends JPanel implements Tile {
 		});
 
 		/* action listener for when the edit button for customer info is clicked */
-		editCustBtn.addActionListener(new ActionListener() {
+		editCustBtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 
 				lNameBox.setEditable(true);
 				fNameBox.setEditable(true);
@@ -412,9 +407,9 @@ public class Customers extends JPanel implements Tile {
 			}
 		});
 		/* Action listener for discard changes btn */
-		discardBtn.addActionListener(new ActionListener() {
+		discardBtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				lNameBox.setEditable(false);
 				fNameBox.setEditable(false);
 				phoneBox.setEditable(false);
@@ -435,9 +430,9 @@ public class Customers extends JPanel implements Tile {
 		});
 
 		/* Action listener for account delete button */
-		delCustBtn.addActionListener(new ActionListener() {
+		delCustBtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 
 				/* If they want to delete an account */
 				int reply = JOptionPane.showConfirmDialog(null,
@@ -445,12 +440,14 @@ public class Customers extends JPanel implements Tile {
 						"Delete User", JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
 
-					control.deleteCustomer(Integer.parseInt(customerTable.getModel().getValueAt(customerTable.convertRowIndexToModel(customerTable.getSelectedRow()), customerCodeColumn).toString()));
-					
+					control.deleteCustomer(Integer.parseInt(ccodeBox.getText()));
+					customerTable.revalidate();
 
-					newModel.delete(customerTable.convertRowIndexToModel(customerTable.getSelectedRow()));
+					// refresh jtable please
+
+					/* Code here to remove the user from the database */
+
 					JOptionPane.showMessageDialog(null, "Account Deleted");
-
 				}
 			}
 		});
@@ -466,9 +463,9 @@ public class Customers extends JPanel implements Tile {
 		addRequestBtn.setEnabled(false);
 		add(addRequestBtn);
 			    
-		addRequestBtn.addActionListener(new ActionListener() {
+		addRequestBtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				if (addRequestBtn.isEnabled()) {
 
 					String[] stores = {"dl1", "dl2"};

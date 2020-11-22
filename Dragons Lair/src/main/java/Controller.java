@@ -9,9 +9,7 @@ import java.net.URL;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Controller {
 
@@ -430,92 +428,6 @@ public class Controller {
 
 		return todaysDate;
 
-	}
-	/**
-	 * Returns the following columns from the customer table.
-	 *
-	 * @param customerCode  	The customer code.
-	 * @return {String[][]} 	Contains the given query ResultSet.
-	 */
-	public List<String[]> getCustomers2() {
-		return select2("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM Customer");
-	}
-
-	/**
-	 * Executes a given query and returns the resultset as a String[][].
-	 *
-	 * @param query				Query to be executed.
-	 * @return {String[][]} 	2D array of the given query.
-	 */
-	public List<String[]> select2(String query) {
-		if (!isConnected()) {
-			connect();
-		}
-		
-		Statement sqlStatement = null;
-		ResultSet rs = null;
-		
-		
-		try {
-			sqlStatement = dbConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		} catch (SQLException e) {
-			System.err.println("Error connecting to the database");
-			e.printStackTrace();
-			System.exit(0);
-			
-		}	
-		
-		try {
-			rs = sqlStatement.executeQuery(query);
-		} catch (SQLException e) {
-			System.err.println("Error executing query");
-			e.printStackTrace();
-			System.exit(0);
-		}
-		
-		return format2(rs);
-	}
-
-	
-	/**
-	 * Converts a given ResultSet to String[][]
-	 *
-	 * @param rs	ResultSet to be converted
-	 * @return 		{String[][]} Given ResultSet converted
-	 */
-	public List<String[]> format2(ResultSet rs){
-		List<String[]> list = new ArrayList<String[]>();
-		String[] tmp;
-		int columns = 0;
-
-		try {
-			columns = rs.getMetaData().getColumnCount();
-			
-		} catch (SQLException e1) {
-			System.err.println("Error getting metadata on ResultSet");
-			e1.printStackTrace();
-			System.exit(0);
-		}
-		tmp = new String[columns];
-		
-		try {
-			while(rs.next()) {
-				for(int k = 0; k < columns; k++) {
-					tmp[k] = rs.getString(k+1);
-				}
-				
-				list.add(tmp);
-				tmp = new String[columns];
-			}
-		
-		} catch (SQLException e1) {
-			System.err.println("Error getting metadata on ResultSet");
-			e1.printStackTrace();
-			System.exit(0);
-		}
-		
-		
-		return list;
 	}
 }
 
