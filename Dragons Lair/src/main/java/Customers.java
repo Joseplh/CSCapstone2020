@@ -26,6 +26,10 @@ public class Customers extends JPanel implements Tile {
 	private DefaultTableModel reportsModel;
 	private String [][] reportsData; 
 	private String reportColumns[];
+	
+	private DefaultTableModel customersModel;
+	private String [][] customersData; 
+	private String customerColumns[];
 
 	private int lastnameCodeColumn = 0;
 	private int firstnameCodeColumn = 1;
@@ -161,13 +165,14 @@ public class Customers extends JPanel implements Tile {
 		JScrollPane customerScrollPane = new JScrollPane();
 		customerScrollPane.setBounds(10, 65, 415, 590);
 		add(customerScrollPane);
-
-		customerTable = new JTable(data, column);
+		customersData = control.getCustomers();
+		customerColumns = new String[]{"Last Name", "First Name", "Phone Num", "Email", "Customer Code"};
+		customersModel = new DefaultTableModel(customersData, customerColumns);
+		customerTable = new JTable(customersModel);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);
+		
 		customerTable.getTableHeader().setReorderingAllowed(false);
-
-
 		customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
 		customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
 		customerTable.getColumnModel().getColumn(4).setWidth(0);
@@ -190,9 +195,9 @@ public class Customers extends JPanel implements Tile {
 		titleTable.getColumnModel().getColumn(4).setPreferredWidth(3);
 
 		/* Action listener for the add account button */
-		AddCustBtn.addMouseListener(new MouseAdapter() {
+		AddCustBtn.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				if (AddCustBtn.isEnabled()) {
 
 					AddCustBtn.setEnabled(false);
@@ -273,22 +278,13 @@ public class Customers extends JPanel implements Tile {
 									emailAccField.getText(), phoneAccField.getText());
 								
 
-							JPanel accAddedPanel = new JPanel();
-							accAddedPanel.setLayout(null);
-							accAddedPanel.setBounds(572, 91, 388, 207);
-							accAddedPanel.setBackground(new Color(240, 240, 240));
-							accPanel.setVisible(false);
-							newAcc.add(accAddedPanel);
-
-							/* Code to do something if the account is not added */
-
-							JTextArea txtrAccountHasBeen = new JTextArea();
-							txtrAccountHasBeen.setEditable(false);
-							txtrAccountHasBeen.setBackground(new Color(240, 240, 240));
-							txtrAccountHasBeen.setText("Account has been added!");
-							txtrAccountHasBeen.setBounds(99, 87, 194, 33);
-							accAddedPanel.add(txtrAccountHasBeen);
-							AddCustBtn.setEnabled(true);
+							customersData = control.getCustomers();
+							customersModel.setDataVector(customersData, customerColumns);
+							customerTable.setModel(customersModel);
+							customerTable.getTableHeader().setReorderingAllowed(false);
+							customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+							customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
+							customerTable.getColumnModel().getColumn(4).setWidth(0);
 
 						}
 					});
@@ -298,9 +294,9 @@ public class Customers extends JPanel implements Tile {
 		});
 
 		/* Action listener for when the "Save Changes" button is clicked */
-		saveCustBtn.addMouseListener(new MouseAdapter() {
+		saveCustBtn.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 
 				/* If the save button has been clicked and it is enabled */
 				if (saveCustBtn.isEnabled()) {
@@ -318,7 +314,15 @@ public class Customers extends JPanel implements Tile {
 					ccodeBox.setEditable(false);
 
 					control.updateCustomer(Integer.parseInt(ccodeBox.getText()), fNameBox.getText(), lNameBox.getText(), emailBox.getText(), phoneBox.getText());
-
+					
+					customersData = control.getCustomers();
+					customersModel.setDataVector(customersData, customerColumns);
+					customerTable.setModel(customersModel);
+					customerTable.getTableHeader().setReorderingAllowed(false);
+					customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+					customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
+					customerTable.getColumnModel().getColumn(4).setWidth(0);
+					
 					JOptionPane.showMessageDialog(null, "Changes have been saved!", "Message",
 							JOptionPane.PLAIN_MESSAGE);
 				}
@@ -392,9 +396,9 @@ public class Customers extends JPanel implements Tile {
 		});
 
 		/* action listener for when the edit button for customer info is clicked */
-		editCustBtn.addMouseListener(new MouseAdapter() {
+		editCustBtn.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 
 				lNameBox.setEditable(true);
 				fNameBox.setEditable(true);
@@ -407,9 +411,9 @@ public class Customers extends JPanel implements Tile {
 			}
 		});
 		/* Action listener for discard changes btn */
-		discardBtn.addMouseListener(new MouseAdapter() {
+		discardBtn.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				lNameBox.setEditable(false);
 				fNameBox.setEditable(false);
 				phoneBox.setEditable(false);
@@ -430,9 +434,9 @@ public class Customers extends JPanel implements Tile {
 		});
 
 		/* Action listener for account delete button */
-		delCustBtn.addMouseListener(new MouseAdapter() {
+		delCustBtn.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 
 				/* If they want to delete an account */
 				int reply = JOptionPane.showConfirmDialog(null,
@@ -441,11 +445,13 @@ public class Customers extends JPanel implements Tile {
 				if (reply == JOptionPane.YES_OPTION) {
 
 					control.deleteCustomer(Integer.parseInt(ccodeBox.getText()));
-					customerTable.revalidate();
-
-					// refresh jtable please
-
-					/* Code here to remove the user from the database */
+					customersData = control.getCustomers();
+					customersModel.setDataVector(customersData, customerColumns);
+					customerTable.setModel(customersModel);
+					customerTable.getTableHeader().setReorderingAllowed(false);
+					customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+					customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
+					customerTable.getColumnModel().getColumn(4).setWidth(0);
 
 					JOptionPane.showMessageDialog(null, "Account Deleted");
 				}
@@ -463,9 +469,9 @@ public class Customers extends JPanel implements Tile {
 		addRequestBtn.setEnabled(false);
 		add(addRequestBtn);
 			    
-		addRequestBtn.addMouseListener(new MouseAdapter() {
+		addRequestBtn.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				if (addRequestBtn.isEnabled()) {
 
 					String[] stores = {"dl1", "dl2"};
