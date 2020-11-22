@@ -1,4 +1,4 @@
-package catalogParser;
+package main.java;
 
 import java.io.FileNotFoundException;
 import java.awt.Color;
@@ -276,7 +276,7 @@ public class reader {
 				homeFrame.setTitle("Tools");
 				homeFrame.setSize(367, 142);
 				homeFrame.setLocationRelativeTo(null);
-				homeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				homeFrame.getContentPane().setLayout(null);
 				homeFrame.setVisible(true);
 				

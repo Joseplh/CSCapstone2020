@@ -55,6 +55,12 @@ public class Titles extends JPanel implements Tile {
 		editTitleBtn.setBounds(505, 63, 162, 33);
 		add(editTitleBtn);
 
+		JButton insertCSV = new JButton("Insert from CSV.");
+		insertCSV.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		insertCSV.setEnabled(true);
+		insertCSV.setBounds(802, 11, 162, 33);
+		add(insertCSV);
+		
 		JButton delTitleBtn = new JButton("Delete");
 		delTitleBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		delTitleBtn.setEnabled(false);
@@ -322,6 +328,15 @@ public class Titles extends JPanel implements Tile {
 						    "Message",
 						    JOptionPane.PLAIN_MESSAGE);
 				}
+			}
+		});
+		
+		/* Action listener for when the "Save Changes" button is clicked */
+		insertCSV.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				reader read = new reader();
+				read.getHomeFrame();
 			}
 		});
 		
