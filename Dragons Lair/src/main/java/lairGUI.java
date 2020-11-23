@@ -63,10 +63,9 @@ public class lairGUI {
 		frame.setVisible(true);
 
 
-
-        actualDate = new JLabel(control.getDate());
-        actualDate.setFont(new Font("Tahoma", Font.BOLD, 14));
-        actualDate.setBounds(878, 21, 90, 14);
+		actualDate = new JLabel(control.getDate());
+		actualDate.setFont(new Font("Tahoma", Font.BOLD, 14));
+		actualDate.setBounds(878, 21, 90, 14);
 		frame.getContentPane().add(actualDate);
 
 		todaysDate.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -74,7 +73,7 @@ public class lairGUI {
 		frame.getContentPane().add(todaysDate);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 34, 998, 694);
+		tabbedPane.setBounds(10, 34, 998, 794);
 		frame.getContentPane().add(tabbedPane);
 
 		tabbedPane.addTab("Customers", null, customers, null);

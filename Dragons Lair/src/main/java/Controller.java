@@ -74,12 +74,12 @@ public class Controller {
 	 */
 	public void addRequest(String storeCode, String customerCode, String title, String comments, int issueStart, int issueEnd, int quantity, float cost) {
 		// TODO: Add custom store code number
-		insert(String.format("INSERT INTO [newDLC].[dbo].[Order]([Store Code], [Customer Code], Title, Comments, "
+		insert(String.format("INSERT INTO [DLC].[dbo].[Order]([Store Code], [Customer Code], Title, Comments, "
 				+ "[Issue Start], [Issue End], Quantity, Cost) VALUES('%s', '%s', '%s', '%s', %d, %d, %d, %f)", storeCode, customerCode, title, comments, issueStart, issueEnd, quantity, cost));
 	}
 	//altered the insert statements to directly return as opposed to a useless one: Joseph
 	public int insertCustomer(String first, String last, String email, String phone) {
-		return insert("INSERT INTO Customer([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
+		return insert("INSERT INTO [DLC].[dbo].[Customer]([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
 	}
 
 	public int deleteCustomer(int ccode) {
@@ -87,24 +87,45 @@ public class Controller {
 	}
 
 	public int updateCustomer(int ccode, String first, String last, String email, String phone) {
-		return insert("UPDATE Customer Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
+		return insert("UPDATE [DLC].[dbo].[Customer] Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
 	}
+
+	/**
+	 * @param storeCode
+	 * @param lName
+	 * @param fName
+	 * @param address
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @param phone1
+	 * @param phone2
+	 * @param email
+	 * @param ccode
+	 * @return
+	 */
+	public int updateCustomerFull(String storeCode, String lName, String fName, String address, String city, String state, String zip, String phone1, String phone2, String email, int ccode) {
+		return insert("UPDATE [DLC].[dbo].[Customer] Set [Store Code] = '" + storeCode + "', [Last Name] = '" + lName + "', [First Name] = '" + fName + "', [Address-1] = '" + address
+				+ "', [City/State] = '" + city + "', [ZIP] = '" + zip + "', [Phone #1] = '" + phone1 + "', [Phone #2] = '" + phone2 + "', [Email] = '" + email + "' WHERE [Customer Code] = " + ccode);
+	}
+
 	/**
 	 * Returns the following columns from the customer table.
 	 *
-	 * @param title  	Title for the new title
-	 * @param distr  	Distributor for new title
-	 * @param sub  		Distc Sub for new title
-	 * @param tcode  	Key for the title in the catalog table
+	 * @param title Title for the new title
+	 * @param distr Distributor for new title
+	 * @param sub   Distc Sub for new title
+	 * @param tCode Key for the title in the catalog table
 	 * @return {int} 	0 or row count, negative if error.
 	 */
 	public int insertTitle(String title, String distr, String sub, String tCode) {
 		return insert("INSERT INTO Catalog([Description], [Distributor], [Disct? Sub], [Calalog ID]) VALUES('" + title + "', '" + distr + "', '" + sub + "', '" + tCode + "')");
 	}
+
 	/**
 	 * Deletes a title from the Catalog table
 	 *
-	 * @param tcode  	Key for the title in the catalog table
+	 * @param tCode    Key for the title in the catalog table
 	 * @return {int} 	0 or row count, negative if error.
 	 */
 	public int deleteTitle(String tCode) {
@@ -114,9 +135,9 @@ public class Controller {
 	/**
 	 * Returns the following columns from the customer table.
 	 *
-	 * @param title  	New title for a given title in the Catalog table
-	 * @param sub  		New Distinct Sub value
-	 * @param tcode  	Key for the title in the catalog table
+	 * @param title    New title for a given title in the Catalog table
+	 * @param sub        New Distinct Sub value
+	 * @param tCode    Key for the title in the catalog table
 	 * @return {int} 	0 or row count, negative if error.
 	 */
 	public int updateTitle(String title, String sub, String tCode) {
@@ -137,11 +158,14 @@ public class Controller {
 	/**
 	 * Returns the following columns from the customer table.
 	 *
-	 * @param customerCode  	The customer code.
 	 * @return {String[][]} 	Contains the given query ResultSet.
 	 */
 	public String[][] getCustomers() {
-		return select("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM Customer");
+		return select("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM [DLC].[dbo].[Customer]");
+	}
+
+	public String[][] getCustomerData(int customerCode) {
+		return select(String.format("SELECT [Store Code], [Last Name], [First Name], [Address-1], [City/State], [ZIP], [Phone #1], [Phone #2], [Email] FROM [DLC].[dbo].[Customer] WHERE [Customer Code] = %d", customerCode));
 	}
 
 	public String[][] getReports() {
@@ -151,7 +175,7 @@ public class Controller {
 	/**
 	 * Handler for fetching the requests for a given customer.
 	 *
-	 * @param customerCode  	The customer code.
+	 * @param customerCode    The customer code.
 	 * @return {String[][]} 	Contains the given query ResultSet.
 	 */
 	public String[][] getRequests(String customerCode) {
@@ -415,8 +439,6 @@ public class Controller {
 	/**
 	 * Returns todays date(string) in the format "MM-DD-YYYY"
 	 *
-	 * @param panel		Parent component of the dialog
-	 * @param name		String to name saved file
 	 * @return {String} Todays date "MM-DD-YYYY"
 	 */
 	public String getDate() {

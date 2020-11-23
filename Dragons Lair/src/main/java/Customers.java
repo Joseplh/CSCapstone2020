@@ -67,6 +67,12 @@ public class Customers extends JPanel implements Tile {
 		editDelSelectedBtn.setBounds(860, 411, 107, 48);
 		add(editDelSelectedBtn);
 
+		JButton moreInfoBtn = new JButton("More Info");
+		moreInfoBtn.setEnabled(false);
+		moreInfoBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		moreInfoBtn.setBounds(860, 59, 107, 33);
+		add(moreInfoBtn);
+
 		JButton saveCustBtn = new JButton("Save");
 		saveCustBtn.setEnabled(false);
 		saveCustBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -347,15 +353,17 @@ public class Customers extends JPanel implements Tile {
 				}
 
 
-
 			}
 		});
+
+		//Willy Wonka
 		/* Listener for when a cell is selected from the customerTable */
 		customerTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
 				addRequestBtn.setEnabled(true);
+				moreInfoBtn.setEnabled(true);
 				reportsData = control.getRequests(
 						customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()
 				);
@@ -410,6 +418,203 @@ public class Customers extends JPanel implements Tile {
 
 			}
 		});
+
+		/* Action listener for More Info btn */
+		moreInfoBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				String[] stores = {"dl1", "dl2"};
+				String[][] customer2D = control.getCustomerData(Integer.parseInt((String) customerTable.getValueAt(customerTable.getSelectedRow(), 4)));
+
+				/*System.out.println(customer2D[0][0]); //Store Code
+				System.out.println(customer2D[0][1]); //Last Name
+				System.out.println(customer2D[0][2]); //First Name
+				System.out.println(customer2D[0][3]); //Address
+				System.out.println(customer2D[0][4]); //City/State
+				System.out.println(customer2D[0][5]); //ZIP
+				System.out.println(customer2D[0][6]); //Phone #1
+				System.out.println(customer2D[0][7]); //Phone #2
+				System.out.println(customer2D[0][8]); //Email*/
+
+				moreInfoBtn.setEnabled(false);
+				addRequestBtn.setEnabled(false);
+
+				JFrame moreInfoFrame = new JFrame("Expanded Customer Information");
+				moreInfoFrame.setVisible(true);
+				centerFrame(moreInfoFrame);
+				moreInfoFrame.setResizable(true);
+				moreInfoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				moreInfoFrame.setBounds(950, 2500, 950, 250);
+				moreInfoFrame.setLocationRelativeTo(null);
+
+
+				/* Action listener for when the add customer frame is closed */
+				moreInfoFrame.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosing(WindowEvent e) {
+						moreInfoBtn.setEnabled(true);
+						addRequestBtn.setEnabled(true);
+					}
+				});
+
+				JPanel moreInfoPanel = new JPanel();
+				centerFrame(moreInfoPanel);
+				moreInfoPanel.setLayout(null);
+
+				JLabel storeLabel = new JLabel("Store");
+				storeLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+				storeLabel.setBounds(28, 25, 78, 23);
+				moreInfoPanel.add(storeLabel);
+
+				JLabel fNameLabel = new JLabel("First Name");
+				fNameLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+				fNameLabel.setBounds(214, 25, 78, 23);
+				moreInfoPanel.add(fNameLabel);
+
+				JLabel lNameLabel = new JLabel("Last Name");
+				lNameLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lNameLabel.setBounds(403, 25, 151, 23);
+				moreInfoPanel.add(lNameLabel);
+
+				JLabel addressLabel = new JLabel("Address");
+				addressLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+				addressLabel.setBounds(592, 25, 78, 23);
+				moreInfoPanel.add(addressLabel);
+
+				JLabel cityLabel = new JLabel("City");
+				cityLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+				cityLabel.setBounds(781, 25, 78, 23);
+				moreInfoPanel.add(cityLabel);
+
+				JLabel stateLabel = new JLabel("State");
+				stateLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+				stateLabel.setBounds(28, 86, 151, 23);
+				moreInfoPanel.add(stateLabel);
+
+				JLabel zipLabel = new JLabel("Zip");
+				zipLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+				zipLabel.setBounds(214, 86, 78, 23);
+				moreInfoPanel.add(zipLabel);
+
+				JLabel phone1Label = new JLabel("Phone #1");
+				phone1Label.setFont(new Font("Tahoma", Font.BOLD, 14));
+				phone1Label.setBounds(403, 86, 78, 23);
+				moreInfoPanel.add(phone1Label);
+
+				JLabel phone2Label = new JLabel("Phone #2");
+				phone2Label.setFont(new Font("Tahoma", Font.BOLD, 14));
+				phone2Label.setBounds(592, 86, 78, 23);
+				moreInfoPanel.add(phone2Label);
+
+				JLabel emailLabel = new JLabel("Email");
+				emailLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+				emailLabel.setBounds(781, 86, 78, 23);
+				moreInfoPanel.add(emailLabel);
+
+
+				JComboBox storeField = new JComboBox(stores);
+				storeField.setBounds(28, 48, 136, 20);
+				storeField.setSelectedIndex(0);
+				moreInfoPanel.add(storeField);
+
+				JTextField fNameField = new JTextField();
+				fNameField.setBounds(214, 48, 136, 20);
+				moreInfoPanel.add(fNameField);
+				fNameField.setColumns(10);
+
+				JTextField lNameField = new JTextField();
+				lNameField.setColumns(10);
+				lNameField.setBounds(403, 48, 136, 20);
+				moreInfoPanel.add(lNameField);
+				moreInfoFrame.add(moreInfoPanel);
+
+				JTextField addressField = new JTextField();
+				addressField.setBounds(592, 48, 136, 20);
+				moreInfoPanel.add(addressField);
+				addressField.setColumns(10);
+
+				JTextField cityField = new JTextField();
+				cityField.setColumns(10);
+				cityField.setBounds(781, 48, 136, 20);
+				moreInfoPanel.add(cityField);
+
+				JTextField stateField = new JTextField();
+				stateField.setColumns(10);
+				stateField.setBounds(28, 109, 136, 20);
+				moreInfoPanel.add(stateField);
+
+				JTextField zipField = new JTextField();
+				zipField.setColumns(10);
+				zipField.setBounds(214, 109, 136, 20);
+				moreInfoPanel.add(zipField);
+				moreInfoFrame.add(moreInfoPanel);
+
+				JTextField phone1Field = new JTextField();
+				phone1Field.setColumns(10);
+				phone1Field.setBounds(403, 109, 136, 20);
+				moreInfoPanel.add(phone1Field);
+				moreInfoFrame.add(moreInfoPanel);
+
+				JTextField phone2Field = new JTextField();
+				phone2Field.setColumns(10);
+				phone2Field.setBounds(592, 109, 136, 20);
+				moreInfoPanel.add(phone2Field);
+				moreInfoFrame.add(moreInfoPanel);
+
+				JTextField emailField = new JTextField();
+				emailField.setColumns(10);
+				emailField.setBounds(781, 109, 136, 20);
+				moreInfoPanel.add(emailField);
+				moreInfoFrame.add(moreInfoPanel);
+
+				JButton updateBtn = new JButton("Update Contact Info");
+				updateBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				centerComponentHorizontal(moreInfoPanel, updateBtn, 170, 170, 25);
+				moreInfoPanel.add(updateBtn);
+
+				storeField.setSelectedItem(customer2D[0][0]);
+				lNameField.setText(customer2D[0][1]);
+				fNameField.setText(customer2D[0][2]);
+				addressField.setText(customer2D[0][3]);
+				cityField.setText(customer2D[0][4]);
+				stateField.setText(customer2D[0][4]);
+				zipField.setText(customer2D[0][5]);
+				phone1Field.setText(customer2D[0][6]);
+				phone2Field.setText(customer2D[0][7]);
+				emailField.setText(customer2D[0][8]);
+
+				updateBtn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent event) {
+						try {
+							control.updateCustomerFull((String) storeField.getSelectedItem(), lNameField.getText(), fNameField.getText(), addressField.getText(), cityField.getText(), stateField.getText(), zipField.getText(), phone1Field.getText(), phone2Field.getText(), emailField.getText(), Integer.parseInt((String) customerTable.getValueAt(customerTable.getSelectedRow(), 4)));
+
+							createMessage(moreInfoFrame, moreInfoPanel, "Customer Information Updated Successfully!");
+							reportsData = control.getRequests(
+									customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString());
+							reportsModel.setDataVector(reportsData, reportColumns);
+							//titleTable.setModel(reportsModel);
+
+							customersData = control.getCustomers();
+							customersModel.setDataVector(customersData, customerColumns);
+							customerTable.setModel(customersModel);
+							customerTable.getTableHeader().setReorderingAllowed(false);
+							customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+							customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
+							customerTable.getColumnModel().getColumn(4).setWidth(0);
+
+
+						} catch (Exception e) {
+							createMessage(moreInfoFrame, moreInfoPanel, "Customer Information could not be updated.");
+						}
+					}
+				});
+
+
+			}
+		});
+
+
 		/* Action listener for discard changes btn */
 		discardBtn.addActionListener(new ActionListener() {
 			@Override
@@ -602,7 +807,7 @@ public class Customers extends JPanel implements Tile {
 								control.addRequest((String) storeField.getSelectedItem(), customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString(),
 										(String) titleField.getSelectedItem(), commentField.getText(), Integer.parseInt(issueStartField.getText()), Integer.parseInt(issueEndField.getText()),
 										Integer.parseInt(quantityField.getText()), Float.parseFloat(costField.getText()));
-								createMessage(addRequestFrame, addRequestPanel, "Request successfully created.");
+								createMessage(addRequestFrame, addRequestPanel, "Request successfully created!");
 								reportsData = control.getRequests(
 										customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString());
 
