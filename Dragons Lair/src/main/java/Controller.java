@@ -74,12 +74,12 @@ public class Controller {
 	 */
 	public void addRequest(String storeCode, String customerCode, String title, String comments, int issueStart, int issueEnd, int quantity, float cost) {
 		// TODO: Add custom store code number
-		insert(String.format("INSERT INTO [DLC].[dbo].[Order]([Store Code], [Customer Code], Title, Comments, "
+		insert(String.format("INSERT INTO [newDLC].[dbo].[Order]([Store Code], [Customer Code], Title, Comments, "
 				+ "[Issue Start], [Issue End], Quantity, Cost) VALUES('%s', '%s', '%s', '%s', %d, %d, %d, %f)", storeCode, customerCode, title, comments, issueStart, issueEnd, quantity, cost));
 	}
 	//altered the insert statements to directly return as opposed to a useless one: Joseph
 	public int insertCustomer(String first, String last, String email, String phone) {
-		return insert("INSERT INTO [DLC].[dbo].[Customer]([Last Name], [First Name], [Email], [Phone #1]) VALUES('" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
+		return insert("INSERT INTO [newDLC].[dbo].[Customer]([Store Code], [Last Name], [First Name], [Email], [Phone #1]) VALUES('dl1', '" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
 	}
 
 	public int deleteCustomer(int ccode) {
@@ -87,7 +87,7 @@ public class Controller {
 	}
 
 	public int updateCustomer(int ccode, String first, String last, String email, String phone) {
-		return insert("UPDATE [DLC].[dbo].[Customer] Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
+		return insert("UPDATE [newDLC].[dbo].[Customer] Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
 	}
 
 	/**
@@ -105,8 +105,8 @@ public class Controller {
 	 * @return
 	 */
 	public int updateCustomerFull(String storeCode, String lName, String fName, String address, String city, String state, String zip, String phone1, String phone2, String email, int ccode) {
-		return insert("UPDATE [DLC].[dbo].[Customer] Set [Store Code] = '" + storeCode + "', [Last Name] = '" + lName + "', [First Name] = '" + fName + "', [Address-1] = '" + address
-				+ "', [City/State] = '" + city + "', [ZIP] = '" + zip + "', [Phone #1] = '" + phone1 + "', [Phone #2] = '" + phone2 + "', [Email] = '" + email + "' WHERE [Customer Code] = " + ccode);
+		return insert("UPDATE [newDLC].[dbo].[Customer] Set [Store Code] = '" + storeCode + "', [Last Name] = '" + lName + "', [First Name] = '" + fName + "', [Address-1] = '" + address
+				+ "', [City] = '" + city + "', [State] = '" + state + "', [ZIP] = '" + zip + "', [Phone #1] = '" + phone1 + "', [Phone #2] = '" + phone2 + "', [Email] = '" + email + "' WHERE [Customer Code] = " + ccode);
 	}
 
 	/**
@@ -161,11 +161,11 @@ public class Controller {
 	 * @return {String[][]} 	Contains the given query ResultSet.
 	 */
 	public String[][] getCustomers() {
-		return select("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM [DLC].[dbo].[Customer]");
+		return select("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM [newDLC].[dbo].[Customer]");
 	}
 
 	public String[][] getCustomerData(int customerCode) {
-		return select(String.format("SELECT [Store Code], [Last Name], [First Name], [Address-1], [City/State], [ZIP], [Phone #1], [Phone #2], [Email] FROM [DLC].[dbo].[Customer] WHERE [Customer Code] = %d", customerCode));
+		return select(String.format("SELECT [Store Code], [Last Name], [First Name], [Address-1], [City], [State], [ZIP], [Phone #1], [Phone #2], [Email] FROM [newDLC].[dbo].[Customer] WHERE [Customer Code] = %d", customerCode));
 	}
 
 	public String[][] getReports() {

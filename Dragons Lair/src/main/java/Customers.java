@@ -431,11 +431,12 @@ public class Customers extends JPanel implements Tile {
 				System.out.println(customer2D[0][1]); //Last Name
 				System.out.println(customer2D[0][2]); //First Name
 				System.out.println(customer2D[0][3]); //Address
-				System.out.println(customer2D[0][4]); //City/State
-				System.out.println(customer2D[0][5]); //ZIP
-				System.out.println(customer2D[0][6]); //Phone #1
-				System.out.println(customer2D[0][7]); //Phone #2
-				System.out.println(customer2D[0][8]); //Email*/
+				System.out.println(customer2D[0][4]); //City
+				System.out.println(customer2D[0][5]); //State
+				System.out.println(customer2D[0][6]); //ZIP
+				System.out.println(customer2D[0][7]); //Phone #1
+				System.out.println(customer2D[0][8]); //Phone #2
+				System.out.println(customer2D[0][9]); //Email*/
 
 				moreInfoBtn.setEnabled(false);
 				addRequestBtn.setEnabled(false);
@@ -578,11 +579,11 @@ public class Customers extends JPanel implements Tile {
 				fNameField.setText(customer2D[0][2]);
 				addressField.setText(customer2D[0][3]);
 				cityField.setText(customer2D[0][4]);
-				stateField.setText(customer2D[0][4]);
-				zipField.setText(customer2D[0][5]);
-				phone1Field.setText(customer2D[0][6]);
-				phone2Field.setText(customer2D[0][7]);
-				emailField.setText(customer2D[0][8]);
+				stateField.setText(customer2D[0][5]);
+				zipField.setText(customer2D[0][6]);
+				phone1Field.setText(customer2D[0][7]);
+				phone2Field.setText(customer2D[0][8]);
+				emailField.setText(customer2D[0][9]);
 
 				updateBtn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
