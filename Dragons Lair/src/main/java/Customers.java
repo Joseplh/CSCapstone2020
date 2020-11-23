@@ -8,6 +8,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Customers extends JPanel implements Tile {
 	/**
@@ -276,20 +278,50 @@ public class Customers extends JPanel implements Tile {
 					addAcc.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 
-							/*
-							 * TODO: Code to add customer account to database
-							 */
-							control.insertCustomer(fnameAccField.getText(), lnameAccField.getText(),
-									emailAccField.getText(), phoneAccField.getText());
+							
 								
-
-							customersData = control.getCustomers();
-							customersModel.setDataVector(customersData, customerColumns);
-							customerTable.setModel(customersModel);
-							customerTable.getTableHeader().setReorderingAllowed(false);
-							customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
-							customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
-							customerTable.getColumnModel().getColumn(4).setWidth(0);
+							String emailpattern = "[a-zA-z0-9_.!#$%&'*+-/=?^_`{|}~;]+@[\\w]+.[\\w]+.{0,1}[\\w]+";
+							String phonepattern = "\\(\\d{3}\\)\\d{3}-\\d{4}";
+							
+							Pattern r = Pattern.compile(emailpattern);
+							Matcher m = r.matcher(emailAccField.getText());
+							
+							if(m.find()) {
+								r = Pattern.compile(phonepattern);
+								m = r.matcher(phoneAccField.getText());
+					
+								if(m.find()) {
+									// Get rid of the add account panel we used
+									newAcc.dispose();
+									//Insert customer
+									control.insertCustomer(fnameAccField.getText(), lnameAccField.getText(),
+											emailAccField.getText(), phoneAccField.getText());
+									
+									AddCustBtn.setEnabled(true);
+									//Reset model
+									customersData = control.getCustomers();
+									customersModel.setDataVector(customersData, customerColumns);
+									customerTable.setModel(customersModel);
+									customerTable.getTableHeader().setReorderingAllowed(false);
+									customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+									customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
+									customerTable.getColumnModel().getColumn(4).setWidth(0);
+									
+								}
+								else {
+									JOptionPane.showMessageDialog(null, "Please enter a valid phone number! (XXX)XXX-XXXX", "Account Information",
+											JOptionPane.PLAIN_MESSAGE);
+								}
+								
+								
+							}
+							else {
+								JOptionPane.showMessageDialog(null, "Please enter a valid email!", "Account Information",
+										JOptionPane.PLAIN_MESSAGE);
+								
+							}
+							
+							
 
 						}
 					});
@@ -318,19 +350,48 @@ public class Customers extends JPanel implements Tile {
 					emailBox.setEditable(false);
 					ccodeBox.setEditable(false);
 
-					control.updateCustomer(Integer.parseInt(ccodeBox.getText()), fNameBox.getText(), lNameBox.getText(), emailBox.getText(), phoneBox.getText());
 					
-					customersData = control.getCustomers();
-					customersModel.setDataVector(customersData, customerColumns);
-					customerTable.setModel(customersModel);
-					customerTable.getTableHeader().setReorderingAllowed(false);
-					customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
-					customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
-					customerTable.getColumnModel().getColumn(4).setWidth(0);
+					String emailpattern = "[a-zA-z0-9_.!#$%&'*+-/=?^_`{|}~;]+@[\\w]+.[\\w]+.{0,1}[\\w]+";
+					String phonepattern = "\\(\\d{3}\\)\\d{3}-\\d{4}";
 					
-					JOptionPane.showMessageDialog(null, "Changes have been saved!", "Message",
-							JOptionPane.PLAIN_MESSAGE);
-				}
+					Pattern r = Pattern.compile(emailpattern);
+					Matcher m = r.matcher(emailBox.getText());
+					
+					if(m.find()) {
+						r = Pattern.compile(phonepattern);
+						m = r.matcher(phoneBox.getText());
+			
+						if(m.find()) {
+						
+							//Update customer
+							control.updateCustomer(Integer.parseInt(ccodeBox.getText()), fNameBox.getText(), lNameBox.getText(), emailBox.getText(), phoneBox.getText());
+							//Reset model
+							customersData = control.getCustomers();
+							customersModel.setDataVector(customersData, customerColumns);
+							customerTable.setModel(customersModel);
+							customerTable.getTableHeader().setReorderingAllowed(false);
+							customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+							customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
+							customerTable.getColumnModel().getColumn(4).setWidth(0);
+							
+							JOptionPane.showMessageDialog(null, "Changes have been saved!", "Message",
+									JOptionPane.PLAIN_MESSAGE);
+						}
+							
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Please enter a valid phone number! (XXX)XXX-XXXX", "Account Information",
+									JOptionPane.PLAIN_MESSAGE);
+						}
+						
+						
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Please enter a valid email!", "Account Information",
+								JOptionPane.PLAIN_MESSAGE);
+						
+					}
+					
 			}
 		});
 
