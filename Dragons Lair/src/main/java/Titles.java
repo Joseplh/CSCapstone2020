@@ -167,7 +167,12 @@ public class Titles extends JPanel implements Tile {
 		titleScrollPane.setBounds(10, 63, 459, 592);
 		add(titleScrollPane);
 
-		titlesModel = new DefaultTableModel(titlesData, titlesColumn);
+		titlesModel = new DefaultTableModel(titlesData, titlesColumn)  {
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}
+		};
+
 		titleTable = new JTable(titlesModel);
 		titleTable.setAutoCreateRowSorter(true);
 		titleTable.getTableHeader().setReorderingAllowed(false);
@@ -297,6 +302,11 @@ public class Titles extends JPanel implements Tile {
 
 							control.insertTitle(newTitleField.getText(), newDistributorField.getText(), newDisctSubField.getText(), newTCodeField.getText());
 
+							titlesData = fetchData();
+							titlesModel.setDataVector(titlesData, titlesColumn);
+							titleTable.setModel(titlesModel);
+							titleTable.getTableHeader().setReorderingAllowed(false);
+
 							JPanel accAddedPanel = new JPanel();
 							accAddedPanel.setLayout(null);
 							accAddedPanel.setBounds(572, 91, 388, 207);
@@ -340,8 +350,11 @@ public class Titles extends JPanel implements Tile {
 					newReleaseField.setEnabled(false);
 
 					control.updateTitle(newReleaseField.isSelected(), titleField.getText(), disctSubField.getText(), tCodeField.getText());
+
 					titlesData = fetchData();
-					titleTable.revalidate();
+					titlesModel.setDataVector(titlesData, titlesColumn);
+					titleTable.setModel(titlesModel);
+					titleTable.getTableHeader().setReorderingAllowed(false);
 
 					JOptionPane.showMessageDialog(null,
 						    "Changes have been saved!",
@@ -404,7 +417,12 @@ public class Titles extends JPanel implements Tile {
 				if (reply == JOptionPane.YES_OPTION) {
 
 					control.deleteTitle(tCodeField.getText());
-					
+
+					titlesData = fetchData();
+					titlesModel.setDataVector(titlesData, titlesColumn);
+					titleTable.setModel(titlesModel);
+					titleTable.getTableHeader().setReorderingAllowed(false);
+
 				    JOptionPane.showMessageDialog(null, "Title Deleted");
 				}
 			}
@@ -417,6 +435,11 @@ public class Titles extends JPanel implements Tile {
 				if (reply == JOptionPane.YES_OPTION) {
 
 					control.resetFlags();
+
+					titlesData = fetchData();
+					titlesModel.setDataVector(titlesData, titlesColumn);
+					titleTable.setModel(titlesModel);
+					titleTable.getTableHeader().setReorderingAllowed(false);
 
 					JOptionPane.showMessageDialog(null, "Flags Reset");
 				}
