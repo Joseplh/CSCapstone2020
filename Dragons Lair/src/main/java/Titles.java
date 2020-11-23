@@ -6,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class Titles extends JPanel implements Tile {
 	/**
@@ -15,13 +16,15 @@ public class Titles extends JPanel implements Tile {
 	private JTable titleTable;
 	private Controller control;
 	private JTextField titleField;
-	private JTextField disctSubField;
+	private JCheckBox disctSubField;
 	private JTextField distributorField;
 	private JTextField tCodeField;
-	private String[][] data;
+	private JCheckBox newReleaseField;
+	private Object[][] titlesData;
+	private DefaultTableModel titlesModel;
 
-	private String[][] fetchData(){
-		return data = control.getTitles();
+	private Object[][] fetchData(){
+		return titlesData = control.getTitles();
 	}
 
 	public Titles(Controller control) {
@@ -34,7 +37,7 @@ public class Titles extends JPanel implements Tile {
 		titlePanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Title Details", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
-		titlePanel.setBounds(505, 117, 459, 168);
+		titlePanel.setBounds(505, 117, 459, 268);
 		add(titlePanel);
 		titlePanel.setLayout(null);
 
@@ -70,27 +73,28 @@ public class Titles extends JPanel implements Tile {
 		JButton discardBtn = new JButton("Discard");
 		discardBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		discardBtn.setEnabled(false);
-		discardBtn.setBounds(755, 313, 107, 33);
+		discardBtn.setBounds(755, 413, 107, 33);
 		add(discardBtn);
 
 		JButton saveBtn = new JButton("Save");
 		saveBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		saveBtn.setEnabled(false);
-		saveBtn.setBounds(607, 313, 107, 33);
+		saveBtn.setBounds(607, 413, 107, 33);
 		add(saveBtn);
 
 		JButton btnExportSingleTitle = new JButton("Export Requested\r\n");
 		btnExportSingleTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnExportSingleTitle.setEnabled(false);
-		btnExportSingleTitle.setBounds(782, 423, 162, 49);
+		btnExportSingleTitle.setBounds(782, 623, 162, 49);
 		add(btnExportSingleTitle);
 
-		/* TextArea deceleration */
+		/* TextArea deceleration
 		JTextArea txtrThisTitleCurrently = new JTextArea();
 		txtrThisTitleCurrently.setText("This Title Currently has 24\r\nCustomer Requests");
 		txtrThisTitleCurrently.setBackground(Color.LIGHT_GRAY);
 		txtrThisTitleCurrently.setBounds(517, 423, 230, 109);
 		add(txtrThisTitleCurrently);
+		*/
 
 		/* TextField deceleration */
 		titleField = new JTextField();
@@ -99,23 +103,27 @@ public class Titles extends JPanel implements Tile {
 		titleField.setColumns(10);
 		titleField.setBounds(10, 43, 440, 33);
 
-		disctSubField = new JTextField();
+		disctSubField = new JCheckBox();
+		disctSubField.setEnabled(false);
 		disctSubField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		disctSubField.setEditable(false);
-		disctSubField.setColumns(10);
-		disctSubField.setBounds(10, 112, 97, 33);
+		disctSubField.setBounds(125, 177, 75, 33);
+
+		newReleaseField = new JCheckBox();
+		newReleaseField.setEnabled(false);
+		newReleaseField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		newReleaseField.setBounds(10, 177, 75, 33);
 
 		distributorField = new JTextField();
 		distributorField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		distributorField.setEditable(false);
 		distributorField.setColumns(10);
-		distributorField.setBounds(115, 112, 200, 33);
+		distributorField.setBounds(10, 112, 330, 33);
 
 		tCodeField = new JTextField();
 		tCodeField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tCodeField.setEditable(false);
 		tCodeField.setColumns(10);
-		tCodeField.setBounds(331, 112, 100, 33);
+		tCodeField.setBounds(350, 112, 100, 33);
 
 		/* Label deceleration */
 		JLabel lblTitle = new JLabel("Title");
@@ -124,39 +132,45 @@ public class Titles extends JPanel implements Tile {
 
 		JLabel lblDistributor = new JLabel("Distributor");
 		lblDistributor.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDistributor.setBounds(115, 87, 82, 14);
+		lblDistributor.setBounds(10, 87, 82, 14);
 
-		JLabel lblDisctSub = new JLabel("Disct? Sub");
+		JLabel lblDisctSub = new JLabel("Unique Print");
 		lblDisctSub.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDisctSub.setBounds(10, 87, 82, 14);
+		lblDisctSub.setBounds(125, 152, 125, 14);
+
+		JLabel lblNewRelease = new JLabel("New Release");
+		lblNewRelease.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewRelease.setBounds(10, 152, 125, 14);
 
 		JLabel lblTCode = new JLabel("Catalog ID");
 		lblTCode.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTCode.setBounds(331, 87, 82, 14);
+		lblTCode.setBounds(350, 87, 82, 14);
 
 		titlePanel.add(titleField);
 		titlePanel.add(disctSubField);
 		titlePanel.add(distributorField);
 		titlePanel.add(tCodeField);
+		titlePanel.add(newReleaseField);
 		titlePanel.add(lblTitle);
 		titlePanel.add(lblDisctSub);
 		titlePanel.add(lblDistributor);
 		titlePanel.add(lblTCode);
+		titlePanel.add(lblNewRelease);
 
 		/* Title Data */
-		data = fetchData();
+		titlesData = fetchData();
 
 		/* Title Table Column Names */
-		String column[] = { "Title", "Disct? Sub", "Distributor", "Catalog ID"};
+		String titlesColumn[] = { "New Release", "Description", "Distributor", "Catalog ID", "Disct? Sub"};
 
 		JScrollPane titleScrollPane = new JScrollPane();
 		titleScrollPane.setBounds(10, 63, 459, 592);
 		add(titleScrollPane);
-		
-		titleTable = new JTable(data, column);
+
+		titlesModel = new DefaultTableModel(titlesData, titlesColumn);
+		titleTable = new JTable(titlesModel);
 		titleTable.setAutoCreateRowSorter(true);
 		titleTable.getTableHeader().setReorderingAllowed(false);
-
 		titleScrollPane.setViewportView(titleTable);
 		
 		/* Listener for when a cell is selected from the titleTable */
@@ -177,11 +191,16 @@ public class Titles extends JPanel implements Tile {
 				/* Otherwise set the text boxes editable so the data can be changed */
 				else {
 					int i = titleTable.getSelectedRow();
-					titleField.setText((String) titleTable.getValueAt(i, 0));
-					disctSubField.setText((String) titleTable.getValueAt(i, 1));
+					titleField.setText((String) titleTable.getValueAt(i, 1));
 					distributorField.setText((String) titleTable.getValueAt(i,2));
 					tCodeField.setText((String) titleTable.getValueAt(i,3));
 
+					if (newReleaseField.isSelected()) {
+						newReleaseField.setSelected(false);
+					}
+					if (disctSubField.isSelected()) {
+						disctSubField.setSelected(false);
+					}
 
 					editTitleBtn.setEnabled(true);
 					delTitleBtn.setEnabled(true);
@@ -315,12 +334,13 @@ public class Titles extends JPanel implements Tile {
 					discardBtn.setEnabled(false);
 					
 					titleField.setEditable(false);
-					disctSubField.setEditable(false);
 					distributorField.setEditable(false);
 					tCodeField.setEditable(false);
+					disctSubField.setEnabled(false);
+					newReleaseField.setEnabled(false);
 
-					control.updateTitle(titleField.getText(), disctSubField.getText(), tCodeField.getText());
-					data = fetchData();
+					control.updateTitle(newReleaseField.isSelected(), titleField.getText(), disctSubField.getText(), tCodeField.getText());
+					titlesData = fetchData();
 					titleTable.revalidate();
 
 					JOptionPane.showMessageDialog(null,
@@ -346,7 +366,9 @@ public class Titles extends JPanel implements Tile {
 			public void mouseClicked(MouseEvent e) {
 
 				titleField.setEditable(true);
-				disctSubField.setEditable(true);
+				distributorField.setEditable(true);
+				newReleaseField.setEnabled(true);
+				disctSubField.setEnabled(true);
 
 				saveBtn.setEnabled(true);
 				discardBtn.setEnabled(true);
@@ -358,15 +380,15 @@ public class Titles extends JPanel implements Tile {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				titleField.setEditable(false);
-				disctSubField.setEditable(false);
-
+				distributorField.setEditable(false);
+				newReleaseField.setEnabled(false);
+				disctSubField.setEnabled(false);
 				
 				discardBtn.setEnabled(false);
 				saveBtn.setEnabled(false);
 				
 				int i = titleTable.getSelectedRow();
 				titleField.setText((String) titleTable.getValueAt(i, 0));
-				disctSubField.setText((String) titleTable.getValueAt(i, 1));
 
 				
 			}
@@ -384,6 +406,19 @@ public class Titles extends JPanel implements Tile {
 					control.deleteTitle(tCodeField.getText());
 					
 				    JOptionPane.showMessageDialog(null, "Title Deleted");
+				}
+			}
+		});
+
+		btnResetNewWeek.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int reply = JOptionPane.showConfirmDialog(null, "Are you sure you would like to reset all new release flags? This can't be undone.", "Reset Release Flags", JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION) {
+
+					control.resetFlags();
+
+					JOptionPane.showMessageDialog(null, "Flags Reset");
 				}
 			}
 		});

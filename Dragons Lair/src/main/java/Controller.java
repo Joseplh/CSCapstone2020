@@ -135,13 +135,14 @@ public class Controller {
 	/**
 	 * Returns the following columns from the customer table.
 	 *
+	 * @param flag     New value for new release column in table for given title
 	 * @param title    New title for a given title in the Catalog table
-	 * @param sub        New Distinct Sub value
+	 * @param unique   New unique print value
 	 * @param tCode    Key for the title in the catalog table
-	 * @return {int} 	0 or row count, negative if error.
+	 * @return {int}   0 or row count, negative if error.
 	 */
-	public int updateTitle(String title, String sub, String tCode) {
-		return insert("UPDATE Catalog Set [Description] = '" + title + "', [Disct? Sub] = '" + sub + "' WHERE [Calalog ID] = '" + tCode + "'");
+	public int updateTitle(boolean flag, String title, String unique, String tCode) {
+		return insert("UPDATE Catalog Set [Form] = '" + flag + "', [Description] = '" + title + "', [Disct? Sub] = '" + unique + "' WHERE [Calalog ID] = '" + tCode + "'");
 	}
 
 
@@ -193,7 +194,11 @@ public class Controller {
 	 * @return {String} 2D array of the titles from database.
 	 */
 	public String[][] getTitles() {
-		return select("SELECT [Description], [Disct? Sub], [Distributor], [Calalog ID] FROM Catalog");
+		return select("SELECT [Form], [Description], [Distributor], [Calalog ID], [Disct? Sub] FROM Catalog");
+	}
+
+	public void resetFlags() {
+		insert("UPDATE Catalog Set [Form] = '" + false + "'");
 	}
 
 
