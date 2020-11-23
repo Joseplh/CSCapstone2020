@@ -30,7 +30,6 @@ public class Customers extends JPanel implements Tile {
 	private DefaultTableModel customersModel;
 	private String [][] customersData; 
 	private String customerColumns[];
-
 	private int lastnameCodeColumn = 0;
 	private int firstnameCodeColumn = 1;
 	private int customerCodeColumn = 4;
@@ -692,9 +691,9 @@ public class Customers extends JPanel implements Tile {
 					JFrame addRequestFrame = new JFrame("Add Request");
 					addRequestFrame.setVisible(true);
 					centerFrame(addRequestFrame);
-					addRequestFrame.setResizable(true);
+					addRequestFrame.setResizable(false);
 					addRequestFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					addRequestFrame.setBounds(400, 300, 400, 300);
+					addRequestFrame.setBounds(400, 300, 700, 300);
 
 					/* Action listener for when the add customer frame is closed */
 					addRequestFrame.addWindowListener(new WindowAdapter() {
@@ -725,17 +724,17 @@ public class Customers extends JPanel implements Tile {
 
 					JLabel issueStartLabel = new JLabel("Issue Start");
 					issueStartLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-					issueStartLabel.setBounds(214, 86, 78, 23);
+					issueStartLabel.setBounds(28, 138, 78, 23);
 					addRequestPanel.add(issueStartLabel);
 
 					JLabel issueEndLabel = new JLabel("Issue End");
 					issueEndLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-					issueEndLabel.setBounds(28, 138, 78, 23);
+					issueEndLabel.setBounds(214, 138, 151, 23);
 					addRequestPanel.add(issueEndLabel);
 
 					JLabel quantityLabel = new JLabel("Quantity");
 					quantityLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-					quantityLabel.setBounds(214, 138, 151, 23);
+					quantityLabel.setBounds(408, 138, 151, 23);
 					addRequestPanel.add(quantityLabel);
 
 					JLabel costLabel = new JLabel("Cost");
@@ -749,29 +748,29 @@ public class Customers extends JPanel implements Tile {
 					addRequestPanel.add(storeField);
 
 					JComboBox titleField = new JComboBox(titles);
-					titleField.setBounds(214, 48, 136, 20);
+					titleField.setBounds(214, 48, 400, 20);
 					titleField.setSelectedIndex(0);
 					addRequestPanel.add(titleField);
 
 					JTextField commentField = new JTextField();
 					commentField.setColumns(10);
-					commentField.setBounds(28, 109, 136, 20);
+					commentField.setBounds(28, 109, 644, 20);
 					addRequestPanel.add(commentField);
 					addRequestFrame.add(addRequestPanel);
 
 					JTextField issueStartField = new JTextField();
-					issueStartField.setBounds(214, 109, 136, 20);
+					issueStartField.setBounds(28, 160, 136, 20);
 					addRequestPanel.add(issueStartField);
 					issueStartField.setColumns(10);
 
 					JTextField issueEndField = new JTextField();
 					issueEndField.setColumns(10);
-					issueEndField.setBounds(28, 160, 136, 20);
+					issueEndField.setBounds(214, 160, 136, 20);
 					addRequestPanel.add(issueEndField);
 
 					JTextField quantityField = new JTextField();
 					quantityField.setColumns(10);
-					quantityField.setBounds(214, 160, 136, 20);
+					quantityField.setBounds(408, 160, 136, 20);
 					addRequestPanel.add(quantityField);
 
 					JTextField costField = new JTextField();
