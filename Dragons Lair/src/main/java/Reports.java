@@ -368,11 +368,11 @@ public class Reports extends JPanel implements Tile {
 		export_customers_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-			    String filePath = control.saveFile(monthly_breakdown, "Customers");
+			    String filePath = control.saveFile(monthly_breakdown, "Customers");  // Calls saveFile() in controller. Essentially opens file saver and gets save destination.
 			    if (filePath != null) {
-			    	String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};
-				    String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM Customer";
-				    control.exportXLSX(null, query, filePath, "Customers", columns);
+			    	String columns[] = {"Last Name", "First Name", "Phone #1", "Email"}; 		// Columns for your excel sheet
+				    String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM [newDLC].[dbo].[Customer]"; // Query matching the columns
+				    control.exportXLSX(null, query, filePath, "Customers", columns); 			// Calling export. Check the function for param values
 			    }
 			    
 			}
