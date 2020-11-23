@@ -174,10 +174,16 @@ public class Customers extends JPanel implements Tile {
 		add(customerScrollPane);
 		customersData = control.getCustomers();
 		customerColumns = new String[]{"Last Name", "First Name", "Phone Num", "Email", "Customer Code"};
-		customersModel = new DefaultTableModel(customersData, customerColumns);
+		customersModel = new DefaultTableModel(customersData, customerColumns) {
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+		        return false;
+		      }
+		};
+		
 		customerTable = new JTable(customersModel);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);
+		
 		
 		customerTable.getTableHeader().setReorderingAllowed(false);
 		customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
@@ -340,19 +346,11 @@ public class Customers extends JPanel implements Tile {
 
 					/* TODO: Code here to pull the new info and update database */
 
-					saveCustBtn.setEnabled(false);
-					editCustBtn.setEnabled(false);
-					discardBtn.setEnabled(false);
-
-					lNameBox.setEditable(false);
-					fNameBox.setEditable(false);
-					phoneBox.setEditable(false);
-					emailBox.setEditable(false);
-					ccodeBox.setEditable(false);
+					
 
 					
-					String emailpattern = "[a-zA-z0-9_.!#$%&'*+-/=?^_`{|}~;]+@[\\w]+.[\\w]+.{0,1}[\\w]+";
-					String phonepattern = "\\(\\d{3}\\)\\d{3}-\\d{4}";
+					String emailpattern = "^$|[a-zA-z0-9_.!#$%&'*+-/=?^_`{|}~;]+@[\\w]+\\.[\\w]+.{0,1}[\\w]";
+					String phonepattern = "^$|\\(\\d{3}\\)\\d{3}\\-\\d{4}";
 					
 					Pattern r = Pattern.compile(emailpattern);
 					Matcher m = r.matcher(emailBox.getText());
@@ -362,10 +360,19 @@ public class Customers extends JPanel implements Tile {
 						m = r.matcher(phoneBox.getText());
 			
 						if(m.find()) {
-						
-							//Update customer
+							saveCustBtn.setEnabled(false);
+							editCustBtn.setEnabled(false);
+							discardBtn.setEnabled(false);
+
+							lNameBox.setEditable(false);
+							fNameBox.setEditable(false);
+							phoneBox.setEditable(false);
+							emailBox.setEditable(false);
+							ccodeBox.setEditable(false);
+							
+							
 							control.updateCustomer(Integer.parseInt(ccodeBox.getText()), fNameBox.getText(), lNameBox.getText(), emailBox.getText(), phoneBox.getText());
-							//Reset model
+							
 							customersData = control.getCustomers();
 							customersModel.setDataVector(customersData, customerColumns);
 							customerTable.setModel(customersModel);
@@ -377,21 +384,18 @@ public class Customers extends JPanel implements Tile {
 							JOptionPane.showMessageDialog(null, "Changes have been saved!", "Message",
 									JOptionPane.PLAIN_MESSAGE);
 						}
-							
-						}
 						else {
-							JOptionPane.showMessageDialog(null, "Please enter a valid phone number! (XXX)XXX-XXXX", "Account Information",
+							JOptionPane.showMessageDialog(null, "Please enter a valid phone number or nothing! (XXX)XXX-XXXX", "Message",
 									JOptionPane.PLAIN_MESSAGE);
 						}
-						
-						
+							
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "Please enter a valid email!", "Account Information",
-								JOptionPane.PLAIN_MESSAGE);
-						
+						JOptionPane.showMessageDialog(null, "Please enter a valid email address!",
+								"Account Information", JOptionPane.PLAIN_MESSAGE);
 					}
-					
+						
+				}
 			}
 		});
 
@@ -980,4 +984,5 @@ public class Customers extends JPanel implements Tile {
 		pane.setText(message);
 		panel.add(pane);
 	}
+	
 }
