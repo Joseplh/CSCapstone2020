@@ -28,6 +28,8 @@ public class Customers extends JPanel implements Tile {
 	private DefaultTableModel reportsModel;
 	private String [][] reportsData; 
 	private String reportColumns[];
+	private JButton editDelSelectedBtn;
+	private final int orderIdcolumn = 4;
 	
 	private DefaultTableModel customersModel;
 	private String [][] customersData; 
@@ -62,11 +64,7 @@ public class Customers extends JPanel implements Tile {
 		add(AddCustBtn);
 
 		addRequestHandler();
-
-		JButton editDelSelectedBtn = new JButton("Edit/delete Selected");
-		editDelSelectedBtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		editDelSelectedBtn.setBounds(860, 411, 107, 48);
-		add(editDelSelectedBtn);
+		editDeleteOrderHandler();
 
 		JButton moreInfoBtn = new JButton("More Info");
 		moreInfoBtn.setEnabled(false);
@@ -194,8 +192,12 @@ public class Customers extends JPanel implements Tile {
 		reportsScrollPane.setBounds(455, 288, 395, 367);
 		add(reportsScrollPane);
 
-		reportColumns = new String[]{"Store Code", "Description", "Issue Start", "Issue End", "Quantity"};
-		reportsModel = new DefaultTableModel(reportsData, reportColumns);
+		reportColumns = new String[]{"Store Code", "Description", "Issue Start", "Issue End", "ID", "Quantity"};
+		reportsModel = new DefaultTableModel(reportsData, reportColumns) {
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		titleTable = new JTable(reportsModel);
 		titleTable.setAutoCreateRowSorter(true);
 		titleTable.getTableHeader().setReorderingAllowed(false);
@@ -205,7 +207,10 @@ public class Customers extends JPanel implements Tile {
 		titleTable.getColumnModel().getColumn(1).setPreferredWidth(200);
 		titleTable.getColumnModel().getColumn(2).setPreferredWidth(3);
 		titleTable.getColumnModel().getColumn(3).setPreferredWidth(3);
-		titleTable.getColumnModel().getColumn(4).setPreferredWidth(3);
+		titleTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+		titleTable.getColumnModel().getColumn(4).setMaxWidth(0);
+		titleTable.getColumnModel().getColumn(4).setWidth(0);
+		titleTable.getColumnModel().getColumn(5).setPreferredWidth(3);
 
 		/* Action listener for the add account button */
 		AddCustBtn.addActionListener(new ActionListener() {
@@ -427,6 +432,7 @@ public class Customers extends JPanel implements Tile {
 			public void mouseClicked(MouseEvent e) {
 
 				addRequestBtn.setEnabled(true);
+				editDelSelectedBtn.setEnabled(false);
 				moreInfoBtn.setEnabled(true);
 				reportsData = control.getRequests(
 						customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()
@@ -439,7 +445,10 @@ public class Customers extends JPanel implements Tile {
 				titleTable.getColumnModel().getColumn(1).setPreferredWidth(200);
 				titleTable.getColumnModel().getColumn(2).setPreferredWidth(3);
 				titleTable.getColumnModel().getColumn(3).setPreferredWidth(3);
-				titleTable.getColumnModel().getColumn(4).setPreferredWidth(3);
+				titleTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+				titleTable.getColumnModel().getColumn(4).setMaxWidth(0);
+				titleTable.getColumnModel().getColumn(4).setWidth(0);
+				titleTable.getColumnModel().getColumn(5).setPreferredWidth(3);
 
 				/*
 				 * If the text boxes displaying the customer information is editable, warn user
@@ -464,6 +473,17 @@ public class Customers extends JPanel implements Tile {
 					delCustBtn.setEnabled(true);
 				}
 
+			}
+		});
+		
+		/**
+		 * Handler for watching for a mouse click on a customers orders.
+		 */
+		titleTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				editDelSelectedBtn.setEnabled(true);
+				
 			}
 		});
 
@@ -883,7 +903,188 @@ public class Customers extends JPanel implements Tile {
 								titleTable.getColumnModel().getColumn(1).setPreferredWidth(200);
 								titleTable.getColumnModel().getColumn(2).setPreferredWidth(3);
 								titleTable.getColumnModel().getColumn(3).setPreferredWidth(3);
-								titleTable.getColumnModel().getColumn(4).setPreferredWidth(3);
+								titleTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+								titleTable.getColumnModel().getColumn(4).setMaxWidth(0);
+								titleTable.getColumnModel().getColumn(4).setWidth(0);
+								titleTable.getColumnModel().getColumn(5).setPreferredWidth(3);
+							} catch (Exception e) {
+								createMessage(addRequestFrame, addRequestPanel, "Request could not be created.");
+							}
+						}
+					});
+
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Handler for editing or deleting the customers order.
+	 */
+	private void editDeleteOrderHandler() {
+		editDelSelectedBtn = new JButton("Edit/delete Selected");
+		editDelSelectedBtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		editDelSelectedBtn.setBounds(860, 411, 107, 48);
+		editDelSelectedBtn.setEnabled(false);
+		add(editDelSelectedBtn);
+			    
+		editDelSelectedBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (editDelSelectedBtn.isEnabled()) {
+					String[] orderData = control.getOrder(Integer.parseInt((String) titleTable.getValueAt(titleTable.getSelectedRow(), orderIdcolumn)));					
+					String storeCode = orderData[0];
+					String customerCode = orderData[1];
+					String title = orderData[2];
+					String comments = orderData[3];
+					int issueStart = Integer.parseInt(orderData[4]);
+					int issueEnd = Integer.parseInt(orderData[5]);
+					int quantity = Integer.parseInt(orderData[6]);
+					float cost = Float.parseFloat(orderData[7]);
+					int id = Integer.parseInt(orderData[8]);
+					
+					String[] stores = {"dl1", "dl2"};
+					String[][] titles2D = control.getIndividualTitles();
+					String[] titles = new String[titles2D.length];
+
+					for (int i = 0; i < titles2D.length; i++) {
+						titles[i] = titles2D[i][0];
+					}
+
+					addRequestBtn.setEnabled(false);
+					JFrame addRequestFrame = new JFrame("Add Request");
+					addRequestFrame.setVisible(true);
+					centerFrame(addRequestFrame);
+					addRequestFrame.setResizable(false);
+					addRequestFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					addRequestFrame.setBounds(400, 300, 700, 300);
+
+					/* Action listener for when the add customer frame is closed */
+					addRequestFrame.addWindowListener(new WindowAdapter() {
+						@Override
+						public void windowClosing(WindowEvent e) {
+							addRequestBtn.setEnabled(true);
+						}
+					});
+
+					JPanel addRequestPanel = new JPanel();
+					centerFrame(addRequestPanel);
+					addRequestPanel.setLayout(null);
+
+					JLabel storeLabel = new JLabel("Store");
+					storeLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					storeLabel.setBounds(28, 25, 78, 23);
+					addRequestPanel.add(storeLabel);
+
+					JLabel titleLabel = new JLabel("Title");
+					titleLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					titleLabel.setBounds(214, 25, 78, 23);
+					addRequestPanel.add(titleLabel);
+
+					JLabel commentLabel = new JLabel("Comments");
+					commentLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					commentLabel.setBounds(28, 86, 151, 23);
+					addRequestPanel.add(commentLabel);
+
+					JLabel issueStartLabel = new JLabel("Issue Start");
+					issueStartLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					issueStartLabel.setBounds(28, 138, 78, 23);
+					addRequestPanel.add(issueStartLabel);
+
+					JLabel issueEndLabel = new JLabel("Issue End");
+					issueEndLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					issueEndLabel.setBounds(214, 138, 151, 23);
+					addRequestPanel.add(issueEndLabel);
+
+					JLabel quantityLabel = new JLabel("Quantity");
+					quantityLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					quantityLabel.setBounds(408, 138, 151, 23);
+					addRequestPanel.add(quantityLabel);
+
+					JLabel costLabel = new JLabel("Cost");
+					costLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					costLabel.setBounds(28, 200, 78, 23);
+					addRequestPanel.add(costLabel);
+
+					JComboBox storeField = new JComboBox(stores);
+					storeField.setBounds(28, 48, 136, 20);
+					storeField.setSelectedIndex(0);
+					addRequestPanel.add(storeField);
+
+					JComboBox titleField = new JComboBox(titles);
+					titleField.setBounds(214, 48, 400, 20);
+					titleField.setSelectedIndex(0);
+					addRequestPanel.add(titleField);
+
+					JTextField commentField = new JTextField(comments);
+					commentField.setColumns(10);
+					commentField.setBounds(28, 109, 644, 20);
+					addRequestPanel.add(commentField);
+					addRequestFrame.add(addRequestPanel);
+
+					JTextField issueStartField = new JTextField(String.valueOf(issueStart));
+					issueStartField.setBounds(28, 160, 136, 20);
+					addRequestPanel.add(issueStartField);
+					issueStartField.setColumns(10);
+
+					JTextField issueEndField = new JTextField(String.valueOf(issueEnd));
+					issueEndField.setColumns(10);
+					issueEndField.setBounds(214, 160, 136, 20);
+					addRequestPanel.add(issueEndField);
+
+					JTextField quantityField = new JTextField(String.valueOf(quantity));
+					quantityField.setColumns(10);
+					quantityField.setBounds(408, 160, 136, 20);
+					addRequestPanel.add(quantityField);
+
+					JTextField costField = new JTextField(String.valueOf(cost));
+					costField.setColumns(10);
+					costField.setBounds(28, 221, 136, 20);
+					addRequestPanel.add(costField);
+					addRequestFrame.add(addRequestPanel);
+
+					JButton editBtn = new JButton("Edit Request");
+					editBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					editBtn.setBounds(214, 220, 140, 25);
+					addRequestPanel.add(editBtn);
+
+					editBtn.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent event) {
+							try {
+								if (commentField.getText().equals("")) {
+									commentField.setText(null);
+								}
+								if (issueStartField.getText().equals("")) {
+									issueStartField.setText("-1");
+								}
+								if (issueEndField.getText().equals("")) {
+									issueEndField.setText("-1");
+								}
+								if (quantityField.getText().equals("")) {
+									quantityField.setText("-1");
+								}
+								if (costField.getText().equals("")) {
+									costField.setText("-1");
+								}
+
+								control.updateOrder(storeCode, customerCode,
+										(String) titleField.getSelectedItem(), commentField.getText(), Integer.parseInt(issueStartField.getText()), Integer.parseInt(issueEndField.getText()),
+										Integer.parseInt(quantityField.getText()), Float.parseFloat(costField.getText()), id);
+								createMessage(addRequestFrame, addRequestPanel, "Request updated successfully!");
+								reportsData = control.getRequests(
+										customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString());
+
+								reportsModel.setDataVector(reportsData, reportColumns);
+								titleTable.setModel(reportsModel);
+
+								titleTable.getColumnModel().getColumn(0).setPreferredWidth(3);
+								titleTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+								titleTable.getColumnModel().getColumn(2).setPreferredWidth(3);
+								titleTable.getColumnModel().getColumn(3).setPreferredWidth(3);
+								titleTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+								titleTable.getColumnModel().getColumn(4).setMaxWidth(0);
+								titleTable.getColumnModel().getColumn(4).setWidth(0);
+								titleTable.getColumnModel().getColumn(5).setPreferredWidth(3);
 							} catch (Exception e) {
 								createMessage(addRequestFrame, addRequestPanel, "Request could not be created.");
 							}
