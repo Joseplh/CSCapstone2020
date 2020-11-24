@@ -86,6 +86,15 @@ public class Controller {
 	public int deleteCustomer(int ccode) {
 		return insert("DELETE FROM Customer WHERE [Customer Code] = " + ccode);
 	}
+	
+	/**
+	 * Handler for deleting an individual order.
+	 * 
+	 * @param id The id of the order to delete.
+	 */
+	public void deleteOrder(int id) {
+		insert(String.format("DELETE FROM [newDLC].[dbo].[Order] WHERE ID=%d", id));
+	}
 
 	public int updateCustomer(int ccode, String first, String last, String email, String phone) {
 		return insert("UPDATE [newDLC].[dbo].[Customer] Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);

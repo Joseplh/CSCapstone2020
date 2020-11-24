@@ -1061,6 +1061,35 @@ public class Customers extends JPanel implements Tile {
 					editBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 					editBtn.setBounds(214, 220, 140, 25);
 					addRequestPanel.add(editBtn);
+					
+					JButton deleteBtn = new JButton("Delete Request");
+					deleteBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					deleteBtn.setBounds(407, 220, 140, 25);
+					addRequestPanel.add(deleteBtn);
+					
+					deleteBtn.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							control.deleteOrder(id);
+							createMessage(addRequestFrame, addRequestPanel, "Request deleted successfully!");
+							reportsData = control.getRequests(
+									customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString());
+
+							reportsModel.setDataVector(reportsData, reportColumns);
+							titleTable.setModel(reportsModel);
+
+							titleTable.getColumnModel().getColumn(0).setPreferredWidth(3);
+							titleTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+							titleTable.getColumnModel().getColumn(2).setPreferredWidth(3);
+							titleTable.getColumnModel().getColumn(3).setPreferredWidth(3);
+							titleTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+							titleTable.getColumnModel().getColumn(4).setMaxWidth(0);
+							titleTable.getColumnModel().getColumn(4).setWidth(0);
+							titleTable.getColumnModel().getColumn(5).setPreferredWidth(3);
+						}
+						
+					});
 
 					editBtn.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent event) {
