@@ -234,6 +234,7 @@ public class Controller {
 	 */
 	public String[][] getTimeSensitiveTitles() {
 		LocalDate today = LocalDate.now();
+		/* TODO: improved dating for month, pull issue and title columns */
 		return select("SELECT [Flag], [Release], [Description], [Distributor], [Catalog ID], [Unique Print] FROM Catalog WHERE MONTH(Release) = " + today.getMonthValue() + "OR MONTH(Release) = " + (today.getMonthValue() - 1) + "OR MONTH(Release) = " + (today.getMonthValue() + 1) + "AND YEAR(Release) = " + today.getYear());
 	}
 
@@ -243,7 +244,8 @@ public class Controller {
 	 * @return {String} 2D array of the titles from database.
 	 */
 	public String[][] getAllTitles() {
-		return select("SELECT [Flag], [Description], [Distributor], [Catalog ID], [Unique Print] FROM Catalog");
+		/* TODO: pull issue and title columns */
+		return select("SELECT [Flag], [Release], [Description], [Distributor], [Catalog ID], [Unique Print] FROM Catalog");
 	}
 
 	public void resetFlags() {

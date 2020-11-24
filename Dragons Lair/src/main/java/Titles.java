@@ -15,12 +15,14 @@ public class Titles extends JPanel implements Tile {
 	private static final long serialVersionUID = 1L;
 	private JTable titleTable;
 	private Controller control;
+	private JTextField descriptionField;
 	private JTextField titleField;
-	private JCheckBox uniqueCheck;
 	private JTextField distributorField;
 	private JTextField tCodeField;
-	private JCheckBox newReleaseCheck;
 	private JTextField releaseField;
+	private JTextField issueField;
+	private JCheckBox newReleaseCheck;
+	private JCheckBox uniqueCheck;
 	private Object[][] titlesData;
 	private DefaultTableModel titlesModel;
 
@@ -106,11 +108,23 @@ public class Titles extends JPanel implements Tile {
 		add(btnExportSingleTitle);
 
 		/* TextField deceleration */
+		descriptionField = new JTextField();
+		descriptionField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		descriptionField.setEditable(false);
+		descriptionField.setColumns(10);
+		descriptionField.setBounds(10, 43, 440, 33);
+		/* TODO: UI configuration
 		titleField = new JTextField();
 		titleField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		titleField.setEditable(false);
 		titleField.setColumns(10);
-		titleField.setBounds(10, 43, 440, 33);
+		titleField.setBounds(10, 43, 440, 33); */
+		/* TODO: UI configuration
+		issueField = new JTextField();
+		issueField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		issueField.setEditable(false);
+		issueField.setColumns(10);
+		issueField.setBounds(10, 43, 440, 33); */
 
 		uniqueCheck = new JCheckBox();
 		uniqueCheck.setEnabled(false);
@@ -141,9 +155,13 @@ public class Titles extends JPanel implements Tile {
 		releaseField.setBounds(350, 195, 100, 33);
 
 		/* Label deceleration */
-		JLabel lblTitle = new JLabel("Description");
+		JLabel lblDescription = new JLabel("Description");
+		lblDescription.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDescription.setBounds(10, 22, 82, 17);
+		/* TODO: UI configuration
+		JLabel lblTitle = new JLabel("Title");
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTitle.setBounds(10, 22, 82, 17);
+		lblTitle.setBounds(10, 22, 82, 17);*/
 
 		JLabel lblDistributor = new JLabel("Distributor");
 		lblDistributor.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -164,24 +182,33 @@ public class Titles extends JPanel implements Tile {
 		JLabel lblRelease = new JLabel("Release Date");
 		lblRelease.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblRelease.setBounds(350, 175, 82, 14);
+		/* TODO: UI configuration
+		JLabel lblIssue = new JLabel("Release Date");
+		lblIssue.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblIssue.setBounds(350, 175, 82, 14); */
 
-		titlePanel.add(titleField);
+		titlePanel.add(descriptionField);
+		//titlePanel.add(titleField);
 		titlePanel.add(uniqueCheck);
 		titlePanel.add(distributorField);
 		titlePanel.add(tCodeField);
 		titlePanel.add(newReleaseCheck);
 		titlePanel.add(releaseField);
-		titlePanel.add(lblTitle);
+		//titlePanel.add(issueField);
+		titlePanel.add(lblDescription);
 		titlePanel.add(lblDisctSub);
 		titlePanel.add(lblDistributor);
 		titlePanel.add(lblTCode);
 		titlePanel.add(lblFlag);
 		titlePanel.add(lblRelease);
+		//titlePanel.add(lblTitle);
+		//titlePanel.add(lblIssue);
 
 		/* Title Data */
 		titlesData = fetchTimedData();
 
 		/* Title Table Column Names */
+		/* TODO: update column names */
 		String titlesColumn[] = { "New", "Release", "Description", "Distributor", "Catalog ID", "Unique"};
 
 		JScrollPane titleScrollPane = new JScrollPane();
@@ -203,7 +230,7 @@ public class Titles extends JPanel implements Tile {
 		titleTable.setAutoCreateRowSorter(true);
 		titleTable.getTableHeader().setReorderingAllowed(false);
 		titleScrollPane.setViewportView(titleTable);
-
+		/* TODO: Set some columns invisible on table */
 		titleTable.getColumnModel().getColumn(0).setMinWidth(50); // Must be set before maxWidth!!
 		titleTable.getColumnModel().getColumn(0).setMaxWidth(50);
 		titleTable.getColumnModel().getColumn(0).setWidth(50);
@@ -221,7 +248,7 @@ public class Titles extends JPanel implements Tile {
 				 * If the text boxes displaying the title information is editable, warn user
 				 * to save the information
 				 */
-				if (titleField.isEditable()) {
+				if (descriptionField.isEditable()) {
 					JOptionPane.showMessageDialog(null,
 							"Please save or discard the changes made to the current title", "Save Warning",
 							JOptionPane.WARNING_MESSAGE);
@@ -229,9 +256,10 @@ public class Titles extends JPanel implements Tile {
 
 				/* Otherwise set the text boxes editable so the data can be changed */
 				else {
+					/* TODO: Get values for details fields from table */
 					int i = titleTable.getSelectedRow();
 					releaseField.setText((String) titleTable.getValueAt(i, 1));
-					titleField.setText((String) titleTable.getValueAt(i, 2));
+					descriptionField.setText((String) titleTable.getValueAt(i, 2));
 					distributorField.setText((String) titleTable.getValueAt(i,3));
 					tCodeField.setText((String) titleTable.getValueAt(i,4));
 
@@ -375,13 +403,13 @@ public class Titles extends JPanel implements Tile {
 					editTitleBtn.setEnabled(false);
 					discardBtn.setEnabled(false);
 					
-					titleField.setEditable(false);
+					descriptionField.setEditable(false);
 					distributorField.setEditable(false);
 					uniqueCheck.setEnabled(false);
 					newReleaseCheck.setEnabled(false);
-					releaseField.setEnabled(false);
+					releaseField.setEditable(false);
 
-					control.updateTitle(newReleaseCheck.isSelected(), titleField.getText(), releaseField.getText(), uniqueCheck.isSelected(), tCodeField.getText());
+					control.updateTitle(newReleaseCheck.isSelected(), descriptionField.getText(), releaseField.getText(), uniqueCheck.isSelected(), tCodeField.getText());
 
 					titlesData = fetchTimedData();
 					titlesModel.setDataVector(titlesData, titlesColumn);
@@ -410,7 +438,7 @@ public class Titles extends JPanel implements Tile {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				titleField.setEditable(true);
+				descriptionField.setEditable(true);
 				distributorField.setEditable(true);
 				newReleaseCheck.setEnabled(true);
 				uniqueCheck.setEnabled(true);
@@ -425,17 +453,17 @@ public class Titles extends JPanel implements Tile {
 		discardBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				titleField.setEditable(false);
+				descriptionField.setEditable(false);
 				distributorField.setEditable(false);
 				newReleaseCheck.setEnabled(false);
 				uniqueCheck.setEnabled(false);
-				releaseField.setEnabled(false);
+				releaseField.setEditable(false);
 				
 				discardBtn.setEnabled(false);
 				saveBtn.setEnabled(false);
 				
 				int i = titleTable.getSelectedRow();
-				titleField.setText((String) titleTable.getValueAt(i, 0));
+				descriptionField.setText((String) titleTable.getValueAt(i, 0));
 
 				
 			}
