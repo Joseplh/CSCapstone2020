@@ -380,6 +380,21 @@ public class Reports extends JPanel implements Tile {
 		});
 		
 		
+		//Monthly Title
+		export_titles_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                String filePath = control.saveFile(monthly_breakdown, "Titles");
+                if (filePath != null) {
+                    String columns[] = {"Title", "Customer", "Quantity"};
+                    String query = "SELECT [Title], [Customer Code], [Quantity] FROM [Order]";
+                    control.exportXLSX(null, query, filePath, "Titles", columns);
+                }
+
+            }
+        });
+		
+		
 		
 	}
 	
