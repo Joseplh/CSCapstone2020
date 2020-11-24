@@ -19,12 +19,16 @@ public class Titles extends JPanel implements Tile {
 	private JCheckBox disctSubField;
 	private JTextField distributorField;
 	private JTextField tCodeField;
-	private JCheckBox newReleaseField;
+	private JCheckBox releaseField;
 	private Object[][] titlesData;
 	private DefaultTableModel titlesModel;
 
-	private Object[][] fetchData(){
-		return titlesData = control.getTitles();
+	private Object[][] fetchTimedData(){
+		return titlesData = control.getTimeSensitiveTitles();
+	}
+
+	private Object[][] fetchAllData(){
+		return titlesData = control.getAllTitles();
 	}
 
 	public Titles(Controller control) {
@@ -58,10 +62,22 @@ public class Titles extends JPanel implements Tile {
 		editTitleBtn.setBounds(505, 63, 162, 33);
 		add(editTitleBtn);
 
+		JButton btnGetAllTitles = new JButton("Show All Titles");
+		btnGetAllTitles.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnGetAllTitles.setEnabled(true);
+		btnGetAllTitles.setBounds(505, 11, 142, 33);
+		add(btnGetAllTitles);
+
+		JButton btnGetTimedTitles = new JButton("Show Near Titles");
+		btnGetTimedTitles.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnGetTimedTitles.setEnabled(true);
+		btnGetTimedTitles.setBounds(663, 11, 142, 33);
+		add(btnGetTimedTitles);
+
 		JButton insertCSV = new JButton("Insert from CSV.");
 		insertCSV.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		insertCSV.setEnabled(true);
-		insertCSV.setBounds(802, 11, 162, 33);
+		insertCSV.setBounds(822, 11, 142, 33);
 		add(insertCSV);
 		
 		JButton delTitleBtn = new JButton("Delete");
@@ -85,16 +101,8 @@ public class Titles extends JPanel implements Tile {
 		JButton btnExportSingleTitle = new JButton("Export Requested\r\n");
 		btnExportSingleTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnExportSingleTitle.setEnabled(false);
-		btnExportSingleTitle.setBounds(782, 623, 162, 49);
+		btnExportSingleTitle.setBounds(782, 523, 162, 49);
 		add(btnExportSingleTitle);
-
-		/* TextArea deceleration
-		JTextArea txtrThisTitleCurrently = new JTextArea();
-		txtrThisTitleCurrently.setText("This Title Currently has 24\r\nCustomer Requests");
-		txtrThisTitleCurrently.setBackground(Color.LIGHT_GRAY);
-		txtrThisTitleCurrently.setBounds(517, 423, 230, 109);
-		add(txtrThisTitleCurrently);
-		*/
 
 		/* TextField deceleration */
 		titleField = new JTextField();
@@ -108,10 +116,10 @@ public class Titles extends JPanel implements Tile {
 		disctSubField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		disctSubField.setBounds(125, 177, 75, 33);
 
-		newReleaseField = new JCheckBox();
-		newReleaseField.setEnabled(false);
-		newReleaseField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		newReleaseField.setBounds(10, 177, 75, 33);
+		releaseField = new JCheckBox();
+		releaseField.setEnabled(false);
+		releaseField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		releaseField.setBounds(10, 177, 75, 33);
 
 		distributorField = new JTextField();
 		distributorField.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -126,7 +134,7 @@ public class Titles extends JPanel implements Tile {
 		tCodeField.setBounds(350, 112, 100, 33);
 
 		/* Label deceleration */
-		JLabel lblTitle = new JLabel("Title");
+		JLabel lblTitle = new JLabel("Description");
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblTitle.setBounds(10, 22, 82, 17);
 
@@ -150,7 +158,7 @@ public class Titles extends JPanel implements Tile {
 		titlePanel.add(disctSubField);
 		titlePanel.add(distributorField);
 		titlePanel.add(tCodeField);
-		titlePanel.add(newReleaseField);
+		titlePanel.add(releaseField);
 		titlePanel.add(lblTitle);
 		titlePanel.add(lblDisctSub);
 		titlePanel.add(lblDistributor);
@@ -158,10 +166,10 @@ public class Titles extends JPanel implements Tile {
 		titlePanel.add(lblNewRelease);
 
 		/* Title Data */
-		titlesData = fetchData();
+		titlesData = fetchTimedData();
 
 		/* Title Table Column Names */
-		String titlesColumn[] = { "New Release", "Description", "Distributor", "Catalog ID", "Disct? Sub"};
+		String titlesColumn[] = { "New Release", "Description", "Distributor", "Catalog ID", "Unique Print"};
 
 		JScrollPane titleScrollPane = new JScrollPane();
 		titleScrollPane.setBounds(10, 63, 459, 592);
@@ -200,8 +208,8 @@ public class Titles extends JPanel implements Tile {
 					distributorField.setText((String) titleTable.getValueAt(i,2));
 					tCodeField.setText((String) titleTable.getValueAt(i,3));
 
-					if (newReleaseField.isSelected()) {
-						newReleaseField.setSelected(false);
+					if (releaseField.isSelected()) {
+						releaseField.setSelected(false);
 					}
 					if (disctSubField.isSelected()) {
 						disctSubField.setSelected(false);
@@ -248,17 +256,17 @@ public class Titles extends JPanel implements Tile {
 
 					JLabel newDistributorLabel = new JLabel("Distributor");
 					newDistributorLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-					newDistributorLabel.setBounds(28, 76, 151, 23);
+					newDistributorLabel.setBounds(28, 69, 151, 23);
 					titlePanel.add(newDistributorLabel);
 
-					JLabel newDisctSubLabel = new JLabel("Disct? Sub");
-					newDisctSubLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-					newDisctSubLabel.setBounds(214, 76, 151, 23);
-					titlePanel.add(newDisctSubLabel);
+					JLabel newReleaseLabel = new JLabel("Release (YYYY-MM-DD)");
+					newReleaseLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					newReleaseLabel.setBounds(200, 69, 200, 23);
+					titlePanel.add(newReleaseLabel);
 
 					JLabel newTCodeLabel = new JLabel("Catalog ID");
 					newTCodeLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-					newTCodeLabel.setBounds(28, 116, 151, 23);
+					newTCodeLabel.setBounds(28, 110, 151, 23);
 					titlePanel.add(newTCodeLabel);
 
 
@@ -269,20 +277,19 @@ public class Titles extends JPanel implements Tile {
 					titlePanel.add(newTitleField);
 
 					JTextField newDistributorField = new JTextField();
-					newDistributorField.setBounds(28, 99, 136, 20);
+					newDistributorField.setBounds(28, 92, 136, 20);
 					newDistributorField.setColumns(10);
 					titlePanel.add(newDistributorField);
 
-					JTextField newDisctSubField = new JTextField();
-					newDisctSubField.setBounds(214, 99, 136, 20);
-					newDisctSubField.setColumns(10);
-					titlePanel.add(newDisctSubField);
+					JTextField newReleaseField = new JTextField();
+					newReleaseField.setBounds(200, 92, 136, 20);
+					newReleaseField.setColumns(10);
+					titlePanel.add(newReleaseField);
 
 					JTextField newTCodeField = new JTextField();
-					newTCodeField.setBounds(28, 139, 136, 20);
+					newTCodeField.setBounds(28, 133, 136, 20);
 					newTCodeField.setColumns(10);
 					titlePanel.add(newTCodeField);
-
 
 
 					JButton addTitlePanelBtn = new JButton("Add");
@@ -300,9 +307,9 @@ public class Titles extends JPanel implements Tile {
 					addTitlePanelBtn.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 
-							control.insertTitle(newTitleField.getText(), newDistributorField.getText(), newDisctSubField.getText(), newTCodeField.getText());
+							control.insertTitle(newTitleField.getText(), newDistributorField.getText(), newReleaseField.getText(), newTCodeField.getText());
 
-							titlesData = fetchData();
+							titlesData = fetchTimedData();
 							titlesModel.setDataVector(titlesData, titlesColumn);
 							titleTable.setModel(titlesModel);
 							titleTable.getTableHeader().setReorderingAllowed(false);
@@ -313,8 +320,6 @@ public class Titles extends JPanel implements Tile {
 							accAddedPanel.setBackground(new Color(240, 240, 240));
 							titlePanel.setVisible(false);
 							newTitlePanel.add(accAddedPanel);
-
-							/* Code to do something if the account is not added */
 
 							JTextArea txtrAccountHasBeen = new JTextArea();
 							txtrAccountHasBeen.setEditable(false);
@@ -347,11 +352,11 @@ public class Titles extends JPanel implements Tile {
 					distributorField.setEditable(false);
 					tCodeField.setEditable(false);
 					disctSubField.setEnabled(false);
-					newReleaseField.setEnabled(false);
+					releaseField.setEnabled(false);
 
-					control.updateTitle(newReleaseField.isSelected(), titleField.getText(), disctSubField.getText(), tCodeField.getText());
+					control.updateTitle(releaseField.isSelected(), titleField.getText(), disctSubField.isSelected(), tCodeField.getText());
 
-					titlesData = fetchData();
+					titlesData = fetchTimedData();
 					titlesModel.setDataVector(titlesData, titlesColumn);
 					titleTable.setModel(titlesModel);
 					titleTable.getTableHeader().setReorderingAllowed(false);
@@ -380,7 +385,7 @@ public class Titles extends JPanel implements Tile {
 
 				titleField.setEditable(true);
 				distributorField.setEditable(true);
-				newReleaseField.setEnabled(true);
+				releaseField.setEnabled(true);
 				disctSubField.setEnabled(true);
 
 				saveBtn.setEnabled(true);
@@ -394,7 +399,7 @@ public class Titles extends JPanel implements Tile {
 			public void mouseClicked(MouseEvent e) {
 				titleField.setEditable(false);
 				distributorField.setEditable(false);
-				newReleaseField.setEnabled(false);
+				releaseField.setEnabled(false);
 				disctSubField.setEnabled(false);
 				
 				discardBtn.setEnabled(false);
@@ -418,7 +423,7 @@ public class Titles extends JPanel implements Tile {
 
 					control.deleteTitle(tCodeField.getText());
 
-					titlesData = fetchData();
+					titlesData = fetchTimedData();
 					titlesModel.setDataVector(titlesData, titlesColumn);
 					titleTable.setModel(titlesModel);
 					titleTable.getTableHeader().setReorderingAllowed(false);
@@ -436,13 +441,33 @@ public class Titles extends JPanel implements Tile {
 
 					control.resetFlags();
 
-					titlesData = fetchData();
+					titlesData = fetchTimedData();
 					titlesModel.setDataVector(titlesData, titlesColumn);
 					titleTable.setModel(titlesModel);
 					titleTable.getTableHeader().setReorderingAllowed(false);
 
 					JOptionPane.showMessageDialog(null, "Flags Reset");
 				}
+			}
+		});
+
+		btnGetAllTitles.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				titlesData = fetchAllData();
+				titlesModel.setDataVector(titlesData, titlesColumn);
+				titleTable.setModel(titlesModel);
+				titleTable.getTableHeader().setReorderingAllowed(false);
+			}
+		});
+
+		btnGetTimedTitles.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				titlesData = fetchTimedData();
+				titlesModel.setDataVector(titlesData, titlesColumn);
+				titleTable.setModel(titlesModel);
+				titleTable.getTableHeader().setReorderingAllowed(false);
 			}
 		});
 	}

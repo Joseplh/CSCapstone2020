@@ -10,6 +10,7 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.time.LocalDate;
 
 public class Controller {
 
@@ -112,14 +113,14 @@ public class Controller {
 	/**
 	 * Returns the following columns from the customer table.
 	 *
-	 * @param title Title for the new title
-	 * @param distr Distributor for new title
-	 * @param sub   Distc Sub for new title
-	 * @param tCode Key for the title in the catalog table
+	 * @param title   Title for the new title
+	 * @param distr   Distributor for new title
+	 * @param release Release date of new title
+	 * @param tCode   Key for the title in the catalog table
 	 * @return {int} 	0 or row count, negative if error.
 	 */
-	public int insertTitle(String title, String distr, String sub, String tCode) {
-		return insert("INSERT INTO Catalog([Description], [Distributor], [Disct? Sub], [Calalog ID]) VALUES('" + title + "', '" + distr + "', '" + sub + "', '" + tCode + "')");
+	public int insertTitle(String title, String distr, String release, String tCode) {
+		return insert("INSERT INTO Catalog([Description], [Title], [Distributor], [Release], [Catalog ID]) VALUES('" + title + "', '" + title + "', '" + distr + "', '" + release + "', '" + tCode + "')");
 	}
 
 	/**
@@ -129,7 +130,7 @@ public class Controller {
 	 * @return {int} 	0 or row count, negative if error.
 	 */
 	public int deleteTitle(String tCode) {
-		return insert("DELETE FROM Catalog WHERE [Calalog ID] = '" + tCode + "'");
+		return insert("DELETE FROM Catalog WHERE [Catalog ID] = '" + tCode + "'");
 	}
 
 	/**
@@ -141,8 +142,8 @@ public class Controller {
 	 * @param tCode    Key for the title in the catalog table
 	 * @return {int}   0 or row count, negative if error.
 	 */
-	public int updateTitle(boolean flag, String title, String unique, String tCode) {
-		return insert("UPDATE Catalog Set [Form] = '" + flag + "', [Description] = '" + title + "', [Disct? Sub] = '" + unique + "' WHERE [Calalog ID] = '" + tCode + "'");
+	public int updateTitle(boolean flag, String title, boolean unique, String tCode) {
+		return insert("UPDATE Catalog Set [Flag] = '" + flag + "', [Description] = '" + title + "', [Unique Print] = '" + unique + "' WHERE [Catalog ID] = '" + tCode + "'");
 	}
 
 
@@ -193,12 +194,22 @@ public class Controller {
 	 *
 	 * @return {String} 2D array of the titles from database.
 	 */
-	public String[][] getTitles() {
-		return select("SELECT [Form], [Description], [Distributor], [Calalog ID], [Disct? Sub] FROM Catalog");
+	public String[][] getTimeSensitiveTitles() {
+		LocalDate today = LocalDate.now();
+		return select("SELECT [Flag], [Description], [Distributor], [Catalog ID], [Unique Print] FROM Catalog WHERE MONTH(Release) = " + today.getMonthValue() + "OR MONTH(Release) = " + (today.getMonthValue() - 1) + "OR MONTH(Release) = " + (today.getMonthValue() + 1) + "AND YEAR(Release) = " + today.getYear());
+	}
+
+	/**
+	 * Calls method to query the Titles from the database. Returns String[][].
+	 *
+	 * @return {String} 2D array of the titles from database.
+	 */
+	public String[][] getAllTitles() {
+		return select("SELECT [Flag], [Description], [Distributor], [Catalog ID], [Unique Print] FROM Catalog");
 	}
 
 	public void resetFlags() {
-		insert("UPDATE Catalog Set [Form] = '" + false + "'");
+		insert("UPDATE Catalog Set [Flag] = '" + false + "'");
 	}
 
 
@@ -340,6 +351,9 @@ public class Controller {
 			System.exit(0);
 		}
 		return false;
+
+
+
 	}
 
 	/**
