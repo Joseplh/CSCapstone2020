@@ -947,7 +947,7 @@ public class Customers extends JPanel implements Tile {
 					String[] orderData = control.getOrder(Integer.parseInt((String) titleTable.getValueAt(titleTable.getSelectedRow(), orderIdcolumn)));					
 					String storeCode = orderData[0];
 					String customerCode = orderData[1];
-					//String title = orderData[2]; unused
+					String title = orderData[2];
 					String comments = orderData[3];
 					int issueStart = Integer.parseInt(orderData[4]);
 					int issueEnd = Integer.parseInt(orderData[5]);
