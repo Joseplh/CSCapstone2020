@@ -137,13 +137,14 @@ public class Controller {
 	 * Returns the following columns from the customer table.
 	 *
 	 * @param flag     New value for new release column in table for given title
+	 * @param release  Updated release date for title
 	 * @param title    New title for a given title in the Catalog table
 	 * @param unique   New unique print value
 	 * @param tCode    Key for the title in the catalog table
 	 * @return {int}   0 or row count, negative if error.
 	 */
-	public int updateTitle(boolean flag, String title, boolean unique, String tCode) {
-		return insert("UPDATE Catalog Set [Flag] = '" + flag + "', [Description] = '" + title + "', [Unique Print] = '" + unique + "' WHERE [Catalog ID] = '" + tCode + "'");
+	public int updateTitle(boolean flag, String title, String release, boolean unique, String tCode) {
+		return insert("UPDATE Catalog Set [Flag] = '" + flag + "', [Description] = '" + title + "', [Release] = CAST('" + release + "' AS DATE), [Unique Print] = '" + unique + "' WHERE [Catalog ID] = '" + tCode + "'");
 	}
 
 
@@ -196,7 +197,7 @@ public class Controller {
 	 */
 	public String[][] getTimeSensitiveTitles() {
 		LocalDate today = LocalDate.now();
-		return select("SELECT [Flag], [Description], [Distributor], [Catalog ID], [Unique Print] FROM Catalog WHERE MONTH(Release) = " + today.getMonthValue() + "OR MONTH(Release) = " + (today.getMonthValue() - 1) + "OR MONTH(Release) = " + (today.getMonthValue() + 1) + "AND YEAR(Release) = " + today.getYear());
+		return select("SELECT [Flag], [Release], [Description], [Distributor], [Catalog ID], [Unique Print] FROM Catalog WHERE MONTH(Release) = " + today.getMonthValue() + "OR MONTH(Release) = " + (today.getMonthValue() - 1) + "OR MONTH(Release) = " + (today.getMonthValue() + 1) + "AND YEAR(Release) = " + today.getYear());
 	}
 
 	/**
@@ -351,8 +352,6 @@ public class Controller {
 			System.exit(0);
 		}
 		return false;
-
-
 
 	}
 
