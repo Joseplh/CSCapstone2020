@@ -24,7 +24,6 @@ public class lairGUI {
 	private Reports reports;
 	private Titles catalog;
 	private static Controller control;
-	private boolean loggedIn;
 	private static lairGUI window;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -44,7 +43,6 @@ public class lairGUI {
 		customers = new Customers(control);
 		reports = new Reports(control);
 		catalog = new Titles(control);
-		loggedIn = false;
 
 
 		initialize();

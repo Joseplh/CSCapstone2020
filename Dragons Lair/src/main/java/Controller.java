@@ -409,6 +409,7 @@ public class Controller {
 		int z = 0;
 
 
+		@SuppressWarnings("resource")//the workbook IS closed near end of method
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(name);
 
@@ -450,7 +451,6 @@ public class Controller {
 			confirmed = false;
 			e.printStackTrace();
 		}
-
 		return confirmed;
 	}
 

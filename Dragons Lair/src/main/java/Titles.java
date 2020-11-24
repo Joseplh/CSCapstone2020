@@ -189,6 +189,11 @@ public class Titles extends JPanel implements Tile {
 		add(titleScrollPane);
 
 		titlesModel = new DefaultTableModel(titlesData, titlesColumn)  {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
 				return false;
 			}

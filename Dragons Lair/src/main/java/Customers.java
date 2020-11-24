@@ -37,7 +37,7 @@ public class Customers extends JPanel implements Tile {
 	private int lastnameCodeColumn = 0;
 	private int firstnameCodeColumn = 1;
 	private int customerCodeColumn = 4;
-	private int storeCodeColumn;
+	//private int storeCodeColumn;  currently unused
 
 	private Font font = new Font("Tahoma", Font.BOLD, 14);
 	private Color color = new Color(240, 240, 240);
@@ -161,10 +161,10 @@ public class Customers extends JPanel implements Tile {
 
 
 		/* Customer Data */
-		String data[][] = control.getCustomers();
+		//String data[][] = control.getCustomers(); unused
 
 		/* Customer Table Column Names */
-		String column[] = {"Last Name", "First Name", "Phone Number", "Email", "Customer Code"};
+		//String column[] = {"Last Name", "First Name", "Phone Number", "Email", "Customer Code"}; unused
 
 		/* Adding the scroll bar to the customer Table */
 		JScrollPane customerScrollPane = new JScrollPane();
@@ -173,6 +173,11 @@ public class Customers extends JPanel implements Tile {
 		customersData = control.getCustomers();
 		customerColumns = new String[]{"Last Name", "First Name", "Phone Num", "Email", "Customer Code"};
 		customersModel = new DefaultTableModel(customersData, customerColumns) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
 		        return false;
 		      }
@@ -194,6 +199,11 @@ public class Customers extends JPanel implements Tile {
 
 		reportColumns = new String[]{"Store Code", "Description", "Issue Start", "Issue End", "ID", "Quantity"};
 		reportsModel = new DefaultTableModel(reportsData, reportColumns) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
@@ -598,7 +608,7 @@ public class Customers extends JPanel implements Tile {
 				moreInfoPanel.add(emailLabel);
 
 
-				JComboBox storeField = new JComboBox(stores);
+				JComboBox<?> storeField = new JComboBox<Object>(stores);
 				storeField.setBounds(28, 48, 136, 20);
 				storeField.setSelectedIndex(0);
 				moreInfoPanel.add(storeField);
@@ -827,12 +837,12 @@ public class Customers extends JPanel implements Tile {
 					costLabel.setBounds(28, 200, 78, 23);
 					addRequestPanel.add(costLabel);
 
-					JComboBox storeField = new JComboBox(stores);
+					JComboBox<?> storeField = new JComboBox<Object>(stores);
 					storeField.setBounds(28, 48, 136, 20);
 					storeField.setSelectedIndex(0);
 					addRequestPanel.add(storeField);
 
-					JComboBox titleField = new JComboBox(titles);
+					JComboBox<?> titleField = new JComboBox<Object>(titles);
 					titleField.setBounds(214, 48, 400, 20);
 					titleField.setSelectedIndex(0);
 					addRequestPanel.add(titleField);
@@ -935,7 +945,7 @@ public class Customers extends JPanel implements Tile {
 					String[] orderData = control.getOrder(Integer.parseInt((String) titleTable.getValueAt(titleTable.getSelectedRow(), orderIdcolumn)));					
 					String storeCode = orderData[0];
 					String customerCode = orderData[1];
-					String title = orderData[2];
+					//String title = orderData[2]; unused
 					String comments = orderData[3];
 					int issueStart = Integer.parseInt(orderData[4]);
 					int issueEnd = Integer.parseInt(orderData[5]);
@@ -1006,12 +1016,12 @@ public class Customers extends JPanel implements Tile {
 					costLabel.setBounds(28, 200, 78, 23);
 					addRequestPanel.add(costLabel);
 
-					JComboBox storeField = new JComboBox(stores);
+					JComboBox<?> storeField = new JComboBox<Object>(stores);
 					storeField.setBounds(28, 48, 136, 20);
 					storeField.setSelectedIndex(0);
 					addRequestPanel.add(storeField);
 
-					JComboBox titleField = new JComboBox(titles);
+					JComboBox<?> titleField = new JComboBox<Object>(titles);
 					titleField.setBounds(214, 48, 400, 20);
 					titleField.setSelectedIndex(0);
 					addRequestPanel.add(titleField);
@@ -1116,6 +1126,7 @@ public class Customers extends JPanel implements Tile {
 	 * @param width  the frame width.
 	 * @param height frame height.
 	 */
+	@SuppressWarnings("unused")//these methods are only visible locally, because of private tag
 	private void centerFrame(JComponent frame, int width, int height) {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setBounds(dim.width / 2 - width / 2, dim.height / 2 - height / 2, width, height);
@@ -1138,6 +1149,7 @@ public class Customers extends JPanel implements Tile {
 	 * @param width  the frame width.
 	 * @param height frame height.
 	 */
+	@SuppressWarnings("unused")//these methods are only visible locally, because of private tag
 	private void centerFrame(JFrame frame, int width, int height) {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setBounds(dim.width / 2 - width / 2, dim.height / 2 - height / 2, width, height);

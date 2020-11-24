@@ -1,8 +1,9 @@
 package main.java;
+
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.*;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
