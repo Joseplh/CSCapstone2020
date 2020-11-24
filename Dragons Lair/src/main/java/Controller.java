@@ -146,6 +146,16 @@ public class Controller {
 	public int updateTitle(boolean flag, String title, String release, boolean unique, String tCode) {
 		return insert("UPDATE Catalog Set [Flag] = '" + flag + "', [Description] = '" + title + "', [Release] = CAST('" + release + "' AS DATE), [Unique Print] = '" + unique + "' WHERE [Catalog ID] = '" + tCode + "'");
 	}
+	
+	/**
+	 * Handler for retrieving a single customer order.
+	 * 
+	 * @param id The order id to retrieve.
+	 * @return The order by id.
+	 */
+	public String[] getOrder(int id) {
+		return select(String.format("Select * FROM [newDLC].[dbo].[Order] WHERE ID=%d", id))[0];
+	}
 
 
 	/**
@@ -166,7 +176,25 @@ public class Controller {
 	public String[][] getCustomers() {
 		return select("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM [newDLC].[dbo].[Customer]");
 	}
-
+	
+	/**
+	 * Handler for updating an individual order in the database.
+	 *
+	 * @param storeCode    The unique store code.
+	 * @param customerCode The unique customer code.
+	 * @param title        The request title.
+	 * @param comments     Any additional comments.
+	 * @param issueStart   The first requested issue number (-1 means no specified start issue).
+	 * @param issueEnd     The last requested issue number (-1 means ongoing indefinitely).
+	 * @param quantity     The request quantity.
+	 * @param cost         The cost of the requested title.
+	 * @param id		   The order id.
+	 */
+	public void updateOrder(String storeCode, String customerCode, String title, String comments, int issueStart, int issueEnd, int quantity, float cost, int id) {
+		insert(String.format("UPDATE [newDLC].[dbo].[Order] SET [Store Code]='%s', [Customer Code]='%s', Title='%s', Comments='%s', "
+				+ "[Issue Start]=%d, [Issue End]=%d, Quantity=%d, Cost=%f WHERE ID=%d", storeCode, customerCode, title, comments, issueStart, issueEnd, quantity, cost, id));
+	}
+	
 	public String[][] getCustomerData(int customerCode) {
 		return select(String.format("SELECT [Store Code], [Last Name], [First Name], [Address-1], [City], [State], [ZIP], [Phone #1], [Phone #2], [Email] FROM [newDLC].[dbo].[Customer] WHERE [Customer Code] = %d", customerCode));
 	}
@@ -182,10 +210,10 @@ public class Controller {
 	 * @return {String[][]} 	Contains the given query ResultSet.
 	 */
 	public String[][] getRequests(String customerCode) {
-		return select(String.format("Select [Store Code], Title, [Issue Start], [Issue End],"
+		return select(String.format("Select [Store Code], Title, [Issue Start], [Issue End], ID"
 				+ " Quantity, Cost, Comments FROM [newDLC].[dbo].[Order] WHERE [Customer Code]=%s", customerCode));
 	}
-
+	
 	public String[][] getIndividualTitles() {
 		return select(String.format("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Catalog]"));
 	}
@@ -339,7 +367,7 @@ public class Controller {
 			System.exit(0);
 			
 		}	
-		
+
 		try {
 			rs = sqlStatement.executeQuery("SELECT CASE WHEN EXISTS ( SELECT * FROM [Account] WHERE [User] = '"+user+"' AND [Pass] = '"+pass+"')THEN CAST(1 AS BIT)ELSE CAST(0 AS BIT) END");
 			while(rs.next()) {
@@ -352,7 +380,6 @@ public class Controller {
 			System.exit(0);
 		}
 		return false;
-
 	}
 
 	/**
