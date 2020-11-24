@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Customers extends JPanel implements Tile {
 	/**
@@ -942,12 +944,24 @@ public class Customers extends JPanel implements Tile {
 					int quantity = Integer.parseInt(orderData[6]);
 					float cost = Float.parseFloat(orderData[7]);
 					int id = Integer.parseInt(orderData[8]);
+					int titleIndex = 0;
+					int storeIndex = 0;
 					
 					String[] stores = {"dl1", "dl2"};
 					String[][] titles2D = control.getIndividualTitles();
 					String[] titles = new String[titles2D.length];
-
+					
+					for (int i = 0; i < stores.length; i++) {
+						if (stores[i].equalsIgnoreCase(storeCode)) {
+							storeIndex = i;
+							break;
+						}
+					}
+	
 					for (int i = 0; i < titles2D.length; i++) {
+						if (titles2D[i][0].equalsIgnoreCase(title)) {
+							titleIndex = i;
+						}
 						titles[i] = titles2D[i][0];
 					}
 
@@ -1008,12 +1022,12 @@ public class Customers extends JPanel implements Tile {
 
 					JComboBox storeField = new JComboBox(stores);
 					storeField.setBounds(28, 48, 136, 20);
-					storeField.setSelectedIndex(0);
+					storeField.setSelectedIndex(storeIndex);
 					addRequestPanel.add(storeField);
 
 					JComboBox titleField = new JComboBox(titles);
 					titleField.setBounds(214, 48, 400, 20);
-					titleField.setSelectedIndex(0);
+					titleField.setSelectedIndex(titleIndex);
 					addRequestPanel.add(titleField);
 
 					JTextField commentField = new JTextField(comments);
@@ -1067,7 +1081,7 @@ public class Customers extends JPanel implements Tile {
 									costField.setText("-1");
 								}
 
-								control.updateOrder(storeCode, customerCode,
+								control.updateOrder((String) storeField.getSelectedItem(), customerCode,
 										(String) titleField.getSelectedItem(), commentField.getText(), Integer.parseInt(issueStartField.getText()), Integer.parseInt(issueEndField.getText()),
 										Integer.parseInt(quantityField.getText()), Float.parseFloat(costField.getText()), id);
 								createMessage(addRequestFrame, addRequestPanel, "Request updated successfully!");
