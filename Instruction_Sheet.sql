@@ -66,4 +66,14 @@ CREATE TABLE "Customer" (
   "Discount %" decimal(2,2),--deciaml allows for defined number sizes, in this case it can handle xx.xx numbers
   CONSTRAINT PK_Customer PRIMARY KEY CLUSTERED ("Customer Code")
 );
+
+CREATE TABLE "Account" (
+	"ID" int IDENTITY(1,1) Primary Key,
+	"User" varchar(20),
+	"Pass" varchar(20)
+);
+INSERT INTO "Account" ("User", "Pass")
+	VALUES('Joseplh', 'pass');
+select * from "Account";
+SELECT CASE WHEN EXISTS ( SELECT * FROM [Account] WHERE [User] = 'Joseplh' AND [Pass] = 'pass')THEN CAST(1 AS BIT)ELSE CAST(0 AS BIT) END
 --END A1
