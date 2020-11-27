@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
  
 public class lairGUI {
 	
@@ -100,7 +101,7 @@ public class lairGUI {
 				loginButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 				loginButton.setBounds(380, 120, 162, 33);
 				homeFrame.getContentPane().add(loginButton);
-				homeFrame.getRootPane().setDefaultButton(loginButton);
+				homeFrame.getRootPane().setDefaultButton(loginButton);				
 				
 				JLabel labelA = new JLabel("Username");
 				labelA.setBounds(30,80,162,33);
@@ -119,19 +120,26 @@ public class lairGUI {
 				userName.setColumns(10);
 				homeFrame.getContentPane().add(userName);
 
-				userPass = new JTextField();
-				userPass.setEditable(true);
-				userPass.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				userPass.setBounds(200, 120, 162, 33);
-				userPass.setColumns(10);
-				homeFrame.getContentPane().add(userPass);
+			//	userPass = new JTextField();
+			//	userPass.setEditable(true);
+			//	userPass.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			//	userPass.setBounds(200, 120, 162, 33);
+			//	userPass.setColumns(10);
+			//	homeFrame.getContentPane().add(userPass);
+				
+				JPasswordField passField = new JPasswordField();
+				passField.setBounds(200, 120, 162, 33);
+				passField.setColumns(10);
+				homeFrame.getContentPane().add(passField);
 				
 				loginButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
 						System.out.println(userName.getUIClassID());
 						if(loginButton.isEnabled()) {
-							if(control.isAccount(userName.getText(), Security.makeHash(userPass.getText()))) {
+							String passString = new String(passField.getPassword());
+							if(control.isAccount(userName.getText(), Security.makeHash(passString))) {
+								passString = null;								
 								System.out.println("Match");
 								window.homeFrame.setVisible(false);
 								window.frame.setVisible(true);
