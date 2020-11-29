@@ -211,6 +211,10 @@ public class Controller {
 	public String[][] getReports() {
 		return new String[0][0];
 	}
+	
+	public String[][] getOrdersByTitle(String title) {
+		return select(String.format("SELECT [Last Name], [First Name], [Quantity] FROM [newDLC].[dbo].[Order] AS [order] INNER JOIN (SELECT [Last Name], [First Name], [Customer Code] FROM [newDLC].[dbo].[Customer]) AS [customer] ON [order].[Customer Code] = [customer].[Customer Code] WHERE [order].[Title] = '%s'", title));
+	}
 
 	/**
 	 * Handler for fetching the requests for a given customer.

@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileFilter;
 import java.text.DateFormat;
@@ -12,11 +14,13 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 public class Reports extends JPanel implements Tile {
 	/**
@@ -24,6 +28,11 @@ public class Reports extends JPanel implements Tile {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Controller control;
+	private DefaultTableModel requestsModel;
+	private String [][] requestsData; 
+	private String requestColumns[];
+	private JTable title_request_table;
+	private final int titleColumn = 0;
 
 	public Reports(Controller control) {
 		this.control = control;
@@ -84,33 +93,7 @@ public class Reports extends JPanel implements Tile {
 				{"Badger","","14.99", "10", "10"},
 				{"Badger","","14.99", "10", "10"},
 				{"Badger","","14.99", "10", "10"}};    
-		
-		String da2[][]={ {"Schrack","Jesse","2"},    
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"},
-                {"Schrack","Jesse","2"}};    
-		
+				
 		String da3[][]={{"Badger","10","Y", "Y"},
 				{"Badger","10","Y", "Y"},
 				{"Badger","10","Y", "Y"},
@@ -188,8 +171,19 @@ public class Reports extends JPanel implements Tile {
 		titles_request_pane.setBounds(455, 225, 475, 369);
 		new_week_pulls.add(titles_request_pane);
 		
-		String col1[]={"Last Name","First Name","Qty"};   
-		JTable title_request_table = new JTable(da2, col1);
+		requestColumns = new String[] {"Last Name","First Name","Qty"};
+		requestsModel = new DefaultTableModel(requestsData, requestColumns) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		
+		title_request_table = new JTable(requestsModel);
 		title_request_table.setAutoCreateRowSorter(true);
 		titles_request_pane.setViewportView(title_request_table);
 		
@@ -364,6 +358,14 @@ public class Reports extends JPanel implements Tile {
 		monthly_breakdown.add(export_zeroRequests_btn);
 		
 		/* End of monthly breakdown */
+		
+		new_titles_table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String[][] orders = control.getOrdersByTitle(new_titles_table.getValueAt(new_titles_table.getSelectedRow(), titleColumn).toString());
+				requestsModel.setDataVector(orders, requestColumns);
+			}
+		});
 		
 		export_customers_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
