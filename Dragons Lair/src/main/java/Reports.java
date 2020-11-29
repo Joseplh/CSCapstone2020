@@ -33,6 +33,9 @@ public class Reports extends JPanel implements Tile {
 	private String requestColumns[];
 	private JTable title_request_table;
 	private final int titleColumn = 0;
+	private JLabel title_lbl = new JLabel();
+	private JLabel qty_lbl = new JLabel();
+	private JLabel number_customers_lbl = new JLabel();
 
 	public Reports(Controller control) {
 		this.control = control;
@@ -201,9 +204,6 @@ public class Reports extends JPanel implements Tile {
 		
 		// Labels for customer requests on new week pulls
 		JLabel lblCustomerRequestsFor = new JLabel("Customer Requests for:");
-		JLabel title_lbl = new JLabel("Flash, The");
-		JLabel qty_lbl = new JLabel("Total Qty: 5");
-		JLabel number_customers_lbl = new JLabel("# of Customers: 4");
 		
 		lblCustomerRequestsFor.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCustomerRequestsFor.setBounds(455, 133, 176, 14);
@@ -362,8 +362,18 @@ public class Reports extends JPanel implements Tile {
 		new_titles_table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String[][] orders = control.getOrdersByTitle(new_titles_table.getValueAt(new_titles_table.getSelectedRow(), titleColumn).toString());
+				String title = new_titles_table.getValueAt(new_titles_table.getSelectedRow(), titleColumn).toString();
+				String[][] orders = control.getOrdersByTitle(title);
 				requestsModel.setDataVector(orders, requestColumns);
+				int quantity = 0;
+				
+				for (String[] order : orders) {
+					quantity += Integer.parseInt(order[2]);
+				}
+				
+				title_lbl.setText(title);
+				qty_lbl.setText(String.format("Total Qty: %d", quantity));
+				number_customers_lbl.setText(String.format("# of Customers: %d", orders.length));
 			}
 		});
 		
