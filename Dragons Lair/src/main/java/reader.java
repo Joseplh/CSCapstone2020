@@ -196,10 +196,10 @@ public class reader {
 			if(colc.contains(" VAR"))
 				unique = true;
 			if(unique)
-				control.insert("INSERT INTO Catalog ([Catalog ID], Distributor, Description, Issue, [Unique Print], Flag, Title) "+
+				control.insert("INSERT INTO Catalog ([Catalog ID], Distributor, Title, Issue, [Unique Print], Flag, Series) "+
 							"VALUES('"+colb+"', '"+coli+"', '"+description+"', '"+issue+"', "+"1, 0, '"+ title + "');");
 			else
-				control.insert("INSERT INTO Catalog ([Catalog ID], Distributor, Description, Issue, [Unique Print], Flag, Title) "+
+				control.insert("INSERT INTO Catalog ([Catalog ID], Distributor, Title, Issue, [Unique Print], Flag, Series) "+
 							"VALUES('"+colb+"', '"+coli+"', '"+description+"', '"+issue+"', "+"0, 0, '"+ title + "');");
 		}
 		return 1;
