@@ -138,7 +138,13 @@ public class Reports extends JPanel implements Tile {
 				{"Badger","10","Y", "N"},
 				{"Badger","10","N", "Y"}};       
 		
-		
+		String titlesData[][] = control.getDistinctTitles();
+		int rows = titlesData.length;
+		String titlesData2[][]= new String[rows][4];
+		int i = 0;
+		for(i=0; i<rows; i++) {
+			System.out.println(titlesData[i][0]);
+		}
 		JTabbedPane reports_pane = new JTabbedPane(JTabbedPane.TOP);
 		reports_pane.setBounds(10, 11, 973, 644);
 		add(reports_pane);
@@ -165,7 +171,7 @@ public class Reports extends JPanel implements Tile {
 		new_titles_sp.setBounds(10, 87, 415, 507);
 		new_week_pulls.add(new_titles_sp);
 		
-		String col[]={"Title","Issue #","Price", "Qty", "# of Customers"}; 
+		String col[]={"Title","Issue #", "Qty", "# of Customers"}; 
 		JTable new_titles_table = new JTable(da1, col);
 		new_titles_table.setAutoCreateRowSorter(true);
 		new_titles_sp.setViewportView(new_titles_table);

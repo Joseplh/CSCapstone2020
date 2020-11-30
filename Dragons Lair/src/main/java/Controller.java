@@ -95,6 +95,11 @@ public class Controller {
 	public void deleteOrder(int id) {
 		insert(String.format("DELETE FROM [newDLC].[dbo].[Order] WHERE ID=%d", id));
 	}
+	
+	
+	public String[][] getDistinctTitles() {
+		return select("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Order]");
+	}
 
 	public int updateCustomer(int ccode, String first, String last, String email, String phone) {
 		return insert("UPDATE [newDLC].[dbo].[Customer] Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
@@ -129,7 +134,7 @@ public class Controller {
 	 * @return {int} 	0 or row count, negative if error.
 	 */
 	public int insertTitle(String title, String distr, String release, String tCode) {
-		return insert("INSERT INTO Catalog([Description], [Title], [Distributor], [Release], [Catalog ID]) VALUES('" + title + "', '" + title + "', '" + distr + "', '" + release + "', '" + tCode + "')");
+		return insert("INSERT INTO Catalog([Title], [Series], [Distributor], [Release], [Catalog ID]) VALUES('" + title + "', '" + title + "', '" + distr + "', '" + release + "', '" + tCode + "')");
 	}
 
 	/**
@@ -153,8 +158,9 @@ public class Controller {
 	 * @return {int}   0 or row count, negative if error.
 	 */
 	public int updateTitle(boolean flag, String title, String release, boolean unique, String tCode) {
-		return insert("UPDATE Catalog Set [Flag] = '" + flag + "', [Description] = '" + title + "', [Release] = CAST('" + release + "' AS DATE), [Unique Print] = '" + unique + "' WHERE [Catalog ID] = '" + tCode + "'");
+		return insert("UPDATE Catalog Set [Flag] = '" + flag + "', [Title] = '" + title + "', [Release] = CAST('" + release + "' AS DATE), [Unique Print] = '" + unique + "' WHERE [Catalog ID] = '" + tCode + "'");
 	}
+	
 	
 	/**
 	 * Handler for retrieving a single customer order.
@@ -239,7 +245,7 @@ public class Controller {
 	public String[][] getTimeSensitiveTitles() {
 		LocalDate today = LocalDate.now();
 		/* TODO: improved dating for month, pull issue and title columns */
-		return select("SELECT [Flag], [Release], [Description], [Distributor], [Catalog ID], [Unique Print] FROM Catalog WHERE MONTH(Release) = " + today.getMonthValue() + "OR MONTH(Release) = " + (today.getMonthValue() - 1) + "OR MONTH(Release) = " + (today.getMonthValue() + 1) + "AND YEAR(Release) = " + today.getYear());
+		return select("SELECT [Flag], [Release], [Title], [Distributor], [Catalog ID], [Unique Print] FROM Catalog WHERE MONTH(Release) = " + today.getMonthValue() + "OR MONTH(Release) = " + (today.getMonthValue() - 1) + "OR MONTH(Release) = " + (today.getMonthValue() + 1) + "AND YEAR(Release) = " + today.getYear());
 	}
 
 	/**
@@ -249,7 +255,7 @@ public class Controller {
 	 */
 	public String[][] getAllTitles() {
 		/* TODO: pull issue and title columns */
-		return select("SELECT [Flag], [Release], [Description], [Distributor], [Catalog ID], [Unique Print] FROM Catalog");
+		return select("SELECT [Flag], [Release], [Title], [Distributor], [Catalog ID], [Unique Print] FROM Catalog");
 	}
 
 	public void resetFlags() {
