@@ -98,7 +98,12 @@ public class Controller {
 		insert(String.format("DELETE FROM [newDLC].[dbo].[Order] WHERE ID=%d", id));
 	}
 	
-	
+	public String[][] getTitleDetails(String title){
+		return select("SELECT [Title], [Issue] FROM [newDLC].[dbo].[Catalog] WHERE [Title] = '" + title + "'");
+	}
+	public String[][] getQty(String title){
+		return select("SELECT [Quantity] FROM [newDLC].[dbo].[Order] WHERE [Title]='" + title +"'");
+	}
 	public String[][] getDistinctTitles() {
 		return select("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Order]");
 	}
@@ -183,7 +188,12 @@ public class Controller {
 	public boolean isConnected() {
 		return (dbConnection != null);
 	}
-
+	public String[][] getNumTitlesPendingIssue() {
+		return select("SELECT COUNT([Issue]) FROM [newDLC].[dbo].[Catalog] WHERE [Issue]='-1'");
+	}
+	public String[][] getNumTitles() {
+		return select("SELECT COUNT([Catalog ID]) FROM [newDLC].[dbo].[Catalog]");
+	}
 
 	/**
 	 * Returns the following columns from the customer table.

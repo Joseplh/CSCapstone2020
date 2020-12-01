@@ -141,10 +141,29 @@ public class Reports extends JPanel implements Tile {
 		String titlesData[][] = control.getDistinctTitles();
 		int rows = titlesData.length;
 		String titlesData2[][]= new String[rows][4];
+		String q1[][] = null;
+		String q2[][] = null;
 		int i = 0;
+		int z = 0;
+		int numCust = 0;
 		for(i=0; i<rows; i++) {
-			System.out.println(titlesData[i][0]);
+			//System.out.println(titlesData[i][0]);
+			q1 = control.getTitleDetails(titlesData[i][0]);
+			if(q1.length > 0) {
+				titlesData2[i][0] = q1[0][0];
+				titlesData2[i][1] = q1[0][1];
+				q2 = control.getQty(titlesData[i][0]);
+				numCust += q2.length;
+				int result=0;
+				for(z=0; z<q2.length; z++) {
+					result += Integer.parseInt(q2[z][0]);
+				}
+				titlesData2[i][2] = Integer.toString(result);
+				titlesData2[i][3] = Integer.toString(q2.length);
+			}
+			
 		}
+		
 		JTabbedPane reports_pane = new JTabbedPane(JTabbedPane.TOP);
 		reports_pane.setBounds(10, 11, 973, 644);
 		add(reports_pane);
@@ -172,7 +191,7 @@ public class Reports extends JPanel implements Tile {
 		new_week_pulls.add(new_titles_sp);
 		
 		String col[]={"Title","Issue #", "Qty", "# of Customers"}; 
-		JTable new_titles_table = new JTable(da1, col);
+		JTable new_titles_table = new JTable(titlesData2, col);
 		new_titles_table.setAutoCreateRowSorter(true);
 		new_titles_sp.setViewportView(new_titles_table);
 		
@@ -226,9 +245,13 @@ public class Reports extends JPanel implements Tile {
 		
 		// These labels are used to show the corresponding value from the DB
 		JLabel cur_flagged_lbl = new JLabel("1000");
+		cur_flagged_lbl.setText(Integer.toString(rows));
 		JLabel cur_flagged_cust_lbl = new JLabel("231");
-		JLabel trigger_issue_lbl = new JLabel("12");
+		cur_flagged_cust_lbl.setText(Integer.toString(numCust));
+		JLabel trigger_issue_lbl = new JLabel(control.getNumTitlesPendingIssue()[0][0]);
 		JLabel no_requests_lbl = new JLabel("14");
+		int amount = Integer.parseInt(control.getNumTitles()[0][0]) - rows;
+		no_requests_lbl.setText(Integer.toString(amount));
 
 		cur_flagged_lbl.setFont(new Font("Tahoma", Font.BOLD, 14));
 		cur_flagged_lbl.setBounds(10, 10, 47, 14);

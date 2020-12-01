@@ -101,11 +101,11 @@ public class Titles extends JPanel implements Tile {
 		saveBtn.setBounds(607, 413, 107, 33);
 		add(saveBtn);
 
-		JButton btnExportSingleTitle = new JButton("Export Requested\r\n");
-		btnExportSingleTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnExportSingleTitle.setEnabled(false);
-		btnExportSingleTitle.setBounds(782, 523, 162, 49);
-		add(btnExportSingleTitle);
+//		JButton btnExportSingleTitle = new JButton("Export Requested\r\n");
+//		btnExportSingleTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+//		btnExportSingleTitle.setEnabled(false);
+//		btnExportSingleTitle.setBounds(782, 523, 162, 49);
+//		add(btnExportSingleTitle);
 
 		/* TextField deceleration */
 		descriptionField = new JTextField();
