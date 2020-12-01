@@ -9,8 +9,8 @@ import java.net.URL;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Controller {
 
@@ -76,11 +76,13 @@ public class Controller {
 	public void addRequest(String storeCode, String customerCode, String title, String comments, int issueStart, int issueEnd, int quantity, float cost) {
 		// TODO: Add custom store code number
 		insert(String.format("INSERT INTO [newDLC].[dbo].[Order]([Store Code], [Customer Code], Title, Comments, "
-				+ "[Issue Start], [Issue End], Quantity, Cost) VALUES('%s', '%s', '%s', '%s', %d, %d, %d, %f)", storeCode, customerCode, title, comments, issueStart, issueEnd, quantity, cost));
+						+ "[Issue Start], [Issue End], Quantity, Cost) VALUES('%s', '%s', '%s', '%s', %d, %d, %d, %f)",
+				storeCode, customerCode, title, comments, issueStart, issueEnd, quantity, cost));
 	}
 	//altered the insert statements to directly return as opposed to a useless one: Joseph
 	public int insertCustomer(String first, String last, String email, String phone) {
-		return insert("INSERT INTO [newDLC].[dbo].[Customer]([Store Code], [Last Name], [First Name], [Email], [Phone #1]) VALUES('dl1', '" + last + "', '" + first + "', '" + email + "', '" + phone + "')");
+		return insert("INSERT INTO [newDLC].[dbo].[Customer]([Store Code], [Last Name], [First Name], [Email], [Phone #1]) VALUES('dl1', '"
+				+ last + "', '" + first + "', '" + email + "', '" + phone + "')");
 	}
 
 	public int deleteCustomer(int ccode) {

@@ -10,8 +10,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Customers extends JPanel implements Tile {
 	/**
@@ -904,7 +902,7 @@ public class Customers extends JPanel implements Tile {
 								control.addRequest((String) storeField.getSelectedItem(), customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString(),
 										(String) titleField.getSelectedItem(), commentField.getText(), Integer.parseInt(issueStartField.getText()), Integer.parseInt(issueEndField.getText()),
 										Integer.parseInt(quantityField.getText()), Float.parseFloat(costField.getText()));
-								createMessage(addRequestFrame, addRequestPanel, "Request successfully created!");
+								//createMessage(addRequestFrame, addRequestPanel, "Request successfully created!");
 								reportsData = control.getRequests(
 										customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString());
 
@@ -919,6 +917,13 @@ public class Customers extends JPanel implements Tile {
 								titleTable.getColumnModel().getColumn(4).setMaxWidth(0);
 								titleTable.getColumnModel().getColumn(4).setWidth(0);
 								titleTable.getColumnModel().getColumn(5).setPreferredWidth(3);
+
+								commentField.setText("");
+								issueStartField.setText("");
+								issueEndField.setText("");
+								quantityField.setText("");
+								costField.setText("");
+
 							} catch (Exception e) {
 								createMessage(addRequestFrame, addRequestPanel, "Request could not be created.");
 							}
