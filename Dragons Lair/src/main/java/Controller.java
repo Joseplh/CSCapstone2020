@@ -234,9 +234,15 @@ public class Controller {
 		return select(String.format("Select [Store Code], Title, [Issue Start], [Issue End], ID"
 				+ " Quantity, Cost, Comments FROM [newDLC].[dbo].[Order] WHERE [Customer Code]=%s", customerCode));
 	}
-	
-	public String[][] getIndividualTitles() {
-		return select(String.format("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Catalog]"));
+
+	public String[][] getIndividualTitles(String filter) {
+		if (filter == null) {
+			System.out.println("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Catalog]");
+			return select(String.format("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Catalog]"));
+		} else {
+			System.out.println("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Catalog] WHERE [Title] Like '%" + filter + "%'");
+			return select(String.format("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Catalog] WHERE [Title] Like '%%" + filter + "%%'"));
+		}
 	}
 
 	/**

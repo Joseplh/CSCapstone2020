@@ -10,6 +10,16 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+/*import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;*/
 
 public class Customers extends JPanel implements Tile {
 	/**
@@ -26,13 +36,14 @@ public class Customers extends JPanel implements Tile {
 	private Controller control;
 	private JButton addRequestBtn;
 	private DefaultTableModel reportsModel;
-	private String [][] reportsData; 
+	private String[][] reportsData;
 	private String reportColumns[];
 	private JButton editDelSelectedBtn;
+	private JButton emailCustomerBtn;
 	private final int orderIdcolumn = 4;
-	
+
 	private DefaultTableModel customersModel;
-	private String [][] customersData; 
+	private String[][] customersData;
 	private String customerColumns[];
 	private int lastnameCodeColumn = 0;
 	private int firstnameCodeColumn = 1;
@@ -65,6 +76,7 @@ public class Customers extends JPanel implements Tile {
 
 		addRequestHandler();
 		editDeleteOrderHandler();
+		emailCustomerHandler();
 
 		JButton moreInfoBtn = new JButton("More Info");
 		moreInfoBtn.setEnabled(false);
@@ -174,7 +186,7 @@ public class Customers extends JPanel implements Tile {
 		customerColumns = new String[]{"Last Name", "First Name", "Phone Num", "Email", "Customer Code"};
 		customersModel = new DefaultTableModel(customersData, customerColumns) {
 			/**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = 1L;
 
@@ -182,12 +194,12 @@ public class Customers extends JPanel implements Tile {
 		        return false;
 		      }
 		};
-		
+
 		customerTable = new JTable(customersModel);
 		customerTable.setAutoCreateRowSorter(true);
 		customerScrollPane.setViewportView(customerTable);
-		
-		
+
+
 		customerTable.getTableHeader().setReorderingAllowed(false);
 		customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
 		customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
@@ -200,7 +212,7 @@ public class Customers extends JPanel implements Tile {
 		reportColumns = new String[]{"Store Code", "Description", "Issue Start", "Issue End", "ID", "Quantity"};
 		reportsModel = new DefaultTableModel(reportsData, reportColumns) {
 			/**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = 1L;
 
@@ -299,25 +311,25 @@ public class Customers extends JPanel implements Tile {
 					addAcc.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 
-							
-								
+
+
 							String emailpattern = "[a-zA-z0-9_.!#$%&'*+-/=?^_`{|}~;]+@[\\w]+.[\\w]+.{0,1}[\\w]+";
 							String phonepattern = "\\(\\d{3}\\)\\d{3}-\\d{4}";
-							
+
 							Pattern r = Pattern.compile(emailpattern);
 							Matcher m = r.matcher(emailAccField.getText());
-							
+
 							if(m.find()) {
 								r = Pattern.compile(phonepattern);
 								m = r.matcher(phoneAccField.getText());
-					
+
 								if(m.find()) {
 									// Get rid of the add account panel we used
 									newAcc.dispose();
 									//Insert customer
 									control.insertCustomer(fnameAccField.getText(), lnameAccField.getText(),
 											emailAccField.getText(), phoneAccField.getText());
-									
+
 									AddCustBtn.setEnabled(true);
 									//Reset model
 									customersData = control.getCustomers();
@@ -327,22 +339,22 @@ public class Customers extends JPanel implements Tile {
 									customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
 									customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
 									customerTable.getColumnModel().getColumn(4).setWidth(0);
-									
+
 								}
 								else {
 									JOptionPane.showMessageDialog(null, "Please enter a valid phone number! (XXX)XXX-XXXX", "Account Information",
 											JOptionPane.PLAIN_MESSAGE);
 								}
-								
-								
+
+
 							}
 							else {
 								JOptionPane.showMessageDialog(null, "Please enter a valid email!", "Account Information",
 										JOptionPane.PLAIN_MESSAGE);
-								
+
 							}
-							
-							
+
+
 
 						}
 					});
@@ -361,19 +373,19 @@ public class Customers extends JPanel implements Tile {
 
 					/* TODO: Code here to pull the new info and update database */
 
-					
 
-					
+
+
 					String emailpattern = "^$|[a-zA-z0-9_.!#$%&'*+-/=?^_`{|}~;]+@[\\w]+\\.[\\w]+.{0,1}[\\w]";
 					String phonepattern = "^$|\\(\\d{3}\\)\\d{3}\\-\\d{4}";
-					
+
 					Pattern r = Pattern.compile(emailpattern);
 					Matcher m = r.matcher(emailBox.getText());
-					
+
 					if(m.find()) {
 						r = Pattern.compile(phonepattern);
 						m = r.matcher(phoneBox.getText());
-			
+
 						if(m.find()) {
 							saveCustBtn.setEnabled(false);
 							editCustBtn.setEnabled(false);
@@ -384,10 +396,10 @@ public class Customers extends JPanel implements Tile {
 							phoneBox.setEditable(false);
 							emailBox.setEditable(false);
 							ccodeBox.setEditable(false);
-							
-							
+
+
 							control.updateCustomer(Integer.parseInt(ccodeBox.getText()), fNameBox.getText(), lNameBox.getText(), emailBox.getText(), phoneBox.getText());
-							
+
 							customersData = control.getCustomers();
 							customersModel.setDataVector(customersData, customerColumns);
 							customerTable.setModel(customersModel);
@@ -395,7 +407,7 @@ public class Customers extends JPanel implements Tile {
 							customerTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
 							customerTable.getColumnModel().getColumn(4).setMaxWidth(0);
 							customerTable.getColumnModel().getColumn(4).setWidth(0);
-							
+
 							JOptionPane.showMessageDialog(null, "Changes have been saved!", "Message",
 									JOptionPane.PLAIN_MESSAGE);
 						}
@@ -403,13 +415,13 @@ public class Customers extends JPanel implements Tile {
 							JOptionPane.showMessageDialog(null, "Please enter a valid phone number or nothing! (XXX)XXX-XXXX", "Message",
 									JOptionPane.PLAIN_MESSAGE);
 						}
-							
+
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Please enter a valid email address!",
 								"Account Information", JOptionPane.PLAIN_MESSAGE);
 					}
-						
+
 				}
 			}
 		});
@@ -485,7 +497,7 @@ public class Customers extends JPanel implements Tile {
 
 			}
 		});
-		
+
 		/**
 		 * Handler for watching for a mouse click on a customers orders.
 		 */
@@ -493,7 +505,7 @@ public class Customers extends JPanel implements Tile {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				editDelSelectedBtn.setEnabled(true);
-				
+
 			}
 		});
 
@@ -768,14 +780,14 @@ public class Customers extends JPanel implements Tile {
 		addRequestBtn.setBounds(860, 339, 107, 48);
 		addRequestBtn.setEnabled(false);
 		add(addRequestBtn);
-			    
+
 		addRequestBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (addRequestBtn.isEnabled()) {
 
 					String[] stores = {"dl1", "dl2"};
-					String[][] titles2D = control.getIndividualTitles();
+					String[][] titles2D = control.getIndividualTitles(null);
 					String[] titles = new String[titles2D.length];
 
 					for (int i = 0; i < titles2D.length; i++) {
@@ -842,8 +854,14 @@ public class Customers extends JPanel implements Tile {
 					storeField.setSelectedIndex(0);
 					addRequestPanel.add(storeField);
 
+					JTextField titleFilterField = new JTextField();
+					titleFilterField.setColumns(10);
+					titleFilterField.setBounds(214, 48, 644, 20);
+					addRequestPanel.add(titleFilterField);
+					addRequestFrame.add(addRequestPanel);
+
 					JComboBox<?> titleField = new JComboBox<Object>(titles);
-					titleField.setBounds(214, 48, 400, 20);
+					titleField.setBounds(214, 72, 400, 20);
 					titleField.setSelectedIndex(0);
 					addRequestPanel.add(titleField);
 
@@ -873,6 +891,28 @@ public class Customers extends JPanel implements Tile {
 					costField.setBounds(28, 221, 136, 20);
 					addRequestPanel.add(costField);
 					addRequestFrame.add(addRequestPanel);
+
+					titleFilterField.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent event) {
+							try {
+								String[][] titles2DFilter = control.getIndividualTitles(titleFilterField.getText());
+								String[] titlesFilter = new String[titles2DFilter.length];
+								System.out.println(titlesFilter.length);
+
+								for (int i = 0; i < titles2DFilter.length; i++) {
+									titlesFilter[i] = titles2DFilter[i][0];
+									System.out.println(titlesFilter[i]);
+								}
+
+								DefaultComboBoxModel model = new DefaultComboBoxModel(titlesFilter);
+								titleField.setModel(model);
+
+							} catch (Exception e) {
+								System.out.println("Error");
+								e.printStackTrace();
+							}
+						}
+					});
 
 					JButton addBtn = new JButton("Add Request");
 					addBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -934,7 +974,156 @@ public class Customers extends JPanel implements Tile {
 			}
 		});
 	}
-	
+
+	/**
+	 * Handler for editing or deleting the customers order.
+	 */
+	private void emailCustomerHandler() {
+		emailCustomerBtn = new JButton("Email Customer");
+		emailCustomerBtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		emailCustomerBtn.setBounds(860, 483, 107, 48);
+		emailCustomerBtn.setEnabled(true);
+		add(emailCustomerBtn);
+
+		emailCustomerBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (emailCustomerBtn.isEnabled()) {
+
+					emailCustomerBtn.setEnabled(false);
+					JFrame emailCustomerFrame = new JFrame("Email Customer?");
+					emailCustomerFrame.setVisible(true);
+					centerFrame(emailCustomerFrame);
+					emailCustomerFrame.setResizable(false);
+					emailCustomerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					emailCustomerFrame.setBounds(400, 300, 700, 300);
+
+					/* Action listener for when the add customer frame is closed */
+					emailCustomerFrame.addWindowListener(new WindowAdapter() {
+						@Override
+						public void windowClosing(WindowEvent e) {
+							emailCustomerBtn.setEnabled(true);
+						}
+					});
+
+					JPanel emailCustomerPanel = new JPanel();
+					LayoutManager layout = new FlowLayout();
+					emailCustomerPanel.setLayout(layout);
+
+					JButton yesBtn = new JButton("Yes");
+					yesBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					yesBtn.setBounds(20, 20, 140, 25);
+					//centerComponentHorizontal(addRequestPanel, addBtn, addRequestPanel.getHeight() - 75, 140, 25);
+					emailCustomerPanel.add(yesBtn);
+
+					JButton noBtn = new JButton("No");
+					noBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					noBtn.setBounds(214, 220, 140, 25);
+					//centerComponentHorizontal(addRequestPanel, addBtn, addRequestPanel.getHeight() - 75, 140, 25);
+					emailCustomerPanel.add(noBtn);
+
+					int result = JOptionPane.showConfirmDialog(emailCustomerFrame, "Email Customer?", "Email Customer?",
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE);
+					if (result == JOptionPane.YES_OPTION) {
+						/*
+						String to="jncunningham@unomaha.edu";
+						String from="jncunningham@unomaha.edu";
+
+						Properties props = new Properties();
+						Session session = Session.getDefaultInstance(props, null);
+
+						String msgBody = "Sending email using JavaMail API...";
+
+						try {
+							Message msg = new MimeMessage(session);
+							msg.setFrom(new InternetAddress(from, "NoReply"));
+							msg.addRecipient(Message.RecipientType.TO,
+									new InternetAddress(to, "Mr. Recipient"));
+							msg.setSubject("Welcome To Java Mail API");
+							msg.setText(msgBody);
+							Transport.send(msg);
+							System.out.println("Email sent successfully...");
+
+						} catch (AddressException ex) {
+							throw new RuntimeException(ex);
+						} catch (MessagingException ex) {
+							throw new RuntimeException(ex);
+						} catch (UnsupportedEncodingException unsupportedEncodingException) {
+							unsupportedEncodingException.printStackTrace();
+						}*/
+					} else if (result == JOptionPane.NO_OPTION) {
+
+					} else {
+
+					}
+
+
+					emailCustomerPanel.add(yesBtn);
+					emailCustomerPanel.add(noBtn);
+					emailCustomerFrame.getContentPane().add(emailCustomerPanel, BorderLayout.CENTER);
+
+					/*JButton yesBtn = new JButton("Yes");
+					yesBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					yesBtn.setBounds(20, 20, 140, 25);
+					//centerComponentHorizontal(addRequestPanel, addBtn, addRequestPanel.getHeight() - 75, 140, 25);
+					emailCustomerPanel.add(yesBtn);
+
+					JButton noBtn = new JButton("No");
+					noBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					noBtn.setBounds(214, 220, 140, 25);
+					//centerComponentHorizontal(addRequestPanel, addBtn, addRequestPanel.getHeight() - 75, 140, 25);
+					emailCustomerPanel.add(noBtn);
+
+					yesBtn.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent event) {
+							try {
+
+								String to = "jncunningham@unomaha.edu";
+
+								// Sender's email ID needs to be mentioned
+								String from = "jncunningham@unomaha.edu";
+
+								// Assuming you are sending email from localhost
+								String host = "localhost";
+
+								// Get system properties
+								Properties properties = System.getProperties();
+
+								// Setup mail server
+								properties.setProperty("mail.smtp.host", host);
+
+								Session session = Session.getDefaultInstance(properties);
+
+								Message message = new MimeMessage(session);
+								message.setFrom(new InternetAddress(from));
+								message.setRecipients(
+										Message.RecipientType.TO, InternetAddress.parse(to));
+								message.setSubject("Mail Subject");
+
+								String msg = "This is my first email using JavaMailer";
+
+								MimeBodyPart mimeBodyPart = new MimeBodyPart();
+								mimeBodyPart.setContent(msg, "text/html");
+
+								Multipart multipart = new MimeMultipart();
+								multipart.addBodyPart(mimeBodyPart);
+
+								message.setContent(multipart);
+
+								Transport.send(message);
+
+							} catch (Exception e) {
+
+							}
+						}
+					});*/
+
+				}
+			}
+		});
+	}
+
 	/**
 	 * Handler for editing or deleting the customers order.
 	 */
@@ -944,12 +1133,12 @@ public class Customers extends JPanel implements Tile {
 		editDelSelectedBtn.setBounds(860, 411, 107, 48);
 		editDelSelectedBtn.setEnabled(false);
 		add(editDelSelectedBtn);
-			    
+
 		editDelSelectedBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (editDelSelectedBtn.isEnabled()) {
-					String[] orderData = control.getOrder(Integer.parseInt((String) titleTable.getValueAt(titleTable.getSelectedRow(), orderIdcolumn)));					
+					String[] orderData = control.getOrder(Integer.parseInt((String) titleTable.getValueAt(titleTable.getSelectedRow(), orderIdcolumn)));
 					String storeCode = orderData[0];
 					String customerCode = orderData[1];
 					String title = orderData[2];
@@ -961,18 +1150,18 @@ public class Customers extends JPanel implements Tile {
 					int id = Integer.parseInt(orderData[8]);
 					int titleIndex = 0;
 					int storeIndex = 0;
-					
+
 					String[] stores = {"dl1", "dl2"};
-					String[][] titles2D = control.getIndividualTitles();
+					String[][] titles2D = control.getIndividualTitles(null);
 					String[] titles = new String[titles2D.length];
-					
+
 					for (int i = 0; i < stores.length; i++) {
 						if (stores[i].equalsIgnoreCase(storeCode)) {
 							storeIndex = i;
 							break;
 						}
 					}
-	
+
 					for (int i = 0; i < titles2D.length; i++) {
 						if (titles2D[i][0].equalsIgnoreCase(title)) {
 							titleIndex = i;
@@ -1076,12 +1265,12 @@ public class Customers extends JPanel implements Tile {
 					editBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 					editBtn.setBounds(214, 220, 140, 25);
 					addRequestPanel.add(editBtn);
-					
+
 					JButton deleteBtn = new JButton("Delete Request");
 					deleteBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 					deleteBtn.setBounds(407, 220, 140, 25);
 					addRequestPanel.add(deleteBtn);
-					
+
 					deleteBtn.addActionListener(new ActionListener() {
 
 						@Override
@@ -1103,7 +1292,7 @@ public class Customers extends JPanel implements Tile {
 							titleTable.getColumnModel().getColumn(4).setWidth(0);
 							titleTable.getColumnModel().getColumn(5).setPreferredWidth(3);
 						}
-						
+
 					});
 
 					editBtn.addActionListener(new ActionListener() {
@@ -1156,7 +1345,7 @@ public class Customers extends JPanel implements Tile {
 
 	/**
 	 * Handler to center a JComponent.
-	 * 
+	 *
 	 * @param frame     The components frame.
 	 * @param component The component to center.
 	 * @param y         The y coordinate.
@@ -1182,7 +1371,7 @@ public class Customers extends JPanel implements Tile {
 
 	/**
 	 * Handler for center the frame on the screen.
-	 * 
+	 *
 	 * @param frame The frame to center.
 	 */
 	private void centerFrame(JComponent frame) {
@@ -1205,7 +1394,7 @@ public class Customers extends JPanel implements Tile {
 
 	/**
 	 * Handler for center the frame on the screen.
-	 * 
+	 *
 	 * @param frame The frame to center.
 	 */
 	private void centerFrame(JFrame frame) {
@@ -1215,7 +1404,7 @@ public class Customers extends JPanel implements Tile {
 
 	/**
 	 * Handler to create a successful message.
-	 * 
+	 *
 	 * @param frame     The component frame.
 	 * @param component The component to display the message.
 	 * @param message   The message to display.
@@ -1245,5 +1434,5 @@ public class Customers extends JPanel implements Tile {
 		pane.setText(message);
 		panel.add(pane);
 	}
-	
+
 }
