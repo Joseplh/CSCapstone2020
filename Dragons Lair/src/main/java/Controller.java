@@ -237,11 +237,11 @@ public class Controller {
 
 	public String[][] getIndividualTitles(String filter) {
 		if (filter == null) {
-			System.out.println("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Catalog]");
-			return select(String.format("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Catalog]"));
+			System.out.println("SELECT DISTINCT [Series] FROM [newDLC].[dbo].[Catalog]");
+			return select(String.format("SELECT DISTINCT [Series] FROM [newDLC].[dbo].[Catalog]"));
 		} else {
-			System.out.println("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Catalog] WHERE [Title] Like '%" + filter + "%'");
-			return select(String.format("SELECT DISTINCT [Title] FROM [newDLC].[dbo].[Catalog] WHERE [Title] Like '%%" + filter + "%%'"));
+			System.out.println("SELECT DISTINCT [Series] FROM [newDLC].[dbo].[Catalog] WHERE [Series] Like '%" + filter + "%'");
+			return select(String.format("SELECT DISTINCT [Series] FROM [newDLC].[dbo].[Catalog] WHERE [Series] Like '%%" + filter + "%%'"));
 		}
 	}
 
