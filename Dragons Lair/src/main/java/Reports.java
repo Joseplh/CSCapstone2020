@@ -401,6 +401,21 @@ public class Reports extends JPanel implements Tile {
             }
         });
 		
+		/* flagged  skeleton
+		export_flagged_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                String filePath = control.saveFile(monthly_breakdown, "Titles");
+                if (filePath != null) {
+                    String columns[] = {};
+                    String query = "";
+                    control.exportXLSX(null, query, filePath, "Titles", columns);
+                }
+
+            }
+        }); */
+		
+		
 		
 		
 	}
