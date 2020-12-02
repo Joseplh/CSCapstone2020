@@ -219,15 +219,25 @@ public class Controller {
 	public String[][] getReports() {
 		return new String[0][0];
 	}
-	
+
 	public String[][] getOrdersByTitle(String title) {
 		return select(String.format("SELECT [Last Name], [First Name], [Quantity] FROM [newDLC].[dbo].[Order] AS [order] INNER JOIN (SELECT [Last Name], [First Name], [Customer Code] FROM [newDLC].[dbo].[Customer]) AS [customer] ON [order].[Customer Code] = [customer].[Customer Code] WHERE [order].[Title] = '%s'", title));
+	}
+
+	public String[] getCustomerOrders(int customerCode) {
+		String[][] orders2D = select(String.format("SELECT [Title] FROM [newDLC].[dbo].[Order] WHERE [Customer Code] = " + customerCode));
+		String[] orders = new String[orders2D.length];
+
+		for (int i = 0; i < orders2D.length; i++) {
+			orders[i] = orders2D[i][0];
+		}
+		return orders;
 	}
 
 	/**
 	 * Handler for fetching the requests for a given customer.
 	 *
-	 * @param customerCode    The customer code.
+	 * @param customerCode The customer code.
 	 * @return {String[][]} 	Contains the given query ResultSet.
 	 */
 	public String[][] getRequests(String customerCode) {

@@ -8,18 +8,9 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-/*import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
-
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.LayoutManager;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;*/
 
 public class Customers extends JPanel implements Tile {
 	/**
@@ -421,7 +412,6 @@ public class Customers extends JPanel implements Tile {
 						JOptionPane.showMessageDialog(null, "Please enter a valid email address!",
 								"Account Information", JOptionPane.PLAIN_MESSAGE);
 					}
-
 				}
 			}
 		});
@@ -442,8 +432,6 @@ public class Customers extends JPanel implements Tile {
 								null, filePath, "Customers", columns);
 					}
 				}
-
-
 			}
 		});
 
@@ -456,6 +444,7 @@ public class Customers extends JPanel implements Tile {
 				addRequestBtn.setEnabled(true);
 				editDelSelectedBtn.setEnabled(false);
 				moreInfoBtn.setEnabled(true);
+				emailCustomerBtn.setEnabled(true);
 				reportsData = control.getRequests(
 						customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()
 				);
@@ -532,17 +521,6 @@ public class Customers extends JPanel implements Tile {
 
 				String[] stores = {"dl1", "dl2"};
 				String[][] customer2D = control.getCustomerData(Integer.parseInt((String) customerTable.getValueAt(customerTable.getSelectedRow(), 4)));
-
-				/*System.out.println(customer2D[0][0]); //Store Code
-				System.out.println(customer2D[0][1]); //Last Name
-				System.out.println(customer2D[0][2]); //First Name
-				System.out.println(customer2D[0][3]); //Address
-				System.out.println(customer2D[0][4]); //City
-				System.out.println(customer2D[0][5]); //State
-				System.out.println(customer2D[0][6]); //ZIP
-				System.out.println(customer2D[0][7]); //Phone #1
-				System.out.println(customer2D[0][8]); //Phone #2
-				System.out.println(customer2D[0][9]); //Email*/
 
 				moreInfoBtn.setEnabled(false);
 				addRequestBtn.setEnabled(false);
@@ -771,6 +749,54 @@ public class Customers extends JPanel implements Tile {
 		});
 	}
 
+	public void emailCustomer(JFrame frame) {
+		int result = JOptionPane.showConfirmDialog(frame, "Email Customer?", "Email Customer?",
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE);
+
+		if (result == JOptionPane.YES_OPTION) {
+			try {
+				String[] requests = control.getCustomerOrders(Integer.parseInt(ccodeBox.getText()));
+
+
+				String mailString = "mailto:";
+				String subject = "Dragon%27s%20Lair%20Pull%20List%20Update";
+				String toEmail = emailBox.getText();
+
+				String body = "Hello " + fNameBox.getText() + " " + lNameBox.getText() + "%2C%0A%0A%0A"; //Hello FirstName LastName, \n\n\n
+
+				body = body + "The following titles are currently in your Pull List%3A %0A%0A"; //The following titles are currently in your Pull List: \n\n
+
+				for (int i = 0; i < requests.length; i++) {
+					body = body + requests[i] + "%0A"; //Title \n
+				}
+
+				Desktop desktop;
+
+				body = body.replaceAll("\\s+", "%20");
+				body = body.replace("'", "%27");
+				body = body.replace(",", "%2C");
+				body = body.replace(":", "%3A");
+
+				mailString = mailString + toEmail + "?subject=" + subject + "&body=" + body;
+
+				if (Desktop.isDesktopSupported()
+						&& (desktop = Desktop.getDesktop()).isSupported(Desktop.Action.MAIL)) {
+					URI mailto = new URI(mailString);
+					desktop.mail(mailto);
+				} else {
+					throw new RuntimeException("Desktop doesn't support mailto");
+				}
+			} catch (Exception uri) {
+				uri.printStackTrace();
+			}
+		} else if (result == JOptionPane.NO_OPTION) {
+			System.out.println("Customer email declined");
+		} else {
+
+		}
+	}
+
 	/**
 	 * Handler for adding the request handler and populating the info box.
 	 */
@@ -806,6 +832,7 @@ public class Customers extends JPanel implements Tile {
 					addRequestFrame.addWindowListener(new WindowAdapter() {
 						@Override
 						public void windowClosing(WindowEvent e) {
+							emailCustomer(addRequestFrame);
 							addRequestBtn.setEnabled(true);
 						}
 					});
@@ -982,7 +1009,7 @@ public class Customers extends JPanel implements Tile {
 		emailCustomerBtn = new JButton("Email Customer");
 		emailCustomerBtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		emailCustomerBtn.setBounds(860, 483, 107, 48);
-		emailCustomerBtn.setEnabled(true);
+		emailCustomerBtn.setEnabled(false);
 		add(emailCustomerBtn);
 
 		emailCustomerBtn.addActionListener(new ActionListener() {
@@ -1006,119 +1033,8 @@ public class Customers extends JPanel implements Tile {
 						}
 					});
 
-					JPanel emailCustomerPanel = new JPanel();
-					LayoutManager layout = new FlowLayout();
-					emailCustomerPanel.setLayout(layout);
-
-					JButton yesBtn = new JButton("Yes");
-					yesBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-					yesBtn.setBounds(20, 20, 140, 25);
-					//centerComponentHorizontal(addRequestPanel, addBtn, addRequestPanel.getHeight() - 75, 140, 25);
-					emailCustomerPanel.add(yesBtn);
-
-					JButton noBtn = new JButton("No");
-					noBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-					noBtn.setBounds(214, 220, 140, 25);
-					//centerComponentHorizontal(addRequestPanel, addBtn, addRequestPanel.getHeight() - 75, 140, 25);
-					emailCustomerPanel.add(noBtn);
-
-					int result = JOptionPane.showConfirmDialog(emailCustomerFrame, "Email Customer?", "Email Customer?",
-							JOptionPane.YES_NO_OPTION,
-							JOptionPane.QUESTION_MESSAGE);
-					if (result == JOptionPane.YES_OPTION) {
-						/*
-						String to="jncunningham@unomaha.edu";
-						String from="jncunningham@unomaha.edu";
-
-						Properties props = new Properties();
-						Session session = Session.getDefaultInstance(props, null);
-
-						String msgBody = "Sending email using JavaMail API...";
-
-						try {
-							Message msg = new MimeMessage(session);
-							msg.setFrom(new InternetAddress(from, "NoReply"));
-							msg.addRecipient(Message.RecipientType.TO,
-									new InternetAddress(to, "Mr. Recipient"));
-							msg.setSubject("Welcome To Java Mail API");
-							msg.setText(msgBody);
-							Transport.send(msg);
-							System.out.println("Email sent successfully...");
-
-						} catch (AddressException ex) {
-							throw new RuntimeException(ex);
-						} catch (MessagingException ex) {
-							throw new RuntimeException(ex);
-						} catch (UnsupportedEncodingException unsupportedEncodingException) {
-							unsupportedEncodingException.printStackTrace();
-						}*/
-					} else if (result == JOptionPane.NO_OPTION) {
-
-					} else {
-
-					}
-
-
-					emailCustomerPanel.add(yesBtn);
-					emailCustomerPanel.add(noBtn);
-					emailCustomerFrame.getContentPane().add(emailCustomerPanel, BorderLayout.CENTER);
-
-					/*JButton yesBtn = new JButton("Yes");
-					yesBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-					yesBtn.setBounds(20, 20, 140, 25);
-					//centerComponentHorizontal(addRequestPanel, addBtn, addRequestPanel.getHeight() - 75, 140, 25);
-					emailCustomerPanel.add(yesBtn);
-
-					JButton noBtn = new JButton("No");
-					noBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-					noBtn.setBounds(214, 220, 140, 25);
-					//centerComponentHorizontal(addRequestPanel, addBtn, addRequestPanel.getHeight() - 75, 140, 25);
-					emailCustomerPanel.add(noBtn);
-
-					yesBtn.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent event) {
-							try {
-
-								String to = "jncunningham@unomaha.edu";
-
-								// Sender's email ID needs to be mentioned
-								String from = "jncunningham@unomaha.edu";
-
-								// Assuming you are sending email from localhost
-								String host = "localhost";
-
-								// Get system properties
-								Properties properties = System.getProperties();
-
-								// Setup mail server
-								properties.setProperty("mail.smtp.host", host);
-
-								Session session = Session.getDefaultInstance(properties);
-
-								Message message = new MimeMessage(session);
-								message.setFrom(new InternetAddress(from));
-								message.setRecipients(
-										Message.RecipientType.TO, InternetAddress.parse(to));
-								message.setSubject("Mail Subject");
-
-								String msg = "This is my first email using JavaMailer";
-
-								MimeBodyPart mimeBodyPart = new MimeBodyPart();
-								mimeBodyPart.setContent(msg, "text/html");
-
-								Multipart multipart = new MimeMultipart();
-								multipart.addBodyPart(mimeBodyPart);
-
-								message.setContent(multipart);
-
-								Transport.send(message);
-
-							} catch (Exception e) {
-
-							}
-						}
-					});*/
-
+					emailCustomerFrame.dispatchEvent(new WindowEvent(emailCustomerFrame, WindowEvent.WINDOW_CLOSING));
+					emailCustomer(emailCustomerFrame);
 				}
 			}
 		});
