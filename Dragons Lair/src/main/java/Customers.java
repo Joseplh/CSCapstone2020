@@ -949,50 +949,68 @@ public class Customers extends JPanel implements Tile {
 
 					addBtn.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent event) {
-							try {
-								if (commentField.getText().equals("")) {
-									commentField.setText(null);
-								}
-								if (issueStartField.getText().equals("")) {
-									issueStartField.setText("-1");
-								}
-								if (issueEndField.getText().equals("")) {
-									issueEndField.setText("-1");
-								}
-								if (quantityField.getText().equals("")) {
-									quantityField.setText("-1");
-								}
-								if (costField.getText().equals("")) {
-									costField.setText("-1");
-								}
+							int j = 0;
+							String[] requests = control.getCustomerOrders(Integer.parseInt(ccodeBox.getText()));
 
-								control.addRequest((String) storeField.getSelectedItem(), customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString(),
-										(String) titleField.getSelectedItem(), commentField.getText(), Integer.parseInt(issueStartField.getText()), Integer.parseInt(issueEndField.getText()),
-										Integer.parseInt(quantityField.getText()), Float.parseFloat(costField.getText()));
-								//createMessage(addRequestFrame, addRequestPanel, "Request successfully created!");
-								reportsData = control.getRequests(
-										customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString());
+							for (int i = 0; i < requests.length; i++) {
+								if (requests[i].equals((String) titleField.getSelectedItem())) {
+									j++;
+								}
+							}
 
-								reportsModel.setDataVector(reportsData, reportColumns);
-								titleTable.setModel(reportsModel);
+							if (j <= 0) {
+								j = 0;
+								try {
+									if (commentField.getText().equals("")) {
+										commentField.setText(null);
+									}
+									if (issueStartField.getText().equals("")) {
+										issueStartField.setText("-1");
+									}
+									if (issueEndField.getText().equals("")) {
+										issueEndField.setText("-1");
+									}
+									if (quantityField.getText().equals("")) {
+										quantityField.setText("-1");
+									}
+									if (costField.getText().equals("")) {
+										costField.setText("-1");
+									}
 
-								titleTable.getColumnModel().getColumn(0).setPreferredWidth(3);
-								titleTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-								titleTable.getColumnModel().getColumn(2).setPreferredWidth(3);
-								titleTable.getColumnModel().getColumn(3).setPreferredWidth(3);
-								titleTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
-								titleTable.getColumnModel().getColumn(4).setMaxWidth(0);
-								titleTable.getColumnModel().getColumn(4).setWidth(0);
-								titleTable.getColumnModel().getColumn(5).setPreferredWidth(3);
+									control.addRequest((String) storeField.getSelectedItem(), customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString(),
+											(String) titleField.getSelectedItem(), commentField.getText(), Integer.parseInt(issueStartField.getText()), Integer.parseInt(issueEndField.getText()),
+											Integer.parseInt(quantityField.getText()), Float.parseFloat(costField.getText()));
+									//createMessage(addRequestFrame, addRequestPanel, "Request successfully created!");
+									reportsData = control.getRequests(
+											customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString());
 
-								commentField.setText("");
-								issueStartField.setText("");
-								issueEndField.setText("");
-								quantityField.setText("");
-								costField.setText("");
+									reportsModel.setDataVector(reportsData, reportColumns);
+									titleTable.setModel(reportsModel);
 
-							} catch (Exception e) {
-								createMessage(addRequestFrame, addRequestPanel, "Request could not be created.");
+									titleTable.getColumnModel().getColumn(0).setPreferredWidth(3);
+									titleTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+									titleTable.getColumnModel().getColumn(2).setPreferredWidth(3);
+									titleTable.getColumnModel().getColumn(3).setPreferredWidth(3);
+									titleTable.getColumnModel().getColumn(4).setMinWidth(0); // Must be set before maxWidth!!
+									titleTable.getColumnModel().getColumn(4).setMaxWidth(0);
+									titleTable.getColumnModel().getColumn(4).setWidth(0);
+									titleTable.getColumnModel().getColumn(5).setPreferredWidth(3);
+
+									commentField.setText("");
+									issueStartField.setText("");
+									issueEndField.setText("");
+									quantityField.setText("");
+									costField.setText("");
+
+								} catch (Exception e) {
+									createMessage(addRequestFrame, addRequestPanel, "Request could not be created.");
+								}
+							} else {
+								j = 0;
+								JOptionPane.showMessageDialog(null,
+										"This title has already been added to this customer's Pull list",
+										"Duplicate Message",
+										JOptionPane.WARNING_MESSAGE);
 							}
 						}
 					});
