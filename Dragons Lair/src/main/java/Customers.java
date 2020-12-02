@@ -1071,6 +1071,7 @@ public class Customers extends JPanel implements Tile {
 		editDelSelectedBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//editDelSelectedBtn.setEnabled(false);
 				if (editDelSelectedBtn.isEnabled()) {
 					String[] orderData = control.getOrder(Integer.parseInt((String) titleTable.getValueAt(titleTable.getSelectedRow(), orderIdcolumn)));
 					String storeCode = orderData[0];
@@ -1103,6 +1104,7 @@ public class Customers extends JPanel implements Tile {
 						titles[i] = titles2D[i][0];
 					}
 
+					editDelSelectedBtn.setEnabled(false);
 					addRequestBtn.setEnabled(false);
 					JFrame addRequestFrame = new JFrame("Add Request");
 					addRequestFrame.setVisible(true);
@@ -1116,6 +1118,7 @@ public class Customers extends JPanel implements Tile {
 						@Override
 						public void windowClosing(WindowEvent e) {
 							addRequestBtn.setEnabled(true);
+							editDelSelectedBtn.setEnabled(true);
 						}
 					});
 
