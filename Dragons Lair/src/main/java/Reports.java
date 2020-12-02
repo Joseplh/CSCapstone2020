@@ -21,6 +21,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class Reports extends JPanel implements Tile {
 	/**
@@ -97,46 +98,7 @@ public class Reports extends JPanel implements Tile {
 				{"Badger","","14.99", "10", "10"},
 				{"Badger","","14.99", "10", "10"}};    
 				
-		String da3[][]={{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "N"},
-				{"Badger","10","N", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "N"},
-				{"Badger","10","N", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "N"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "N"},
-				{"Badger","10","N", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "N"},
-				{"Badger","10","N", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "N"},
-				{"Badger","10","N", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "N"},
-				{"Badger","10","N", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "N"},
-				{"Badger","10","N", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "N"},
-				{"Badger","10","N", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "Y"},
-				{"Badger","10","Y", "N"},
-				{"Badger","10","N", "Y"}};       
+		String da3[][]= control.getMonthlyBreakdown();       
 		
 		String titlesData[][] = control.getDistinctTitles();
 		int rows = titlesData.length;
@@ -190,8 +152,15 @@ public class Reports extends JPanel implements Tile {
 		new_titles_sp.setBounds(10, 87, 415, 507);
 		new_week_pulls.add(new_titles_sp);
 		
-		String col[]={"Title","Issue #", "Qty", "# of Customers"}; 
-		JTable new_titles_table = new JTable(titlesData2, col);
+		String col[]={"Title","Issue #", "Qty", "# of Customers"};
+		TableModel titleTablesModel = new DefaultTableModel(titlesData2, col) {
+			private static final long serialVersionUID = 1L;
+			
+			public boolean isCellEditable(int row, int column) {
+		      return false;
+		    }
+		 };
+		JTable new_titles_table = new JTable(titleTablesModel);
 		new_titles_table.setAutoCreateRowSorter(true);
 		new_titles_sp.setViewportView(new_titles_table);
 		
@@ -201,9 +170,6 @@ public class Reports extends JPanel implements Tile {
 		
 		requestColumns = new String[] {"Last Name","First Name","Qty"};
 		requestsModel = new DefaultTableModel(requestsData, requestColumns) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int column) {

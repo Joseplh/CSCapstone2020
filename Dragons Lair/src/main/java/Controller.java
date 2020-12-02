@@ -111,6 +111,11 @@ public class Controller {
 	public int updateCustomer(int ccode, String first, String last, String email, String phone) {
 		return insert("UPDATE [newDLC].[dbo].[Customer] Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
 	}
+	
+	public String[][] getMonthlyBreakdown() {
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		return select(String.format("SELECT * FROM [newDLC].[dbo].[Catalog] WHERE MONTH([Release]) = MONTH(%s) AND YEAR([Release]) = YEAR(%s)", timeStamp, timeStamp));
+	}
 
 	/**
 	 * @param storeCode
