@@ -826,7 +826,7 @@ public class Customers extends JPanel implements Tile {
 					centerFrame(addRequestFrame);
 					addRequestFrame.setResizable(false);
 					addRequestFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					addRequestFrame.setBounds(400, 300, 700, 300);
+					addRequestFrame.setBounds(400, 300, 775, 300);
 
 					/* Action listener for when the add customer frame is closed */
 					addRequestFrame.addWindowListener(new WindowAdapter() {
@@ -873,7 +873,7 @@ public class Customers extends JPanel implements Tile {
 
 					JLabel costLabel = new JLabel("Cost");
 					costLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-					costLabel.setBounds(28, 200, 78, 23);
+					costLabel.setBounds(602, 138, 78, 23);
 					addRequestPanel.add(costLabel);
 
 					JComboBox<?> storeField = new JComboBox<Object>(stores);
@@ -883,18 +883,18 @@ public class Customers extends JPanel implements Tile {
 
 					JTextField titleFilterField = new JTextField();
 					titleFilterField.setColumns(10);
-					titleFilterField.setBounds(214, 48, 644, 20);
+					titleFilterField.setBounds(214, 48, 525, 20);
 					addRequestPanel.add(titleFilterField);
 					addRequestFrame.add(addRequestPanel);
 
 					JComboBox<?> titleField = new JComboBox<Object>(titles);
-					titleField.setBounds(214, 72, 400, 20);
+					titleField.setBounds(214, 72, 525, 20);
 					titleField.setSelectedIndex(0);
 					addRequestPanel.add(titleField);
 
 					JTextField commentField = new JTextField();
 					commentField.setColumns(10);
-					commentField.setBounds(28, 109, 644, 20);
+					commentField.setBounds(28, 109, 710, 20);
 					addRequestPanel.add(commentField);
 					addRequestFrame.add(addRequestPanel);
 
@@ -915,7 +915,7 @@ public class Customers extends JPanel implements Tile {
 
 					JTextField costField = new JTextField();
 					costField.setColumns(10);
-					costField.setBounds(28, 221, 136, 20);
+					costField.setBounds(602, 160, 136, 20);
 					addRequestPanel.add(costField);
 					addRequestFrame.add(addRequestPanel);
 
@@ -943,7 +943,7 @@ public class Customers extends JPanel implements Tile {
 
 					JButton addBtn = new JButton("Add Request");
 					addBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-					addBtn.setBounds(214, 220, 140, 25);
+					addBtn.setBounds(210, 220, 340, 25);
 					//centerComponentHorizontal(addRequestPanel, addBtn, addRequestPanel.getHeight() - 75, 140, 25);
 					addRequestPanel.add(addBtn);
 
