@@ -200,7 +200,7 @@ public class Customers extends JPanel implements Tile {
 		reportsScrollPane.setBounds(455, 288, 395, 367);
 		add(reportsScrollPane);
 
-		reportColumns = new String[]{"Store Code", "Description", "Issue Start", "Issue End", "ID", "Quantity"};
+		reportColumns = new String[]{"Store Code", "Title", "Issue Start", "Issue End", "ID", "Cost"};
 		reportsModel = new DefaultTableModel(reportsData, reportColumns) {
 			/**
 			 *
