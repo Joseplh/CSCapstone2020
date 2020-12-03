@@ -401,21 +401,22 @@ public class Reports extends JPanel implements Tile {
             }
         });
 		
-		/* flagged  skeleton
+		// not flagged in 6 months button export
 		export_flagged_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                String filePath = control.saveFile(monthly_breakdown, "Titles");
+                String filePath = control.saveFile(monthly_breakdown, "Titles not Flagged 6mo+");
                 if (filePath != null) {
-                    String columns[] = {};
-                    String query = "";
-                    control.exportXLSX(null, query, filePath, "Titles", columns);
+                    String columns[] = {"Catalog ID", "Distributor",  "Title", "Flag", "Release"};
+                    String query = "SELECT [Catalog ID], [Distributor], [Title], [Flag], [Release] FROM [Catalog] WHERE [Flag] < 1 AND [Release] <= dateadd(month, -6, getdate())";
+                
+                    control.exportXLSX(null, query, filePath, "Catalog", columns);
                 }
 
             }
-        }); */
+        }); 
 		
-		// Zero request  skeleton
+		// Zero request skeleton
 		export_zeroRequests_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
