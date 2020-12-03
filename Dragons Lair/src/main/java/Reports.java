@@ -415,7 +415,19 @@ public class Reports extends JPanel implements Tile {
             }
         }); */
 		
-		
+		// Zero request  skeleton
+		export_zeroRequests_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                String filePath = control.saveFile(monthly_breakdown, "Zero Requests");
+                if (filePath != null) {
+                    String columns[] = {"Store Code", "Customer Code",  "Title"};
+                    String query = "SELECT [Store Code], [Customer Code], [Title] FROM [Order] WHERE [Quantity] < 1";
+                    control.exportXLSX(null, query, filePath, "Order", columns);
+                }
+
+            }
+        }); 
 		
 		
 	}
