@@ -15,7 +15,7 @@ public class Titles extends JPanel implements Tile {
 	private static final long serialVersionUID = 1L;
 	private JTable titleTable;
 	private Controller control;
-	private JTextField descriptionField;
+	private JTextField fullTitleField;
 	private JTextField titleField;
 	private JTextField distributorField;
 	private JTextField tCodeField;
@@ -23,15 +23,47 @@ public class Titles extends JPanel implements Tile {
 	private JTextField issueField;
 	private JCheckBox newReleaseCheck;
 	private JCheckBox uniqueCheck;
-	private Object[][] titlesData;
+	private String[][] titlesData;
 	private DefaultTableModel titlesModel;
 
-	private Object[][] fetchTimedData(){
-		return titlesData = control.getTimeSensitiveTitles();
+	private String[][] fetchTimedData(){
+		titlesData = control.getTimeSensitiveTitles();
+		for (int i = 0; i < titlesData.length; i++) {
+			if (titlesData[i][0].equals("1")) {
+				titlesData[i][0] = "Yes";
+			}
+			else {
+				titlesData[i][0] = "No";
+			}
+
+			if (titlesData[i][5].equals("1")) {
+				titlesData[i][5] = "Yes";
+			}
+			else {
+				titlesData[i][5] = "No";
+			}
+		}
+		return titlesData;
 	}
 
-	private Object[][] fetchAllData(){
-		return titlesData = control.getAllTitles();
+	private String[][] fetchAllData(){
+		titlesData = control.getAllTitles();
+		for (int i = 0; i < titlesData.length; i++) {
+			if (titlesData[i][0].equals("1")) {
+				titlesData[i][0] = "Yes";
+			}
+			else {
+				titlesData[i][0] = "No";
+			}
+
+			if (titlesData[i][5].equals("1")) {
+				titlesData[i][5] = "Yes";
+			}
+			else {
+				titlesData[i][5] = "No";
+			}
+		}
+		return titlesData;
 	}
 
 	public Titles(Controller control) {
@@ -108,11 +140,11 @@ public class Titles extends JPanel implements Tile {
 //		add(btnExportSingleTitle);
 
 		/* TextField deceleration */
-		descriptionField = new JTextField();
-		descriptionField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		descriptionField.setEditable(false);
-		descriptionField.setColumns(10);
-		descriptionField.setBounds(10, 43, 440, 33);
+		fullTitleField = new JTextField();
+		fullTitleField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		fullTitleField.setEditable(false);
+		fullTitleField.setColumns(10);
+		fullTitleField.setBounds(10, 43, 440, 33);
 		/* TODO: UI configuration
 		titleField = new JTextField();
 		titleField.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -129,12 +161,12 @@ public class Titles extends JPanel implements Tile {
 		uniqueCheck = new JCheckBox();
 		uniqueCheck.setEnabled(false);
 		uniqueCheck.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		uniqueCheck.setBounds(125, 177, 21, 33);
+		uniqueCheck.setBounds(125, 177, 21, 21);
 
 		newReleaseCheck = new JCheckBox();
 		newReleaseCheck.setEnabled(false);
 		newReleaseCheck.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		newReleaseCheck.setBounds(10, 177, 21, 33);
+		newReleaseCheck.setBounds(10, 177, 21, 21);
 
 		distributorField = new JTextField();
 		distributorField.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -155,9 +187,9 @@ public class Titles extends JPanel implements Tile {
 		releaseField.setBounds(350, 195, 100, 33);
 
 		/* Label deceleration */
-		JLabel lblDescription = new JLabel("Description");
-		lblDescription.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDescription.setBounds(10, 22, 82, 17);
+		JLabel lblFullTitle = new JLabel("Full Title");
+		lblFullTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblFullTitle.setBounds(10, 22, 82, 17);
 		/* TODO: UI configuration
 		JLabel lblTitle = new JLabel("Title");
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -181,13 +213,13 @@ public class Titles extends JPanel implements Tile {
 
 		JLabel lblRelease = new JLabel("Release Date");
 		lblRelease.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblRelease.setBounds(350, 175, 82, 14);
+		lblRelease.setBounds(350, 175, 150, 14);
 		/* TODO: UI configuration
 		JLabel lblIssue = new JLabel("Release Date");
 		lblIssue.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblIssue.setBounds(350, 175, 82, 14); */
 
-		titlePanel.add(descriptionField);
+		titlePanel.add(fullTitleField);
 		//titlePanel.add(titleField);
 		titlePanel.add(uniqueCheck);
 		titlePanel.add(distributorField);
@@ -195,7 +227,7 @@ public class Titles extends JPanel implements Tile {
 		titlePanel.add(newReleaseCheck);
 		titlePanel.add(releaseField);
 		//titlePanel.add(issueField);
-		titlePanel.add(lblDescription);
+		titlePanel.add(lblFullTitle);
 		titlePanel.add(lblDisctSub);
 		titlePanel.add(lblDistributor);
 		titlePanel.add(lblTCode);
@@ -230,14 +262,10 @@ public class Titles extends JPanel implements Tile {
 		titleTable.setAutoCreateRowSorter(true);
 		titleTable.getTableHeader().setReorderingAllowed(false);
 		titleScrollPane.setViewportView(titleTable);
-		/* TODO: Set some columns invisible on table */
+		/* TODO: Set some columns invisible on table
 		titleTable.getColumnModel().getColumn(0).setMinWidth(50); // Must be set before maxWidth!!
 		titleTable.getColumnModel().getColumn(0).setMaxWidth(50);
-		titleTable.getColumnModel().getColumn(0).setWidth(50);
-
-		titleTable.getColumnModel().getColumn(5).setMinWidth(50); // Must be set before maxWidth!!
-		titleTable.getColumnModel().getColumn(5).setMaxWidth(50);
-		titleTable.getColumnModel().getColumn(5).setWidth(50);
+		titleTable.getColumnModel().getColumn(0).setWidth(50); */
 
 		/* Listener for when a cell is selected from the titleTable */
 		titleTable.addMouseListener(new MouseAdapter() {
@@ -248,7 +276,7 @@ public class Titles extends JPanel implements Tile {
 				 * If the text boxes displaying the title information is editable, warn user
 				 * to save the information
 				 */
-				if (descriptionField.isEditable()) {
+				if (fullTitleField.isEditable()) {
 					JOptionPane.showMessageDialog(null,
 							"Please save or discard the changes made to the current title", "Save Warning",
 							JOptionPane.WARNING_MESSAGE);
@@ -259,14 +287,21 @@ public class Titles extends JPanel implements Tile {
 					/* TODO: Get values for details fields from table */
 					int i = titleTable.getSelectedRow();
 					releaseField.setText((String) titleTable.getValueAt(i, 1));
-					descriptionField.setText((String) titleTable.getValueAt(i, 2));
+					fullTitleField.setText((String) titleTable.getValueAt(i, 2));
 					distributorField.setText((String) titleTable.getValueAt(i,3));
 					tCodeField.setText((String) titleTable.getValueAt(i,4));
 
-					if (newReleaseCheck.isSelected()) {
+					if (titleTable.getValueAt(i, 0).equals("Yes")) {
+						newReleaseCheck.setSelected(true);
+					}
+					else {
 						newReleaseCheck.setSelected(false);
 					}
-					if (uniqueCheck.isSelected()) {
+
+					if (titleTable.getValueAt(i, 5).equals("Yes")) {
+						uniqueCheck.setSelected(true);
+					}
+					else {
 						uniqueCheck.setSelected(false);
 					}
 
@@ -403,13 +438,13 @@ public class Titles extends JPanel implements Tile {
 					editTitleBtn.setEnabled(false);
 					discardBtn.setEnabled(false);
 					
-					descriptionField.setEditable(false);
+					fullTitleField.setEditable(false);
 					distributorField.setEditable(false);
 					uniqueCheck.setEnabled(false);
 					newReleaseCheck.setEnabled(false);
 					releaseField.setEditable(false);
 
-					control.updateTitle(newReleaseCheck.isSelected(), descriptionField.getText(), releaseField.getText(), uniqueCheck.isSelected(), tCodeField.getText());
+					control.updateTitle(newReleaseCheck.isSelected(), fullTitleField.getText(), releaseField.getText(), uniqueCheck.isSelected(), tCodeField.getText());
 
 					titlesData = fetchTimedData();
 					titlesModel.setDataVector(titlesData, titlesColumn);
@@ -438,7 +473,7 @@ public class Titles extends JPanel implements Tile {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				descriptionField.setEditable(true);
+				fullTitleField.setEditable(true);
 				distributorField.setEditable(true);
 				newReleaseCheck.setEnabled(true);
 				uniqueCheck.setEnabled(true);
@@ -453,7 +488,7 @@ public class Titles extends JPanel implements Tile {
 		discardBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				descriptionField.setEditable(false);
+				fullTitleField.setEditable(false);
 				distributorField.setEditable(false);
 				newReleaseCheck.setEnabled(false);
 				uniqueCheck.setEnabled(false);
@@ -463,7 +498,7 @@ public class Titles extends JPanel implements Tile {
 				saveBtn.setEnabled(false);
 				
 				int i = titleTable.getSelectedRow();
-				descriptionField.setText((String) titleTable.getValueAt(i, 0));
+				fullTitleField.setText((String) titleTable.getValueAt(i, 0));
 
 				
 			}
