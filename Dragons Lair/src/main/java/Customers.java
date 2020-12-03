@@ -970,8 +970,8 @@ public class Customers extends JPanel implements Tile {
 									if (issueEndField.getText().equals("")) {
 										issueEndField.setText("-1");
 									}
-									if (quantityField.getText().equals("")) {
-										quantityField.setText("-1");
+									if (quantityField.getText().equals("") || quantityField.getText().charAt(0) == '-') {
+										quantityField.setText("1");
 									}
 									if (costField.getText().equals("")) {
 										costField.setText("-1");
@@ -1244,12 +1244,13 @@ public class Customers extends JPanel implements Tile {
 								if (issueEndField.getText().equals("")) {
 									issueEndField.setText("-1");
 								}
-								if (quantityField.getText().equals("")) {
-									quantityField.setText("-1");
+								if (quantityField.getText().equals("") || quantityField.getText().charAt(0) == '-') {
+									quantityField.setText("1");
 								}
 								if (costField.getText().equals("")) {
 									costField.setText("-1");
 								}
+
 
 								control.updateOrder((String) storeField.getSelectedItem(), customerCode,
 										(String) titleField.getSelectedItem(), commentField.getText(), Integer.parseInt(issueStartField.getText()), Integer.parseInt(issueEndField.getText()),
