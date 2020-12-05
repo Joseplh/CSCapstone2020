@@ -391,7 +391,7 @@ public class Reports extends JPanel implements Tile {
 		export_titles_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                String filePath = control.saveFile(monthly_breakdown, "Titles");
+                String filePath = control.saveFile(monthly_breakdown, "Monthly Titles");
                 if (filePath != null) {
                     String columns[] = {"Title", "Customer", "Quantity"};
                     String query = "SELECT [Title], [Customer Code], [Quantity] FROM [Order]";
@@ -420,7 +420,7 @@ public class Reports extends JPanel implements Tile {
 		export_zeroRequests_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                String filePath = control.saveFile(monthly_breakdown, "Zero Requests");
+                String filePath = control.saveFile(monthly_breakdown, "Titles with 0 Requests");
                 if (filePath != null) {
                     String columns[] = {"Store Code", "Customer Code",  "Title"};
                     String query = "SELECT [Store Code], [Customer Code], [Title] FROM [Order] WHERE [Quantity] < 1";
