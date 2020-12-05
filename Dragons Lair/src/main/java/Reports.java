@@ -37,6 +37,7 @@ public class Reports extends JPanel implements Tile {
 	private JLabel title_lbl = new JLabel();
 	private JLabel qty_lbl = new JLabel();
 	private JLabel number_customers_lbl = new JLabel();
+	String[][] orders;
 
 	public Reports(Controller control) {
 		this.control = control;
@@ -358,7 +359,7 @@ public class Reports extends JPanel implements Tile {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String title = new_titles_table.getValueAt(new_titles_table.getSelectedRow(), titleColumn).toString();
-				String[][] orders = control.getOrdersByTitle(title);
+				orders = control.getOrdersByTitle(title);
 				requestsModel.setDataVector(orders, requestColumns);
 				int quantity = 0;
 				
@@ -372,6 +373,25 @@ public class Reports extends JPanel implements Tile {
 			}
 		});
 		
+		
+		export_request_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (requestsModel.getRowCount() > 0) {
+					
+					String temp = title_lbl.getText();
+					if (temp.length() > 35) {
+						temp = temp.substring(0, 35);
+					}
+
+					String filePath = control.saveFile(new_week_pulls, temp); // Calls saveFile() in controller.// Essentially opens file saver and gets
+																			
+					if (filePath != null) {
+						String columns[] = { "Last Name", "First Name", "Qty" }; // Columns for your excel sheet
+						control.exportXLSX(orders, null, filePath, "Single Title Order List", columns); 																		
+					}
+				}
+			}
+		});
 		export_customers_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
