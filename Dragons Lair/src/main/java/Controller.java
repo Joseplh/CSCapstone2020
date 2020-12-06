@@ -113,8 +113,7 @@ public class Controller {
 	}
 	
 	public String[][] getMonthlyBreakdown() {
-		String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-		return select(String.format("SELECT * FROM [newDLC].[dbo].[Catalog] WHERE MONTH([Release]) = MONTH(%s) AND YEAR([Release]) = YEAR(%s)", timeStamp, timeStamp));
+		return select("SELECT * FROM [newDLC].[dbo].[Catalog] WHERE MONTH([release]) = MONTH(CURRENT_TIMESTAMP) AND YEAR([release]) = YEAR(CURRENT_TIMESTAMP)");
 	}
 
 	/**
