@@ -113,7 +113,7 @@ public class Controller {
 	}
 	
 	public String[][] getMonthlyBreakdown() {
-		return select("SELECT * FROM [newDLC].[dbo].[Catalog] WHERE MONTH([release]) = MONTH(CURRENT_TIMESTAMP) AND YEAR([release]) = YEAR(CURRENT_TIMESTAMP)");
+		return select("SELECT [Series], [Quantity], [Issue], [Flag] FROM [newDLC].[dbo].[Catalog] as [catalog] INNER JOIN (SELECT * FROM [newDLC].[dbo].[Order]) as [order] ON [order].[Title] = [catalog].[Series] WHERE MONTH([release]) = MONTH(CURRENT_TIMESTAMP) AND YEAR([release]) = YEAR(CURRENT_TIMESTAMP)");
 	}
 
 	/**
