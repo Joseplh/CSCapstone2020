@@ -147,11 +147,6 @@ public class Reports extends JPanel implements Tile {
 		
 		JPanel monthly_breakdown = new JPanel();
 		reports_pane.addTab("Monthly Breakdown", null, monthly_breakdown, null);
-
-		JPanel reports_history = new JPanel();
-		reports_pane.addTab("Reports History", null, reports_history, null);
-		
-		
 		
 		/* New week pulls tab */
 		
