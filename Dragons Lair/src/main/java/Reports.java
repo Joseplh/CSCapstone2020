@@ -99,7 +99,15 @@ public class Reports extends JPanel implements Tile {
 				{"Badger","","14.99", "10", "10"},
 				{"Badger","","14.99", "10", "10"}};    
 				
-		String da3[][]= control.getMonthlyBreakdown();       
+		String da3[][]= control.getMonthlyBreakdown(); 
+		
+		for (String row[] : da3) {
+			if (row[3].equals(0)) {
+				row[3] = "False";
+			} else {
+				row[3] = "True";
+			}
+		}
 		
 		String titlesData[][] = control.getDistinctTitles();
 		int rows = titlesData.length;
@@ -201,7 +209,7 @@ public class Reports extends JPanel implements Tile {
 		lblCustomerRequestsFor.setBounds(455, 133, 176, 14);
 		new_week_pulls.add(lblCustomerRequestsFor);
 		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		title_lbl.setBounds(455, 158, 90, 14);
+		title_lbl.setBounds(455, 158, 500, 14);
 		new_week_pulls.add(title_lbl);
 		qty_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		qty_lbl.setBounds(455, 181, 90, 14);
