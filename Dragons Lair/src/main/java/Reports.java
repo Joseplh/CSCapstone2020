@@ -47,58 +47,6 @@ public class Reports extends JPanel implements Tile {
 		/* Report Data */
 		String data[][] = control.getReports();
 
-		/* Report Table Column Names */
-		String column[] = { };
-		String da1[][]={{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"},
-				{"Badger","","14.99", "10", "10"}};    
-				
 		String da3[][]= control.getMonthlyBreakdown(); 
 		
 		for (String row[] : da3) {
@@ -265,8 +213,14 @@ public class Reports extends JPanel implements Tile {
 		breakdown_pane.setBounds(10, 11, 443, 594);
 		monthly_breakdown.add(breakdown_pane);
 		
-		String col3[]={"Title","Qty","Pending Issue #", "Flagged in last 6 months"}; 
-		JTable breakdown_table = new JTable(da3, col3);
+		DefaultTableModel monthlyBreakdownModel = new DefaultTableModel(da3, new String[] {"Title","Qty","Pending Issue #", "Flagged in last 6 months"}) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		JTable breakdown_table = new JTable(monthlyBreakdownModel);
 		breakdown_table.setAutoCreateRowSorter(true);
 		breakdown_pane.setViewportView(breakdown_table);
 		
