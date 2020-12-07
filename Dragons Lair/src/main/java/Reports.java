@@ -1,5 +1,13 @@
 package main.java;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -8,6 +16,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class Reports extends JPanel implements Tile {
 	/**
@@ -209,7 +221,7 @@ public class Reports extends JPanel implements Tile {
 		JTable breakdown_table = new JTable(monthlyBreakdownModel);
 		breakdown_table.setAutoCreateRowSorter(true);
 		breakdown_pane.setViewportView(breakdown_table);
-		
+
 		
 		
 		// These are the labels that hold the value of the given request on monthly breakdown 
@@ -295,9 +307,22 @@ public class Reports extends JPanel implements Tile {
 		export_zeroRequests_btn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		export_zeroRequests_btn.setBounds(869, 348, 89, 23);
 		monthly_breakdown.add(export_zeroRequests_btn);
-		
+
+
+		JRadioButton csv = new JRadioButton("CSV");
+		JRadioButton pdf = new JRadioButton("PDF");
+		csv.setBounds(869, 383, 89, 23);
+		pdf.setBounds(869, 418, 89, 23);
+		ButtonGroup bG = new ButtonGroup();
+		bG.add(csv);
+		bG.add(pdf);
+		csv.setSelected(true);
+		monthly_breakdown.add(csv);
+		monthly_breakdown.add(pdf);
+
+
 		/* End of monthly breakdown */
-		
+
 		new_titles_table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -337,14 +362,95 @@ public class Reports extends JPanel implements Tile {
 		});
 		export_customers_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (csv.isSelected()) {
+					//CSV
+					String filePath = control.saveFile(monthly_breakdown, "Customers", ".xlsx");  // Calls saveFile() in controller. Essentially opens file saver and gets save destination.
+					if (filePath != null) {
+						String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};        // Columns for your excel sheet
+						String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM [newDLC].[dbo].[Customer]"; // Query matching the columns
+						control.exportXLSX(null, query, filePath, "Customers", columns);            // Calling export. Check the function for param values
+					}
+				} else {
+					//PDF
 
-				String filePath = control.saveFile(monthly_breakdown, "Customers", ".xlsx");  // Calls saveFile() in controller. Essentially opens file saver and gets save destination.
-				if (filePath != null) {
-					String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};        // Columns for your excel sheet
-					String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM [newDLC].[dbo].[Customer]"; // Query matching the columns
-					control.exportXLSX(null, query, filePath, "Customers", columns);            // Calling export. Check the function for param values
+					Document pdfDoc = new Document();
+					//Create new File
+					String filePath = control.saveFile(monthly_breakdown, "Monthly_Titles_List", ".pdf");
+					File file = new File(filePath);
+
+					try {
+						file.createNewFile();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					FileOutputStream fop = null;
+					try {
+						fop = new FileOutputStream(file);
+					} catch (FileNotFoundException fileNotFoundException) {
+						fileNotFoundException.printStackTrace();
+					}
+					try {
+						PdfWriter.getInstance(pdfDoc, fop);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					pdfDoc.open();
+
+					String[] header = new String[]{"Last Name", "First Name", "Phone #1", "Email"};
+					String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM [newDLC].[dbo].[Customer]";
+					String[][] body = control.select(query);
+
+					//Table for header
+					PdfPTable pdfTableHeader = new PdfPTable(header.length);
+					for (int j = 0; j < header.length; j++) {
+						Phrase frase = new Phrase(header[j]);
+						PdfPCell cell = new PdfPCell(frase);
+						cell.setBackgroundColor(new BaseColor(Color.lightGray.getRGB()));
+						pdfTableHeader.addCell(cell);
+					}
+
+					try {
+						pdfTableHeader.setWidths(new float[]{2, 2, 2, 4});
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+
+					try {
+						pdfDoc.add(pdfTableHeader);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					//Table for body
+					PdfPTable pdfTable = new PdfPTable(header.length);
+					for (int i = 0; i < body.length; i++) {
+						for (int j = 0; j < body[i].length; j++) {
+							pdfTable.addCell(new Phrase(body[i][j]));
+						}
+					}
+
+					try {
+						pdfTable.setWidths(new float[]{2, 2, 2, 4});
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+
+					try {
+						pdfDoc.add(pdfTable);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					pdfDoc.close();
+					try {
+						fop.flush();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					try {
+						fop.close();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
 				}
-
 			}
 			
 		});
@@ -353,43 +459,288 @@ public class Reports extends JPanel implements Tile {
 		//Monthly Title
 		export_titles_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+				if (csv.isSelected()) {
+					//CSV
 
-				String filePath = control.saveFile(monthly_breakdown, "Monthly Titles", ".xlsx");
-                if (filePath != null) {
-                    String columns[] = {"Title", "Customer", "Quantity"};
-                    String query = "SELECT [Title], [Customer Code], [Quantity] FROM [Order]";
-                    control.exportXLSX(null, query, filePath, "Titles", columns);
-                }
+					String filePath = control.saveFile(monthly_breakdown, "Monthly Titles", ".xlsx");
+					if (filePath != null) {
+						String columns[] = {"Title", "Customer", "Quantity"};
+						String query = "SELECT [Title], [Customer Code], [Quantity] FROM [newDLC].[dbo].[Order]";
+						control.exportXLSX(null, query, filePath, "Titles", columns);
+					}
+				} else {
+					//PDF
 
+					Document pdfDoc = new Document();
+					//Create new File
+					String filePath = control.saveFile(monthly_breakdown, "Monthly_Titles_List", ".pdf");
+					File file = new File(filePath);
+
+					try {
+						file.createNewFile();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					FileOutputStream fop = null;
+					try {
+						fop = new FileOutputStream(file);
+					} catch (FileNotFoundException fileNotFoundException) {
+						fileNotFoundException.printStackTrace();
+					}
+					try {
+						PdfWriter.getInstance(pdfDoc, fop);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					pdfDoc.open();
+
+					String[] header = new String[]{"Title", "Customer", "Quantity"};
+					String query = "SELECT [Title], [Customer Code], [Quantity] FROM [newDLC].[dbo].[Order]";
+					String[][] body = control.select(query);
+
+					//Table for header
+					PdfPTable pdfTableHeader = new PdfPTable(header.length);
+					for (int j = 0; j < header.length; j++) {
+						Phrase frase = new Phrase(header[j]);
+						PdfPCell cell = new PdfPCell(frase);
+						cell.setBackgroundColor(new BaseColor(Color.lightGray.getRGB()));
+						pdfTableHeader.addCell(cell);
+					}
+
+					try {
+						pdfTableHeader.setWidths(new float[]{5, 2, 1});
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+
+					try {
+						pdfDoc.add(pdfTableHeader);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					//Table for body
+					PdfPTable pdfTable = new PdfPTable(header.length);
+					for (int i = 0; i < body.length; i++) {
+						for (int j = 0; j < body[i].length; j++) {
+							pdfTable.addCell(new Phrase(body[i][j]));
+						}
+					}
+
+					try {
+						pdfTable.setWidths(new float[]{5, 2, 1});
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+
+					try {
+						pdfDoc.add(pdfTable);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					pdfDoc.close();
+					try {
+						fop.flush();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					try {
+						fop.close();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+				}
             }
         });
 		
 		// not flagged in 6 months button export
 		export_flagged_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+				if (csv.isSelected()) {
+					//CSV
 
-				String filePath = control.saveFile(monthly_breakdown, "Titles not Flagged 6mo+", ".xlsx");
-                if (filePath != null) {
-                    String columns[] = {"Catalog ID", "Distributor",  "Title", "Flag", "Release"};
-                    String query = "SELECT [Catalog ID], [Distributor], [Title], [Flag], [Release] FROM [Catalog] WHERE [Flag] < 1 AND [Release] <= dateadd(month, -6, getdate())";
-                
-                    control.exportXLSX(null, query, filePath, "Catalog", columns);
-                }
+					String filePath = control.saveFile(monthly_breakdown, "Titles not Flagged 6mo+", ".xlsx");
+					if (filePath != null) {
+						String columns[] = {"Catalog ID", "Distributor", "Title", "Flag", "Release"};
+						String query = "SELECT [Catalog ID], [Distributor], [Series], [Flag], [Release] FROM [newDLC].[dbo].[Catalog] WHERE [Flag] < 1 AND [Release] <= dateadd(month, -6, getdate())";
 
+						control.exportXLSX(null, query, filePath, "Catalog", columns);
+					}
+				} else {
+					//PDF
+
+					Document pdfDoc = new Document();
+					//Create new File
+					String filePath = control.saveFile(monthly_breakdown, "Monthly_Titles_List", ".pdf");
+					File file = new File(filePath);
+
+					try {
+						file.createNewFile();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					FileOutputStream fop = null;
+					try {
+						fop = new FileOutputStream(file);
+					} catch (FileNotFoundException fileNotFoundException) {
+						fileNotFoundException.printStackTrace();
+					}
+					try {
+						PdfWriter.getInstance(pdfDoc, fop);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					pdfDoc.open();
+
+					String[] header = new String[]{"Catalog ID", "Distributor", "Title", "Flag", "Release"};
+					String query = "SELECT [Catalog ID], [Distributor], [Series], [Flag], [Release] FROM [newDLC].[dbo].[Catalog] WHERE [Flag] < 1 AND [Release] <= dateadd(month, -6, getdate())";
+					String[][] body = control.select(query);
+
+					//Table for header
+					PdfPTable pdfTableHeader = new PdfPTable(header.length);
+					for (int j = 0; j < header.length; j++) {
+						Phrase frase = new Phrase(header[j]);
+						PdfPCell cell = new PdfPCell(frase);
+						cell.setBackgroundColor(new BaseColor(Color.lightGray.getRGB()));
+						pdfTableHeader.addCell(cell);
+					}
+
+					try {
+						pdfTableHeader.setWidths(new float[]{2, 3, 4, 1, 1});
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+
+					try {
+						pdfDoc.add(pdfTableHeader);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					//Table for body
+					PdfPTable pdfTable = new PdfPTable(header.length);
+					for (int i = 0; i < body.length; i++) {
+						for (int j = 0; j < body[i].length; j++) {
+							pdfTable.addCell(new Phrase(body[i][j]));
+						}
+					}
+
+					try {
+						pdfTable.setWidths(new float[]{2, 3, 4, 1, 1});
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+
+					try {
+						pdfDoc.add(pdfTable);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					pdfDoc.close();
+					try {
+						fop.flush();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					try {
+						fop.close();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+				}
             }
         }); 
 		
 		// Zero request skeleton
 		export_zeroRequests_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+				if (csv.isSelected()) {
+					//CSV
+					String filePath = control.saveFile(monthly_breakdown, "Titles with 0 Requests", ".xlsx");
+					if (filePath != null) {
+						String columns[] = {"Store Code", "Customer Code", "Title"};
+						String query = "SELECT [Store Code], [Customer Code], [Title] FROM [newDLC].[dbo].[Order] WHERE [Quantity] < 1";
+						control.exportXLSX(null, query, filePath, "Order", columns);
+					}
+				} else {
+					//PDF
 
-				String filePath = control.saveFile(monthly_breakdown, "Titles with 0 Requests", ".xlsx");
-                if (filePath != null) {
-                    String columns[] = {"Store Code", "Customer Code",  "Title"};
-                    String query = "SELECT [Store Code], [Customer Code], [Title] FROM [Order] WHERE [Quantity] < 1";
-                    control.exportXLSX(null, query, filePath, "Order", columns);
-                }
+					Document pdfDoc = new Document();
+					//Create new File
+					String filePath = control.saveFile(monthly_breakdown, "Monthly_Titles_List", ".pdf");
+					File file = new File(filePath);
 
+					try {
+						file.createNewFile();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					FileOutputStream fop = null;
+					try {
+						fop = new FileOutputStream(file);
+					} catch (FileNotFoundException fileNotFoundException) {
+						fileNotFoundException.printStackTrace();
+					}
+					try {
+						PdfWriter.getInstance(pdfDoc, fop);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					pdfDoc.open();
+
+					String[] header = new String[]{"Store Code", "Customer Code", "Title"};
+					String query = "SELECT [Store Code], [Customer Code], [Title] FROM [newDLC].[dbo].[Order] WHERE [Quantity] < 1";
+					String[][] body = control.select(query);
+
+					//Table for header
+					PdfPTable pdfTableHeader = new PdfPTable(header.length);
+					for (int j = 0; j < header.length; j++) {
+						Phrase frase = new Phrase(header[j]);
+						PdfPCell cell = new PdfPCell(frase);
+						cell.setBackgroundColor(new BaseColor(Color.lightGray.getRGB()));
+						pdfTableHeader.addCell(cell);
+					}
+
+					try {
+						pdfTableHeader.setWidths(new float[]{1, 1, 4});
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+
+					try {
+						pdfDoc.add(pdfTableHeader);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					//Table for body
+					PdfPTable pdfTable = new PdfPTable(header.length);
+					for (int i = 0; i < body.length; i++) {
+						for (int j = 0; j < body[i].length; j++) {
+							pdfTable.addCell(new Phrase(body[i][j]));
+						}
+					}
+
+					try {
+						pdfTable.setWidths(new float[]{1, 1, 4});
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+
+					try {
+						pdfDoc.add(pdfTable);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					pdfDoc.close();
+					try {
+						fop.flush();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					try {
+						fop.close();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+				}
             }
         }); 
 		
