@@ -8,6 +8,7 @@
       <root url="jar://$PROJECT_DIR$/Dragons Lair/xmlbeans-3.1.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/Dragons Lair/commons-compress-1.19.jar!/" />
       <root url="jar://$PROJECT_DIR$/Dragons Lair/commons-collections4-4.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/itextpdf-5.1.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

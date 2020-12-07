@@ -1,31 +1,17 @@
 package main.java;
-import java.awt.Color;
-import java.awt.Font;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileFilter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class Reports extends JPanel implements Tile {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private Controller control;
@@ -334,31 +320,31 @@ public class Reports extends JPanel implements Tile {
 		export_request_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (requestsModel.getRowCount() > 0) {
-					
+
 					String temp = title_lbl.getText();
 					if (temp.length() > 35) {
 						temp = temp.substring(0, 35);
 					}
 
-					String filePath = control.saveFile(new_week_pulls, temp); // Calls saveFile() in controller.// Essentially opens file saver and gets
-																			
+					String filePath = control.saveFile(new_week_pulls, temp, ".xlsx"); // Calls saveFile() in controller.// Essentially opens file saver and gets
+
 					if (filePath != null) {
-						String columns[] = { "Last Name", "First Name", "Qty" }; // Columns for your excel sheet
-						control.exportXLSX(orders, null, filePath, "Single Title Order List", columns); 																		
+						String columns[] = {"Last Name", "First Name", "Qty"}; // Columns for your excel sheet
+						control.exportXLSX(orders, null, filePath, "Single Title Order List", columns);
 					}
 				}
 			}
 		});
 		export_customers_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			    String filePath = control.saveFile(monthly_breakdown, "Customers");  // Calls saveFile() in controller. Essentially opens file saver and gets save destination.
-			    if (filePath != null) {
-			    	String columns[] = {"Last Name", "First Name", "Phone #1", "Email"}; 		// Columns for your excel sheet
-				    String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM [newDLC].[dbo].[Customer]"; // Query matching the columns
-				    control.exportXLSX(null, query, filePath, "Customers", columns); 			// Calling export. Check the function for param values
-			    }
-			    
+
+				String filePath = control.saveFile(monthly_breakdown, "Customers", ".xlsx");  // Calls saveFile() in controller. Essentially opens file saver and gets save destination.
+				if (filePath != null) {
+					String columns[] = {"Last Name", "First Name", "Phone #1", "Email"};        // Columns for your excel sheet
+					String query = "SELECT [Last Name], [First Name], [Phone #1], [Email] FROM [newDLC].[dbo].[Customer]"; // Query matching the columns
+					control.exportXLSX(null, query, filePath, "Customers", columns);            // Calling export. Check the function for param values
+				}
+
 			}
 			
 		});
@@ -368,7 +354,7 @@ public class Reports extends JPanel implements Tile {
 		export_titles_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                String filePath = control.saveFile(monthly_breakdown, "Monthly Titles");
+				String filePath = control.saveFile(monthly_breakdown, "Monthly Titles", ".xlsx");
                 if (filePath != null) {
                     String columns[] = {"Title", "Customer", "Quantity"};
                     String query = "SELECT [Title], [Customer Code], [Quantity] FROM [Order]";
@@ -382,7 +368,7 @@ public class Reports extends JPanel implements Tile {
 		export_flagged_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                String filePath = control.saveFile(monthly_breakdown, "Titles not Flagged 6mo+");
+				String filePath = control.saveFile(monthly_breakdown, "Titles not Flagged 6mo+", ".xlsx");
                 if (filePath != null) {
                     String columns[] = {"Catalog ID", "Distributor",  "Title", "Flag", "Release"};
                     String query = "SELECT [Catalog ID], [Distributor], [Title], [Flag], [Release] FROM [Catalog] WHERE [Flag] < 1 AND [Release] <= dateadd(month, -6, getdate())";
@@ -397,7 +383,7 @@ public class Reports extends JPanel implements Tile {
 		export_zeroRequests_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                String filePath = control.saveFile(monthly_breakdown, "Titles with 0 Requests");
+				String filePath = control.saveFile(monthly_breakdown, "Titles with 0 Requests", ".xlsx");
                 if (filePath != null) {
                     String columns[] = {"Store Code", "Customer Code",  "Title"};
                     String query = "SELECT [Store Code], [Customer Code], [Title] FROM [Order] WHERE [Quantity] < 1";

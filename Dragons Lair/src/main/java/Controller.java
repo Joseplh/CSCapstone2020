@@ -510,23 +510,24 @@ public class Controller {
 	/**
 	 * Opens up a file chooser for a user to select save destination. Returns path
 	 *
-	 * @param panel		Parent component of the dialog
-	 * @param name		String to name saved file
+	 * @param panel     Parent component of the dialog
+	 * @param name      String to name saved file
+	 * @param extension File extension (".xlsx", ".pdf")
 	 * @return {String} Full path to save location
 	 */
-	public String saveFile(JPanel panel, String name){
+	public String saveFile(JPanel panel, String name, String extension) {
 		String path = null;
 		String choosertitle = "Select Save Location";
 		JFileChooser chooser = new JFileChooser();
-	    chooser.setCurrentDirectory(new java.io.File("."));
-	    chooser.setDialogTitle(choosertitle);
-	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-	    chooser.setAcceptAllFileFilterUsed(false);
-	    if (chooser.showSaveDialog(panel) == JFileChooser.APPROVE_OPTION) {
-	    	path = chooser.getSelectedFile().getAbsolutePath();
-	    	path += "\\" + name + "_" + getDate() + ".xlsx";
+		chooser.setCurrentDirectory(new java.io.File("."));
+		chooser.setDialogTitle(choosertitle);
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		chooser.setAcceptAllFileFilterUsed(false);
+		if (chooser.showSaveDialog(panel) == JFileChooser.APPROVE_OPTION) {
+			path = chooser.getSelectedFile().getAbsolutePath();
+			path += "\\" + name + "_" + getDate() + extension;
 
-	    }
+		}
 	    else {
 	    	System.out.println("No Selection ");
 	     }

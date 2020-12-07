@@ -1,5 +1,13 @@
 package main.java;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -8,9 +16,15 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+
 
 public class Customers extends JPanel implements Tile {
 	/**
@@ -31,6 +45,7 @@ public class Customers extends JPanel implements Tile {
 	private String reportColumns[];
 	private JButton editDelSelectedBtn;
 	private JButton emailCustomerBtn;
+	private JButton exportCustomersBtn;
 	private final int orderIdcolumn = 4;
 
 	private DefaultTableModel customersModel;
@@ -43,6 +58,9 @@ public class Customers extends JPanel implements Tile {
 
 	private Font font = new Font("Tahoma", Font.BOLD, 14);
 	private Color color = new Color(240, 240, 240);
+
+	private Font fontHeader = new Font("TimesRoman", Font.BOLD, 12);
+	private Font fontBody = new Font("Courier", Font.PLAIN, 12);
 
 	public Customers(Controller control) {
 		this.control = control;
@@ -103,6 +121,12 @@ public class Customers extends JPanel implements Tile {
 		exportBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		exportBtn.setBounds(860, 607, 107, 48);
 		add(exportBtn);
+
+		exportCustomersBtn = new JButton("Export PDF");
+		exportCustomersBtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		exportCustomersBtn.setBounds(860, 555, 107, 48);
+		exportCustomersBtn.setEnabled(true);
+		add(exportCustomersBtn);
 
 		/* Declaring variables for "edit customer info" section */
 		lNameBox = new JTextField();
@@ -422,10 +446,10 @@ public class Customers extends JPanel implements Tile {
 				if(customerTable.getSelectedRow() != -1) {
 					String last = customerTable.getValueAt(customerTable.getSelectedRow(), lastnameCodeColumn).toString();
 					String first = customerTable.getValueAt(customerTable.getSelectedRow(), firstnameCodeColumn).toString();
-					String filePath = control.saveFile(customerDetails, last + "_" + first);
+					String filePath = control.saveFile(customerDetails, last + "_" + first, ".xlsx");
 
 					if (filePath != null) {
-						String columns[] = { "Store Code", "Description", "Issue Start", "Issue End", "Quantity" };
+						String columns[] = {"Store Code", "Description", "Issue Start", "Issue End", "Quantity"};
 						control.exportXLSX(
 								control.getRequests(customerTable
 										.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()),
@@ -435,7 +459,94 @@ public class Customers extends JPanel implements Tile {
 			}
 		});
 
-		//Willy Wonka
+		exportCustomersBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (exportCustomersBtn.isEnabled()) {
+
+					exportCustomersBtn.setEnabled(true);
+					Document pdfDoc = new Document();
+					//Create new File
+					String filePath = control.saveFile(customerDetails, "Customers_List", ".pdf");
+					File file = new File(filePath);
+
+					try {
+						file.createNewFile();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					FileOutputStream fop = null;
+					try {
+						fop = new FileOutputStream(file);
+					} catch (FileNotFoundException fileNotFoundException) {
+						fileNotFoundException.printStackTrace();
+					}
+					try {
+						PdfWriter.getInstance(pdfDoc, fop);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					pdfDoc.open();
+
+					String[] header = new String[]{"Last Name", "First Name", "Phone Number", "Email Address", "ID"};
+					String[][] body = control.getCustomers();
+
+					//Table for header
+					PdfPTable pdfTableHeader = new PdfPTable(header.length);
+					for (int j = 0; j < header.length; j++) {
+						Phrase frase = new Phrase(header[j]);
+						PdfPCell cell = new PdfPCell(frase);
+						cell.setBackgroundColor(new BaseColor(Color.lightGray.getRGB()));
+						pdfTableHeader.addCell(cell);
+					}
+
+					try {
+						pdfTableHeader.setWidths(new float[]{2, 2, 2, 4, 1});
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+
+					try {
+						pdfDoc.add(pdfTableHeader);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					//Table for body
+					PdfPTable pdfTable = new PdfPTable(header.length);
+					for (int i = 0; i < body.length; i++) {
+						for (int j = 0; j < body[i].length; j++) {
+							pdfTable.addCell(new Phrase(body[i][j]));
+						}
+					}
+
+					try {
+						pdfTable.setWidths(new float[]{2, 2, 2, 4, 1});
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+
+					try {
+						pdfDoc.add(pdfTable);
+					} catch (DocumentException documentException) {
+						documentException.printStackTrace();
+					}
+					pdfDoc.close();
+					try {
+						fop.flush();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					try {
+						fop.close();
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+				}
+			}
+		});
+
+
+
 		/* Listener for when a cell is selected from the customerTable */
 		customerTable.addMouseListener(new MouseAdapter() {
 			@Override
@@ -445,6 +556,7 @@ public class Customers extends JPanel implements Tile {
 				editDelSelectedBtn.setEnabled(false);
 				moreInfoBtn.setEnabled(true);
 				emailCustomerBtn.setEnabled(true);
+				exportCustomersBtn.setEnabled(true);
 				reportsData = control.getRequests(
 						customerTable.getValueAt(customerTable.getSelectedRow(), customerCodeColumn).toString()
 				);
@@ -1021,7 +1133,7 @@ public class Customers extends JPanel implements Tile {
 	}
 
 	/**
-	 * Handler for editing or deleting the customers order.
+	 * Handler for emailing pull list titles to a customer.
 	 */
 	private void emailCustomerHandler() {
 		emailCustomerBtn = new JButton("Email Customer");
@@ -1071,7 +1183,6 @@ public class Customers extends JPanel implements Tile {
 		editDelSelectedBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//editDelSelectedBtn.setEnabled(false);
 				if (editDelSelectedBtn.isEnabled()) {
 					String[] orderData = control.getOrder(Integer.parseInt((String) titleTable.getValueAt(titleTable.getSelectedRow(), orderIdcolumn)));
 					String storeCode = orderData[0];
