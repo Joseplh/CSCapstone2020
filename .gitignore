@@ -6,3 +6,11 @@
 .gradle/*
 .gradle
 *.class
+Dragons Lair/bin/main/java/Customers$1.class
+Dragons Lair/bin/main/java/Customers$2.class
+Dragons Lair/bin/main/java/Customers$3.class
+Dragons Lair/bin/main/java/Customers$4.class
+Dragons Lair/bin/main/java/Customers$5.class
+*.class
+Dragons Lair/bin/main/java/Customers.class
+Dragons Lair/bin/main/java/Reports.class
