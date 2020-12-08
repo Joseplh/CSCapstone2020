@@ -131,5 +131,115 @@ public class Controller {
 		}
 		return false;
 	}
+	protected boolean isStore(String store) {
+		if(!isConnected()) {
+			connect();
+		}
+		
+		Statement sqlStatement = null;		
+		ResultSet rs = null;
+		
+		try {
+			sqlStatement = dbConnection.createStatement();
+		} catch (SQLException e) {
+			System.err.println("Error connecting to the database");
+			e.printStackTrace();
+			System.exit(0);
+			
+		}	
+		
+		try {
+			rs = sqlStatement.executeQuery("SELECT CASE WHEN EXISTS ( SELECT * FROM [Stores] WHERE [Store] = '"+store+"')THEN CAST(1 AS BIT)ELSE CAST(0 AS BIT) END");
+			while(rs.next()) {
+				if(rs.getInt(1) == 1)
+					return true;
+			}
+		} catch (SQLException e) {
+			System.err.println("Error executing query in password check");
+			e.printStackTrace();
+			System.exit(0);
+		}
+		return false;
+	}
+	public int getStoreCount() {
+		if (!isConnected()) {
+			connect();
+		}
+		
+		Statement sqlStatement = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			sqlStatement = dbConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		} catch (SQLException e) {
+			System.err.println("Error connecting to the database");
+			e.printStackTrace();
+			System.exit(0);
+			
+		}
+		
+		try {
+			rs = sqlStatement.executeQuery("SELECT COUNT(*) AS result FROM Stores;");
+		} catch (SQLException e) {
+			System.err.println("Error executing query");
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		try {
+			rs.next();
+			return Integer.parseInt(rs.getString("result"));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+
+	public String[] getStoreList() {
+		if (!isConnected()) {
+			connect();
+		}
+		
+		Statement sqlStatement = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			sqlStatement = dbConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		} catch (SQLException e) {
+			System.err.println("Error connecting to the database");
+			e.printStackTrace();
+			System.exit(0);
+			
+		}
+		
+		try {
+			rs = sqlStatement.executeQuery("SELECT * FROM Stores;");
+		} catch (SQLException e) {
+			System.err.println("Error executing query");
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		try {
+			int columns = getStoreCount();
+			String[] list = new String[columns];
+			for(int x=0; x<columns; x++) {
+				rs.next();
+				list[x] = rs.getString("Store");
+			}
+			return list;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }
 
