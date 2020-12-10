@@ -198,6 +198,12 @@ public class Controller {
 	public String[][] getNumTitles() {
 		return select("SELECT COUNT([Catalog ID]) FROM [newDLC].[dbo].[Catalog]");
 	}
+	public String[][] getNumCustomers() {
+		return select("SELECT COUNT([First Name]) FROM [newDLC].[dbo].[Customer]");
+	}
+	public String[][] getNumSpecialComments() {
+		return select("SELECT COUNT([Comments]) FROM [newDLC].[dbo].[Order] WHERE [Comments] != ''");
+	}
 
 	/**
 	 * Returns the following columns from the customer table.
