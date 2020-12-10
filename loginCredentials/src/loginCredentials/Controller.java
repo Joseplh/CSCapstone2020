@@ -52,28 +52,14 @@ public class Controller {
 			System.exit(0);
 		}
 	}
-	
-	
-	/**
-	 * Handler for adding a request to the database.
-	 * 
-	 * @param title	   The request title.
-	 * @param quantity The request quantity.
-	 * @param issue	   The request issue number.
-	 */
-
-	
-	/*
-	 * Returns true if connected, false if not
-	 */
 	public boolean isConnected() {
 		return (dbConnection != null);
 	}
-	/*
-	 * Method to insert, update, delete info. Returns 0 for statements that return nothing or the row count 
-	 * 
-	 */
 	public void execute(String query) {
+		/*
+		 * Method to insert, update, delete info. Returns 0 for statements that return nothing or the row count 
+		 * 
+		 */
 		if(!isConnected()) {
 			connect();
 		}
@@ -95,11 +81,6 @@ public class Controller {
 			System.exit(0);
 		}
 	}	
-	/* TODO: Need a method for taking in an insert, update, delete query
-	 * 		 Maybe return boolean/int depending on if it was successful or not
-	 * 		 executeUpdate(query)
-	 * 
-	 */	
 	protected boolean isAccount(String user, String pass) {
 		//Created by Joseph: This is a sql statement to check if the username and password are valid
 		if(!isConnected()) {
