@@ -175,7 +175,6 @@ public class MainPage {
 	private void listStores() {
 		JLabel Store0;
 		String[] storeList = control.getStoreList();
-		System.out.println(storeList.length);
 		for(int x=0; x<storeList.length; x++) {
 			Store0 = new JLabel(storeList[x]);
 			Store0.setBounds(354, 55+(x*15), 90, 14);

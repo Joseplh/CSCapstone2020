@@ -16,7 +16,6 @@ public class lairGUI {
 
 	private JLabel todaysDate = new JLabel("Today's Date: ");
 	private JLabel actualDate;
-
 	private JFrame frame;
 	private JFrame homeFrame;
 	private JTextField userName;

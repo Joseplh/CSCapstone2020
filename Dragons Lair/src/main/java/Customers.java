@@ -47,6 +47,7 @@ public class Customers extends JPanel implements Tile {
 	private JButton emailCustomerBtn;
 	private JButton exportCustomersBtn;
 	private final int orderIdcolumn = 4;
+	private String currentStore = "dl1";
 
 	private DefaultTableModel customersModel;
 	private String[][] customersData;
@@ -77,7 +78,7 @@ public class Customers extends JPanel implements Tile {
 
 		customerDetails.setLayout(null);
 
-		/* Button deceleration */
+		/* Button deceleration */		
 		JButton AddCustBtn = new JButton("Add New Customer");
 		AddCustBtn.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 		AddCustBtn.setBounds(132, 11, 174, 33);
@@ -309,7 +310,7 @@ public class Customers extends JPanel implements Tile {
 					lnameAccField.setColumns(10);
 					lnameAccField.setBounds(214, 48, 136, 20);
 					accPanel.add(lnameAccField);
-					newAcc.add(accPanel);
+					newAcc.getContentPane().add(accPanel);
 
 					JTextField phoneAccField = new JTextField();
 					phoneAccField.setBounds(214, 109, 136, 20);
@@ -724,7 +725,7 @@ public class Customers extends JPanel implements Tile {
 				lNameField.setColumns(10);
 				lNameField.setBounds(403, 48, 136, 20);
 				moreInfoPanel.add(lNameField);
-				moreInfoFrame.add(moreInfoPanel);
+				moreInfoFrame.getContentPane().add(moreInfoPanel);
 
 				JTextField addressField = new JTextField();
 				addressField.setBounds(592, 48, 136, 20);
@@ -745,25 +746,25 @@ public class Customers extends JPanel implements Tile {
 				zipField.setColumns(10);
 				zipField.setBounds(214, 109, 136, 20);
 				moreInfoPanel.add(zipField);
-				moreInfoFrame.add(moreInfoPanel);
+				moreInfoFrame.getContentPane().add(moreInfoPanel);
 
 				JTextField phone1Field = new JTextField();
 				phone1Field.setColumns(10);
 				phone1Field.setBounds(403, 109, 136, 20);
 				moreInfoPanel.add(phone1Field);
-				moreInfoFrame.add(moreInfoPanel);
+				moreInfoFrame.getContentPane().add(moreInfoPanel);
 
 				JTextField phone2Field = new JTextField();
 				phone2Field.setColumns(10);
 				phone2Field.setBounds(592, 109, 136, 20);
 				moreInfoPanel.add(phone2Field);
-				moreInfoFrame.add(moreInfoPanel);
+				moreInfoFrame.getContentPane().add(moreInfoPanel);
 
 				JTextField emailField = new JTextField();
 				emailField.setColumns(10);
 				emailField.setBounds(781, 109, 136, 20);
 				moreInfoPanel.add(emailField);
-				moreInfoFrame.add(moreInfoPanel);
+				moreInfoFrame.getContentPane().add(moreInfoPanel);
 
 				JButton updateBtn = new JButton("Update Contact Info");
 				updateBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -860,6 +861,8 @@ public class Customers extends JPanel implements Tile {
 			}
 		});
 	}
+
+	
 
 	public void emailCustomer(JFrame frame) {
 		int result = JOptionPane.showConfirmDialog(frame, "Email Customer?", "Email Customer?",
@@ -997,7 +1000,7 @@ public class Customers extends JPanel implements Tile {
 					titleFilterField.setColumns(10);
 					titleFilterField.setBounds(214, 48, 525, 20);
 					addRequestPanel.add(titleFilterField);
-					addRequestFrame.add(addRequestPanel);
+					addRequestFrame.getContentPane().add(addRequestPanel);
 
 					JComboBox<?> titleField = new JComboBox<Object>(titles);
 					titleField.setBounds(214, 72, 525, 20);
@@ -1008,7 +1011,7 @@ public class Customers extends JPanel implements Tile {
 					commentField.setColumns(10);
 					commentField.setBounds(28, 109, 710, 20);
 					addRequestPanel.add(commentField);
-					addRequestFrame.add(addRequestPanel);
+					addRequestFrame.getContentPane().add(addRequestPanel);
 
 					JTextField issueStartField = new JTextField();
 					issueStartField.setBounds(28, 160, 136, 20);
@@ -1029,7 +1032,7 @@ public class Customers extends JPanel implements Tile {
 					costField.setColumns(10);
 					costField.setBounds(602, 160, 136, 20);
 					addRequestPanel.add(costField);
-					addRequestFrame.add(addRequestPanel);
+					addRequestFrame.getContentPane().add(addRequestPanel);
 
 					titleFilterField.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent event) {
@@ -1286,7 +1289,7 @@ public class Customers extends JPanel implements Tile {
 					commentField.setColumns(10);
 					commentField.setBounds(28, 109, 644, 20);
 					addRequestPanel.add(commentField);
-					addRequestFrame.add(addRequestPanel);
+					addRequestFrame.getContentPane().add(addRequestPanel);
 
 					JTextField issueStartField = new JTextField(String.valueOf(issueStart));
 					issueStartField.setBounds(28, 160, 136, 20);
@@ -1307,7 +1310,7 @@ public class Customers extends JPanel implements Tile {
 					costField.setColumns(10);
 					costField.setBounds(28, 221, 136, 20);
 					addRequestPanel.add(costField);
-					addRequestFrame.add(addRequestPanel);
+					addRequestFrame.getContentPane().add(addRequestPanel);
 
 					JButton editBtn = new JButton("Edit Request");
 					editBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -1469,7 +1472,7 @@ public class Customers extends JPanel implements Tile {
 		panel.setBounds(x, y, width, height);
 		panel.setBackground(color);
 		component.setVisible(false);
-		frame.add(panel);
+		frame.getContentPane().add(panel);
 
 		JTextPane pane = new JTextPane();
 		pane.setBounds(x, height / 2 - font.getSize(), width, height);

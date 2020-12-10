@@ -42,7 +42,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Joseph/workspace/CSCapstone2020/itextpdf-5.1.0.jar">
+	<classpathentry kind="lib" path="itextpdf-5.1.0.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
