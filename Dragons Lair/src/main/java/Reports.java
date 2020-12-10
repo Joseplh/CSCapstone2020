@@ -696,7 +696,7 @@ public class Reports extends JPanel implements Tile {
 						}
 
 						try {
-							pdfTableHeader.setWidths(new float[]{1, 1, 4});
+							pdfTableHeader.setWidths(new float[]{1, 4, 1, 1});
 						} catch (DocumentException documentException) {
 							documentException.printStackTrace();
 						}
@@ -715,7 +715,7 @@ public class Reports extends JPanel implements Tile {
 						}
 
 						try {
-							pdfTable.setWidths(new float[]{1, 1, 4});
+							pdfTable.setWidths(new float[]{1, 4, 1, 1});
 						} catch (DocumentException documentException) {
 							documentException.printStackTrace();
 						}
