@@ -16,7 +16,7 @@ public class Titles extends JPanel implements Tile {
 	private JTable titleTable;
 	private Controller control;
 	private JTextField fullTitleField;
-	private JTextField titleField;
+	private JTextField seriesField;
 	private JTextField distributorField;
 	private JTextField tCodeField;
 	private JTextField releaseField;
@@ -76,7 +76,7 @@ public class Titles extends JPanel implements Tile {
 		titlePanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Title Details", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
-		titlePanel.setBounds(505, 117, 459, 268);
+		titlePanel.setBounds(505, 117, 459, 318);
 		add(titlePanel);
 		titlePanel.setLayout(null);
 
@@ -124,13 +124,13 @@ public class Titles extends JPanel implements Tile {
 		JButton discardBtn = new JButton("Discard");
 		discardBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		discardBtn.setEnabled(false);
-		discardBtn.setBounds(755, 413, 107, 33);
+		discardBtn.setBounds(755, 463, 107, 33);
 		add(discardBtn);
 
 		JButton saveBtn = new JButton("Save");
 		saveBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		saveBtn.setEnabled(false);
-		saveBtn.setBounds(607, 413, 107, 33);
+		saveBtn.setBounds(607, 463, 107, 33);
 		add(saveBtn);
 
 //		JButton btnExportSingleTitle = new JButton("Export Requested\r\n");
@@ -145,103 +145,105 @@ public class Titles extends JPanel implements Tile {
 		fullTitleField.setEditable(false);
 		fullTitleField.setColumns(10);
 		fullTitleField.setBounds(10, 43, 440, 33);
-		/* TODO: UI configuration
-		titleField = new JTextField();
-		titleField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		titleField.setEditable(false);
-		titleField.setColumns(10);
-		titleField.setBounds(10, 43, 440, 33); */
-		/* TODO: UI configuration
+
+		seriesField = new JTextField();
+		seriesField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		seriesField.setEditable(false);
+		seriesField.setColumns(10);
+		seriesField.setBounds(10, 108, 355, 33);
+
 		issueField = new JTextField();
 		issueField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		issueField.setEditable(false);
 		issueField.setColumns(10);
-		issueField.setBounds(10, 43, 440, 33); */
-
-		uniqueCheck = new JCheckBox();
-		uniqueCheck.setEnabled(false);
-		uniqueCheck.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		uniqueCheck.setBounds(125, 177, 21, 21);
-
-		newReleaseCheck = new JCheckBox();
-		newReleaseCheck.setEnabled(false);
-		newReleaseCheck.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		newReleaseCheck.setBounds(10, 177, 21, 21);
+		issueField.setBounds(375, 108, 75, 33);
 
 		distributorField = new JTextField();
 		distributorField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		distributorField.setEditable(false);
 		distributorField.setColumns(10);
-		distributorField.setBounds(10, 112, 330, 33);
+		distributorField.setBounds(10, 173, 330, 33);
 
 		tCodeField = new JTextField();
 		tCodeField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tCodeField.setEditable(false);
 		tCodeField.setColumns(10);
-		tCodeField.setBounds(350, 112, 100, 33);
+		tCodeField.setBounds(350, 173, 100, 33);
+
+		newReleaseCheck = new JCheckBox();
+		newReleaseCheck.setEnabled(false);
+		newReleaseCheck.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		newReleaseCheck.setBounds(10, 238, 21, 21);
+
+		uniqueCheck = new JCheckBox();
+		uniqueCheck.setEnabled(false);
+		uniqueCheck.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		uniqueCheck.setBounds(125, 238, 21, 21);
 
 		releaseField = new JTextField();
 		releaseField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		releaseField.setEditable(false);
 		releaseField.setColumns(10);
-		releaseField.setBounds(350, 195, 100, 33);
+		releaseField.setBounds(350, 238, 100, 33);
 
 		/* Label deceleration */
 		JLabel lblFullTitle = new JLabel("Full Title");
 		lblFullTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblFullTitle.setBounds(10, 22, 82, 17);
-		/* TODO: UI configuration
-		JLabel lblTitle = new JLabel("Title");
-		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTitle.setBounds(10, 22, 82, 17);*/
+
+		JLabel lblSeries = new JLabel("Series");
+		lblSeries.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblSeries.setBounds(10, 87, 82, 17);
+
+		JLabel lblIssue = new JLabel("Issue #");
+		lblIssue.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblIssue.setBounds(375, 87, 82, 14);
 
 		JLabel lblDistributor = new JLabel("Distributor");
 		lblDistributor.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDistributor.setBounds(10, 87, 82, 14);
-
-		JLabel lblDisctSub = new JLabel("Unique Print");
-		lblDisctSub.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDisctSub.setBounds(125, 152, 125, 14);
-
-		JLabel lblFlag = new JLabel("New Release");
-		lblFlag.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblFlag.setBounds(10, 152, 125, 14);
+		lblDistributor.setBounds(10, 152, 82, 17);
 
 		JLabel lblTCode = new JLabel("Catalog ID");
 		lblTCode.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTCode.setBounds(350, 87, 82, 14);
+		lblTCode.setBounds(350, 152, 82, 17);
+
+		JLabel lblFlag = new JLabel("New Release");
+		lblFlag.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblFlag.setBounds(10, 217, 125, 17);
+
+		JLabel lblUnique = new JLabel("Unique Print");
+		lblUnique.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblUnique.setBounds(125, 217, 125, 17);
 
 		JLabel lblRelease = new JLabel("Release Date");
 		lblRelease.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblRelease.setBounds(350, 175, 150, 14);
-		/* TODO: UI configuration
-		JLabel lblIssue = new JLabel("Release Date");
-		lblIssue.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblIssue.setBounds(350, 175, 82, 14); */
+		lblRelease.setBounds(350, 217, 150, 17);
+
+
 
 		titlePanel.add(fullTitleField);
-		//titlePanel.add(titleField);
+		titlePanel.add(seriesField);
 		titlePanel.add(uniqueCheck);
 		titlePanel.add(distributorField);
 		titlePanel.add(tCodeField);
 		titlePanel.add(newReleaseCheck);
 		titlePanel.add(releaseField);
-		//titlePanel.add(issueField);
+		titlePanel.add(issueField);
 		titlePanel.add(lblFullTitle);
-		titlePanel.add(lblDisctSub);
+		titlePanel.add(lblUnique);
 		titlePanel.add(lblDistributor);
 		titlePanel.add(lblTCode);
 		titlePanel.add(lblFlag);
 		titlePanel.add(lblRelease);
-		//titlePanel.add(lblTitle);
-		//titlePanel.add(lblIssue);
+		titlePanel.add(lblSeries);
+		titlePanel.add(lblIssue);
 
 		/* Title Data */
 		titlesData = fetchTimedData();
 
 		/* Title Table Column Names */
 		/* TODO: update column names */
-		String titlesColumn[] = { "New", "Release", "Description", "Distributor", "Catalog ID", "Unique"};
+		String titlesColumn[] = { "New", "Series", "Issue #", "Release", "Distributor", "Unique", "Title", "Catalog ID"};
 
 		JScrollPane titleScrollPane = new JScrollPane();
 		titleScrollPane.setBounds(10, 63, 459, 592);
@@ -262,10 +264,14 @@ public class Titles extends JPanel implements Tile {
 		titleTable.setAutoCreateRowSorter(true);
 		titleTable.getTableHeader().setReorderingAllowed(false);
 		titleScrollPane.setViewportView(titleTable);
-		/* TODO: Set some columns invisible on table
-		titleTable.getColumnModel().getColumn(0).setMinWidth(50); // Must be set before maxWidth!!
-		titleTable.getColumnModel().getColumn(0).setMaxWidth(50);
-		titleTable.getColumnModel().getColumn(0).setWidth(50); */
+
+		titleTable.getColumnModel().getColumn(6).setMinWidth(0); // Must be set before maxWidth!!
+		titleTable.getColumnModel().getColumn(6).setMaxWidth(0);
+		titleTable.getColumnModel().getColumn(6).setWidth(0);
+
+		titleTable.getColumnModel().getColumn(7).setMinWidth(0); // Must be set before maxWidth!!
+		titleTable.getColumnModel().getColumn(7).setMaxWidth(0);
+		titleTable.getColumnModel().getColumn(7).setWidth(0);
 
 		/* Listener for when a cell is selected from the titleTable */
 		titleTable.addMouseListener(new MouseAdapter() {
@@ -284,12 +290,13 @@ public class Titles extends JPanel implements Tile {
 
 				/* Otherwise set the text boxes editable so the data can be changed */
 				else {
-					/* TODO: Get values for details fields from table */
 					int i = titleTable.getSelectedRow();
-					releaseField.setText((String) titleTable.getValueAt(i, 1));
-					fullTitleField.setText((String) titleTable.getValueAt(i, 2));
-					distributorField.setText((String) titleTable.getValueAt(i,3));
-					tCodeField.setText((String) titleTable.getValueAt(i,4));
+					fullTitleField.setText((String) titleTable.getValueAt(i, 6));
+					seriesField.setText((String) titleTable.getValueAt(i,1));
+					issueField.setText((String) titleTable.getValueAt(i,2));
+					distributorField.setText((String) titleTable.getValueAt(i,4));
+					tCodeField.setText((String) titleTable.getValueAt(i,7));
+					releaseField.setText((String) titleTable.getValueAt(i, 3));
 
 					if (titleTable.getValueAt(i, 0).equals("Yes")) {
 						newReleaseCheck.setSelected(true);
@@ -318,9 +325,9 @@ public class Titles extends JPanel implements Tile {
 				if (addTitleBtn.isEnabled()) {
 
 					addTitleBtn.setEnabled(false);
-					JFrame newTitlePanel = new JFrame("Add New Customer");
+					JFrame newTitlePanel = new JFrame("Add New Title");
 					newTitlePanel.setVisible(true);
-					newTitlePanel.setBounds(128, 91, 400, 240);
+					newTitlePanel.setBounds(505, 117, 348, 268);
 					newTitlePanel.setResizable(false);
 					newTitlePanel.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -334,57 +341,96 @@ public class Titles extends JPanel implements Tile {
 
 					/* Creating the panel that will take new customer info */
 					JPanel titlePanel = new JPanel();
-					titlePanel.setBounds(128, 91, 388, 207);
+					titlePanel.setBounds(505, 117, 348, 268);
 					titlePanel.setLayout(null);
+
+
+
+					JTextField newTitleField = new JTextField();
+					newTitleField.setBounds(10, 31, 308, 20);
+					newTitleField.setColumns(10);
+					titlePanel.add(newTitleField);
+
+					JTextField newSeriesField = new JTextField();
+					newSeriesField.setBounds(10, 76, 220, 20);
+					newSeriesField.setColumns(10);
+					titlePanel.add(newSeriesField);
+
+					JTextField newIssueField = new JTextField();
+					newIssueField.setBounds(240, 76, 78, 20);
+					newIssueField.setColumns(10);
+					titlePanel.add(newIssueField);
+
+					JTextField newDistributorField = new JTextField();
+					newDistributorField.setBounds(10, 121, 220, 20);
+					newDistributorField.setColumns(10);
+					titlePanel.add(newDistributorField);
+
+					JTextField newTCodeField = new JTextField();
+					newTCodeField.setBounds(240, 121, 78, 20);
+					newTCodeField.setColumns(10);
+					titlePanel.add(newTCodeField);
+
+					JCheckBox newNewReleaseCheck = new JCheckBox();
+					newNewReleaseCheck.setBounds(15, 166, 20, 20);
+					titlePanel.add(newNewReleaseCheck);
+
+					JCheckBox newUniqueCheck = new JCheckBox();
+					newUniqueCheck.setBounds(91, 166, 20, 20);
+					titlePanel.add(newUniqueCheck);
+
+					JTextField newReleaseDateField = new JTextField();
+					newReleaseDateField.setBounds(142, 166, 176, 20);
+					newReleaseDateField.setColumns(10);
+					titlePanel.add(newReleaseDateField);
 
 
 
 					JLabel newTitleLabel = new JLabel("Title");
 					newTitleLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-					newTitleLabel.setBounds(28, 25, 78, 23);
+					newTitleLabel.setBounds(10, 10, 82, 17);
 					titlePanel.add(newTitleLabel);
+
+					JLabel newSeriesLabel = new JLabel("Series");
+					newSeriesLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					newSeriesLabel.setBounds(10, 55, 82, 17);
+					titlePanel.add(newSeriesLabel);
+
+					JLabel newIssueLabel = new JLabel("Issue #");
+					newIssueLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					newIssueLabel.setBounds(240, 55, 82, 17);
+					titlePanel.add(newIssueLabel);
 
 					JLabel newDistributorLabel = new JLabel("Distributor");
 					newDistributorLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-					newDistributorLabel.setBounds(28, 69, 151, 23);
+					newDistributorLabel.setBounds(10, 100, 151, 23);
 					titlePanel.add(newDistributorLabel);
-
-					JLabel newReleaseLabel = new JLabel("Release (YYYY-MM-DD)");
-					newReleaseLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-					newReleaseLabel.setBounds(200, 69, 200, 23);
-					titlePanel.add(newReleaseLabel);
 
 					JLabel newTCodeLabel = new JLabel("Catalog ID");
 					newTCodeLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-					newTCodeLabel.setBounds(28, 110, 151, 23);
+					newTCodeLabel.setBounds(240, 100, 151, 23);
 					titlePanel.add(newTCodeLabel);
 
+					JLabel newNewReleaseLabel = new JLabel("New");
+					newNewReleaseLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					newNewReleaseLabel.setBounds(10, 145, 151, 23);
+					titlePanel.add(newNewReleaseLabel);
 
+					JLabel newUniqueLabel = new JLabel("Unique");
+					newUniqueLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					newUniqueLabel.setBounds(76, 145, 151, 23);
+					titlePanel.add(newUniqueLabel);
 
-					JTextField newTitleField = new JTextField();
-					newTitleField.setBounds(28, 48, 332, 20);
-					newTitleField.setColumns(10);
-					titlePanel.add(newTitleField);
+					JLabel newReleaseDateLabel = new JLabel("Release (YYYY-MM-DD)");
+					newReleaseDateLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+					newReleaseDateLabel.setBounds(142, 145, 200, 23);
+					titlePanel.add(newReleaseDateLabel);
 
-					JTextField newDistributorField = new JTextField();
-					newDistributorField.setBounds(28, 92, 136, 20);
-					newDistributorField.setColumns(10);
-					titlePanel.add(newDistributorField);
-
-					JTextField newReleaseField = new JTextField();
-					newReleaseField.setBounds(200, 92, 136, 20);
-					newReleaseField.setColumns(10);
-					titlePanel.add(newReleaseField);
-
-					JTextField newTCodeField = new JTextField();
-					newTCodeField.setBounds(28, 133, 136, 20);
-					newTCodeField.setColumns(10);
-					titlePanel.add(newTCodeField);
 
 
 					JButton addTitlePanelBtn = new JButton("Add");
 					addTitlePanelBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-					addTitlePanelBtn.setBounds(148, 161, 89, 23);
+					addTitlePanelBtn.setBounds(119, 201, 90, 23);
 					titlePanel.add(addTitlePanelBtn);
 
 
@@ -393,30 +439,45 @@ public class Titles extends JPanel implements Tile {
 
 
 
-					/* Action listener for when add button clicked on create new customer frame */
+					/* Action listener for when add button clicked on create new title frame */
 					addTitlePanelBtn.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 
-							control.insertTitle(newTitleField.getText(), newDistributorField.getText(), newReleaseField.getText(), newTCodeField.getText());
+							control.insertTitle(newTitleField.getText(),
+									newSeriesField.getText(),
+									newIssueField.getText(),
+									newDistributorField.getText(),
+									newTCodeField.getText(),
+									newNewReleaseCheck.isSelected(),
+									newUniqueCheck.isSelected(),
+									newReleaseDateField.getText());
 
 							titlesData = fetchTimedData();
 							titlesModel.setDataVector(titlesData, titlesColumn);
 							titleTable.setModel(titlesModel);
 							titleTable.getTableHeader().setReorderingAllowed(false);
 
-							JPanel accAddedPanel = new JPanel();
-							accAddedPanel.setLayout(null);
-							accAddedPanel.setBounds(572, 91, 388, 207);
-							accAddedPanel.setBackground(new Color(240, 240, 240));
-							titlePanel.setVisible(false);
-							newTitlePanel.add(accAddedPanel);
+							titleTable.getColumnModel().getColumn(6).setMinWidth(0); // Must be set before maxWidth!!
+							titleTable.getColumnModel().getColumn(6).setMaxWidth(0);
+							titleTable.getColumnModel().getColumn(6).setWidth(0);
 
-							JTextArea txtrAccountHasBeen = new JTextArea();
-							txtrAccountHasBeen.setEditable(false);
-							txtrAccountHasBeen.setBackground(new Color(240, 240, 240));
-							txtrAccountHasBeen.setText("Title has been added!");
-							txtrAccountHasBeen.setBounds(99, 87, 194, 33);
-							accAddedPanel.add(txtrAccountHasBeen);
+							titleTable.getColumnModel().getColumn(7).setMinWidth(0); // Must be set before maxWidth!!
+							titleTable.getColumnModel().getColumn(7).setMaxWidth(0);
+							titleTable.getColumnModel().getColumn(7).setWidth(0);
+
+							JPanel titleAddedPanel = new JPanel();
+							titleAddedPanel.setLayout(null);
+							titleAddedPanel.setBounds(572, 91, 388, 207);
+							titleAddedPanel.setBackground(new Color(240, 240, 240));
+							titlePanel.setVisible(false);
+							newTitlePanel.add(titleAddedPanel);
+
+							JTextArea txtrTitleHasBeen = new JTextArea();
+							txtrTitleHasBeen.setEditable(false);
+							txtrTitleHasBeen.setBackground(new Color(240, 240, 240));
+							txtrTitleHasBeen.setText("Title has been added!");
+							txtrTitleHasBeen.setBounds(99, 87, 194, 33);
+							titleAddedPanel.add(txtrTitleHasBeen);
 							addTitleBtn.setEnabled(true);
 
 						}
@@ -439,17 +500,28 @@ public class Titles extends JPanel implements Tile {
 					discardBtn.setEnabled(false);
 					
 					fullTitleField.setEditable(false);
-					distributorField.setEditable(false);
+					seriesField.setEditable(false);
+					issueField.setEditable(false);
+					distributorField.setEditable(false); // Distributor and Catalog ID cannot be
+					tCodeField.setEditable(false);       // edited due to being primary keys
 					uniqueCheck.setEnabled(false);
 					newReleaseCheck.setEnabled(false);
 					releaseField.setEditable(false);
 
-					control.updateTitle(newReleaseCheck.isSelected(), fullTitleField.getText(), releaseField.getText(), uniqueCheck.isSelected(), tCodeField.getText());
+					control.updateTitle(fullTitleField.getText(), seriesField.getText(), issueField.getText(), distributorField.getText(), tCodeField.getText(), newReleaseCheck.isSelected(), uniqueCheck.isSelected(), releaseField.getText());
 
 					titlesData = fetchTimedData();
 					titlesModel.setDataVector(titlesData, titlesColumn);
 					titleTable.setModel(titlesModel);
 					titleTable.getTableHeader().setReorderingAllowed(false);
+
+					titleTable.getColumnModel().getColumn(6).setMinWidth(0); // Must be set before maxWidth!!
+					titleTable.getColumnModel().getColumn(6).setMaxWidth(0);
+					titleTable.getColumnModel().getColumn(6).setWidth(0);
+
+					titleTable.getColumnModel().getColumn(7).setMinWidth(0); // Must be set before maxWidth!!
+					titleTable.getColumnModel().getColumn(7).setMaxWidth(0);
+					titleTable.getColumnModel().getColumn(7).setWidth(0);
 
 					JOptionPane.showMessageDialog(null,
 						    "Changes have been saved!",
@@ -474,7 +546,10 @@ public class Titles extends JPanel implements Tile {
 			public void mouseClicked(MouseEvent e) {
 
 				fullTitleField.setEditable(true);
-				distributorField.setEditable(true);
+				seriesField.setEditable(true);
+				issueField.setEditable(true);
+				distributorField.setEditable(false); // Distributor and Catalog ID cannot be
+				tCodeField.setEditable(false);       // edited due to being primary keys
 				newReleaseCheck.setEnabled(true);
 				uniqueCheck.setEnabled(true);
 				releaseField.setEditable(true);
@@ -485,22 +560,43 @@ public class Titles extends JPanel implements Tile {
 			}
 		});
 		/* Action listener for discard btn */
+		/* TODO: default to clear details when no row is selected */
 		discardBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				fullTitleField.setEditable(false);
-				distributorField.setEditable(false);
+				seriesField.setEditable(false);
+				issueField.setEditable(false);
+				distributorField.setEditable(false); // Distributor and Catalog ID cannot be
+				tCodeField.setEditable(false);       // edited due to being primary keys
 				newReleaseCheck.setEnabled(false);
 				uniqueCheck.setEnabled(false);
 				releaseField.setEditable(false);
 				
 				discardBtn.setEnabled(false);
 				saveBtn.setEnabled(false);
-				
-				int i = titleTable.getSelectedRow();
-				fullTitleField.setText((String) titleTable.getValueAt(i, 0));
 
-				
+				int i = titleTable.getSelectedRow();
+				fullTitleField.setText((String) titleTable.getValueAt(i, 6));
+				seriesField.setText((String) titleTable.getValueAt(i,1));
+				issueField.setText((String) titleTable.getValueAt(i,2));
+				distributorField.setText((String) titleTable.getValueAt(i,4));
+				tCodeField.setText((String) titleTable.getValueAt(i,7));
+				releaseField.setText((String) titleTable.getValueAt(i, 3));
+
+				if (titleTable.getValueAt(i, 0).equals("Yes")) {
+					newReleaseCheck.setSelected(true);
+				}
+				else {
+					newReleaseCheck.setSelected(false);
+				}
+
+				if (titleTable.getValueAt(i, 5).equals("Yes")) {
+					uniqueCheck.setSelected(true);
+				}
+				else {
+					uniqueCheck.setSelected(false);
+				}
 			}
 		});
 		
@@ -520,6 +616,14 @@ public class Titles extends JPanel implements Tile {
 					titleTable.setModel(titlesModel);
 					titleTable.getTableHeader().setReorderingAllowed(false);
 
+					titleTable.getColumnModel().getColumn(6).setMinWidth(0); // Must be set before maxWidth!!
+					titleTable.getColumnModel().getColumn(6).setMaxWidth(0);
+					titleTable.getColumnModel().getColumn(6).setWidth(0);
+
+					titleTable.getColumnModel().getColumn(7).setMinWidth(0); // Must be set before maxWidth!!
+					titleTable.getColumnModel().getColumn(7).setMaxWidth(0);
+					titleTable.getColumnModel().getColumn(7).setWidth(0);
+
 				    JOptionPane.showMessageDialog(null, "Title Deleted");
 				}
 			}
@@ -538,6 +642,14 @@ public class Titles extends JPanel implements Tile {
 					titleTable.setModel(titlesModel);
 					titleTable.getTableHeader().setReorderingAllowed(false);
 
+					titleTable.getColumnModel().getColumn(6).setMinWidth(0); // Must be set before maxWidth!!
+					titleTable.getColumnModel().getColumn(6).setMaxWidth(0);
+					titleTable.getColumnModel().getColumn(6).setWidth(0);
+
+					titleTable.getColumnModel().getColumn(7).setMinWidth(0); // Must be set before maxWidth!!
+					titleTable.getColumnModel().getColumn(7).setMaxWidth(0);
+					titleTable.getColumnModel().getColumn(7).setWidth(0);
+
 					JOptionPane.showMessageDialog(null, "Flags Reset");
 				}
 			}
@@ -550,6 +662,14 @@ public class Titles extends JPanel implements Tile {
 				titlesModel.setDataVector(titlesData, titlesColumn);
 				titleTable.setModel(titlesModel);
 				titleTable.getTableHeader().setReorderingAllowed(false);
+
+				titleTable.getColumnModel().getColumn(6).setMinWidth(0); // Must be set before maxWidth!!
+				titleTable.getColumnModel().getColumn(6).setMaxWidth(0);
+				titleTable.getColumnModel().getColumn(6).setWidth(0);
+
+				titleTable.getColumnModel().getColumn(7).setMinWidth(0); // Must be set before maxWidth!!
+				titleTable.getColumnModel().getColumn(7).setMaxWidth(0);
+				titleTable.getColumnModel().getColumn(7).setWidth(0);
 			}
 		});
 
@@ -560,6 +680,14 @@ public class Titles extends JPanel implements Tile {
 				titlesModel.setDataVector(titlesData, titlesColumn);
 				titleTable.setModel(titlesModel);
 				titleTable.getTableHeader().setReorderingAllowed(false);
+
+				titleTable.getColumnModel().getColumn(6).setMinWidth(0); // Must be set before maxWidth!!
+				titleTable.getColumnModel().getColumn(6).setMaxWidth(0);
+				titleTable.getColumnModel().getColumn(6).setWidth(0);
+
+				titleTable.getColumnModel().getColumn(7).setMinWidth(0); // Must be set before maxWidth!!
+				titleTable.getColumnModel().getColumn(7).setMaxWidth(0);
+				titleTable.getColumnModel().getColumn(7).setWidth(0);
 			}
 		});
 	}

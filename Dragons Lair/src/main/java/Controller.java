@@ -139,13 +139,20 @@ public class Controller {
 	 * Returns the following columns from the customer table.
 	 *
 	 * @param title   Title for the new title
-	 * @param distr   Distributor for new title
+	 * @param distributor   Distributor for new title
 	 * @param release Release date of new title
 	 * @param tCode   Key for the title in the catalog table
 	 * @return {int} 	0 or row count, negative if error.
 	 */
-	public int insertTitle(String title, String distr, String release, String tCode) {
-		return insert("INSERT INTO Catalog([Title], [Series], [Distributor], [Release], [Catalog ID]) VALUES('" + title + "', '" + title + "', '" + distr + "', '" + release + "', '" + tCode + "')");
+	public int insertTitle(String title, String series, String issue, String distributor, String tCode, boolean flag, boolean unique, String release) {
+		return insert("INSERT INTO Catalog([Title], [Series], [Issue], [Distributor], [Catalog ID], [Flag], [Unique Print], [Release]) VALUES('" + title
+				+ "', '" + series
+				+ "', '" + issue
+				+ "', '" + distributor
+				+ "', '" + tCode
+				+ "', '" + flag
+				+ "', '" + unique
+				+ "', '" + release + "')");
 	}
 
 	/**
@@ -168,8 +175,14 @@ public class Controller {
 	 * @param tCode    Key for the title in the catalog table
 	 * @return {int}   0 or row count, negative if error.
 	 */
-	public int updateTitle(boolean flag, String title, String release, boolean unique, String tCode) {
-		return insert("UPDATE Catalog Set [Flag] = '" + flag + "', [Title] = '" + title + "', [Release] = CAST('" + release + "' AS DATE), [Unique Print] = '" + unique + "' WHERE [Catalog ID] = '" + tCode + "'");
+	public int updateTitle(String title, String series, String issue, String distributor, String tCode, boolean flag, boolean unique, String release) {
+		return insert("UPDATE Catalog Set [Title] = '" + title
+				+ "', [Series] = '" + series
+				+ "', [Issue] = '" + issue
+				+ "', [Flag] = '" + flag
+				+ "', [Unique Print] = '" + unique
+				+ "', [Release] = CAST('" + release + "' AS DATE) "
+				+ "WHERE ([Catalog ID] = '" + tCode + "' AND [Distributor] = '" + distributor + "')");
 	}
 	
 	
@@ -276,8 +289,24 @@ public class Controller {
 	 */
 	public String[][] getTimeSensitiveTitles() {
 		LocalDate today = LocalDate.now();
-		/* TODO: improved dating for month, pull issue and title columns */
-		return select("SELECT [Flag], [Release], [Title], [Distributor], [Catalog ID], [Unique Print] FROM Catalog WHERE MONTH(Release) = " + today.getMonthValue() + "OR MONTH(Release) = " + (today.getMonthValue() - 1) + "OR MONTH(Release) = " + (today.getMonthValue() + 1) + "AND YEAR(Release) = " + today.getYear());
+		if (today.plusMonths(2).getMonthValue() == 1) {
+			return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog WHERE "
+					+ "(YEAR(Release) = " + today.getYear() + "AND MONTH(Release) = " + today.getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()) + "AND MONTH(Release) = " + today.plusMonths(1).getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()+1) + "AND MONTH(Release) = " + today.plusMonths(2).getMonthValue() + ")");
+		}
+		else if (today.plusMonths(1).getMonthValue() == 1) {
+			return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog WHERE "
+					+ "(YEAR(Release) = " + today.getYear() + "AND MONTH(Release) = " + today.getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()+1) + "AND MONTH(Release) = " + today.plusMonths(1).getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()+1) + "AND MONTH(Release) = " + today.plusMonths(2).getMonthValue() + ")");
+		}
+		else {
+			return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog WHERE "
+					+ "(YEAR(Release) = " + today.getYear() + "AND MONTH(Release) = " + today.getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()) + "AND MONTH(Release) = " + today.plusMonths(1).getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()) + "AND MONTH(Release) = " + today.plusMonths(2).getMonthValue() + ")");
+		}
 	}
 
 	/**
@@ -286,8 +315,7 @@ public class Controller {
 	 * @return {String} 2D array of the titles from database.
 	 */
 	public String[][] getAllTitles() {
-		/* TODO: pull issue and title columns */
-		return select("SELECT [Flag], [Release], [Title], [Distributor], [Catalog ID], [Unique Print] FROM Catalog");
+		return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog");
 	}
 
 	public void resetFlags() {
