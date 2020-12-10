@@ -225,10 +225,10 @@ public class Reports extends JPanel implements Tile {
 		
 		
 		// These are the labels that hold the value of the given request on monthly breakdown 
-		JLabel no_titles_lbl = new JLabel("1000");
-		JLabel no_customers_lbl = new JLabel("231");
-		JLabel no_special_lbl = new JLabel("12");
-		JLabel no_pending_lbl = new JLabel("14");
+		JLabel no_titles_lbl = new JLabel(control.getNumTitles()[0][0].toString());
+		JLabel no_customers_lbl = new JLabel(control.getNumCustomers()[0][0].toString());
+		JLabel no_special_lbl = new JLabel(control.getNumSpecialComments()[0][0].toString());
+		
 		JLabel no_flagged_lbl = new JLabel("77");
 		JLabel no_zeroRequest_lbl = new JLabel("23");
 		
@@ -242,9 +242,7 @@ public class Reports extends JPanel implements Tile {
 		no_special_lbl.setFont(new Font("Tahoma", Font.BOLD, 14));
 		no_special_lbl.setBounds(471, 245, 55, 14);
 		monthly_breakdown.add(no_special_lbl);
-		no_pending_lbl.setFont(new Font("Tahoma", Font.BOLD, 14));
-		no_pending_lbl.setBounds(471, 280, 55, 14);
-		monthly_breakdown.add(no_pending_lbl);
+		
 		no_flagged_lbl.setFont(new Font("Tahoma", Font.BOLD, 14));
 		no_flagged_lbl.setBounds(471, 315, 55, 14);
 		monthly_breakdown.add(no_flagged_lbl);
@@ -257,7 +255,6 @@ public class Reports extends JPanel implements Tile {
 		JLabel titles_lbl = new JLabel("Titles");
 		JLabel customers_lbl = new JLabel("Customers");
 		JLabel special_lbl = new JLabel("Special Order Notes");
-		JLabel pending_lbl= new JLabel("Pending Issue # Requests");
 		JLabel flagged_lbl = new JLabel("Titles not flagged in over 6 months");
 		JLabel zero_Requests_lbl = new JLabel("Titles have 0 Customer Requests");
 		JLabel breakdown_lbl = new JLabel("Database currently has:");
@@ -274,9 +271,7 @@ public class Reports extends JPanel implements Tile {
 		special_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		special_lbl.setBounds(536, 245, 176, 14);
 		monthly_breakdown.add(special_lbl);
-		pending_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		pending_lbl.setBounds(536, 280, 189, 14);
-		monthly_breakdown.add(pending_lbl);
+
 		flagged_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		flagged_lbl.setBounds(536, 315, 250, 14);
 		monthly_breakdown.add(flagged_lbl);
@@ -288,7 +283,7 @@ public class Reports extends JPanel implements Tile {
 		JButton export_titles_btn = new JButton("Export");
 		JButton export_customers_btn = new JButton("Export");
 		JButton export_flagged_btn = new JButton("Export");
-		JButton export_pending_btn = new JButton("Export");
+		JButton export_special_comments_btn = new JButton("Export");
 		JButton export_zeroRequests_btn = new JButton("Export");
 		
 		// Font, bounds, and adding buttons to panel
@@ -301,9 +296,11 @@ public class Reports extends JPanel implements Tile {
 		export_flagged_btn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		export_flagged_btn.setBounds(869, 313, 89, 23);
 		monthly_breakdown.add(export_flagged_btn);
-		export_pending_btn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		export_pending_btn.setBounds(869, 278, 89, 23);
-		monthly_breakdown.add(export_pending_btn);
+		export_special_comments_btn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		export_special_comments_btn.setBounds(869, 243, 89, 23);
+		monthly_breakdown.add(export_special_comments_btn);
+		
+
 		export_zeroRequests_btn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		export_zeroRequests_btn.setBounds(869, 348, 89, 23);
 		monthly_breakdown.add(export_zeroRequests_btn);
@@ -649,6 +646,101 @@ public class Reports extends JPanel implements Tile {
             }
         }); 
 		
+		export_special_comments_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					if (csv.isSelected()) {
+						//CSV
+						String filePath = control.saveFile(monthly_breakdown, "Special_Comments", ".xlsx");
+						if (filePath != null) {
+							String columns[] = {"Title", "Comments", "Issue Start", "Issue End"};
+							String query = "SELECT [Title], [Comments], [Issue Start], [Issue End] FROM [newDLC].[dbo].[Order] WHERE [Comments] != ''";
+							control.exportXLSX(null, query, filePath, "Titles with Comments", columns);
+						}
+					} else {
+						//PDF
+
+						Document pdfDoc = new Document();
+						//Create new File
+						String filePath = control.saveFile(monthly_breakdown, "Special_Comments", ".pdf");
+						File file = new File(filePath);
+
+						try {
+							file.createNewFile();
+						} catch (IOException ioException) {
+							ioException.printStackTrace();
+						}
+						FileOutputStream fop = null;
+						try {
+							fop = new FileOutputStream(file);
+						} catch (FileNotFoundException fileNotFoundException) {
+							fileNotFoundException.printStackTrace();
+						}
+						try {
+							PdfWriter.getInstance(pdfDoc, fop);
+						} catch (DocumentException documentException) {
+							documentException.printStackTrace();
+						}
+						pdfDoc.open();
+
+						String[] header = new String[]{"Title", "Comments", "Issue Start", "Issue End"};
+						String query = "SELECT [Title], [Comments], [Issue Start], [Issue End] FROM [newDLC].[dbo].[Order] WHERE [Comments] != ''";
+						String[][] body = control.select(query);
+
+						//Table for header
+						PdfPTable pdfTableHeader = new PdfPTable(header.length);
+						for (int j = 0; j < header.length; j++) {
+							Phrase frase = new Phrase(header[j]);
+							PdfPCell cell = new PdfPCell(frase);
+							cell.setBackgroundColor(new BaseColor(Color.lightGray.getRGB()));
+							pdfTableHeader.addCell(cell);
+						}
+
+						try {
+							pdfTableHeader.setWidths(new float[]{1, 4, 1, 1});
+						} catch (DocumentException documentException) {
+							documentException.printStackTrace();
+						}
+
+						try {
+							pdfDoc.add(pdfTableHeader);
+						} catch (DocumentException documentException) {
+							documentException.printStackTrace();
+						}
+						//Table for body
+						PdfPTable pdfTable = new PdfPTable(header.length);
+						for (int i = 0; i < body.length; i++) {
+							for (int j = 0; j < body[i].length; j++) {
+								pdfTable.addCell(new Phrase(body[i][j]));
+							}
+						}
+
+						try {
+							pdfTable.setWidths(new float[]{1, 4, 1, 1});
+						} catch (DocumentException documentException) {
+							documentException.printStackTrace();
+						}
+
+						try {
+							pdfDoc.add(pdfTable);
+						} catch (DocumentException documentException) {
+							documentException.printStackTrace();
+						}
+						pdfDoc.close();
+						try {
+							fop.flush();
+						} catch (IOException ioException) {
+							ioException.printStackTrace();
+						}
+						try {
+							fop.close();
+						} catch (IOException ioException) {
+							ioException.printStackTrace();
+						}
+					}
+	            }
+			});
+		
+
 		// Zero request skeleton
 		export_zeroRequests_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
