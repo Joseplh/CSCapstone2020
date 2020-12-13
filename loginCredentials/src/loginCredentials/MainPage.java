@@ -12,8 +12,6 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
-import java.awt.Panel;
-import javax.swing.JList;
 import javax.swing.JMenuBar;
 import java.awt.Button;
 

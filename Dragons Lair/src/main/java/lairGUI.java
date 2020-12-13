@@ -19,7 +19,7 @@ public class lairGUI {
 	private JFrame frame;
 	private JFrame homeFrame;
 	private JTextField userName;
-	private JTextField userPass;
+	//private JTextField userPass;//Used on line 122, but is commented out
 	private Customers customers;
 	private Reports reports;
 	private Titles catalog;
