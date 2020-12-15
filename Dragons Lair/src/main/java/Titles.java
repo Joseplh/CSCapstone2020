@@ -242,7 +242,6 @@ public class Titles extends JPanel implements Tile {
 		titlesData = fetchTimedData();
 
 		/* Title Table Column Names */
-		/* TODO: update column names */
 		String titlesColumn[] = { "New", "Series", "Issue #", "Release", "Distributor", "Unique", "Title", "Catalog ID"};
 
 		JScrollPane titleScrollPane = new JScrollPane();
@@ -560,7 +559,6 @@ public class Titles extends JPanel implements Tile {
 			}
 		});
 		/* Action listener for discard btn */
-		/* TODO: default to clear details when no row is selected */
 		discardBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -609,7 +607,7 @@ public class Titles extends JPanel implements Tile {
 				int reply = JOptionPane.showConfirmDialog(null, "Are you sure you would like to delete the selected title from the system? This can't be undone.", "Delete Title", JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
 
-					control.deleteTitle(tCodeField.getText());
+					control.deleteTitle(distributorField.getText(), tCodeField.getText());
 
 					titlesData = fetchTimedData();
 					titlesModel.setDataVector(titlesData, titlesColumn);
