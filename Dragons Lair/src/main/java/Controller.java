@@ -20,8 +20,8 @@ public class Controller {
 	
 	public void connect() {
 		try {
-			//URL config = getClass().getClassLoader().getResource("config.ini");
-			File file = new File("config.ini");
+			URL config = getClass().getClassLoader().getResource("config.ini");
+			File file = new File(config.toURI());
 			
 			BufferedReader br;
 			br = new BufferedReader(new FileReader(file));
