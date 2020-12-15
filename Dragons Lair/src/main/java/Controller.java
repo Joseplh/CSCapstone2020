@@ -136,13 +136,61 @@ public class Controller {
 	}
 
 	/**
-	 * Returns the following columns from the customer table.
+	 * Queries the database to retrieve items from the Catalog table such that
+	 * the retrieved items have release dates within the next two months
 	 *
-	 * @param title   Title for the new title
-	 * @param distributor   Distributor for new title
-	 * @param release Release date of new title
-	 * @param tCode   Key for the title in the catalog table
-	 * @return {int} 	0 or row count, negative if error.
+	 * @return {String} 2D array of the retrieved items
+	 */
+	public String[][] getTimeSensitiveTitles() {
+		LocalDate today = LocalDate.now();
+		if (today.plusMonths(2).getMonthValue() == 1) {
+			return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog WHERE "
+					+ "(YEAR(Release) = " + today.getYear() + "AND MONTH(Release) = " + today.getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()) + "AND MONTH(Release) = " + today.plusMonths(1).getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()+1) + "AND MONTH(Release) = " + today.plusMonths(2).getMonthValue() + ")");
+		}
+		else if (today.plusMonths(1).getMonthValue() == 1) {
+			return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog WHERE "
+					+ "(YEAR(Release) = " + today.getYear() + "AND MONTH(Release) = " + today.getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()+1) + "AND MONTH(Release) = " + today.plusMonths(1).getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()+1) + "AND MONTH(Release) = " + today.plusMonths(2).getMonthValue() + ")");
+		}
+		else {
+			return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog WHERE "
+					+ "(YEAR(Release) = " + today.getYear() + "AND MONTH(Release) = " + today.getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()) + "AND MONTH(Release) = " + today.plusMonths(1).getMonthValue() + ") OR"
+					+ "(YEAR(Release) = " + (today.getYear()) + "AND MONTH(Release) = " + today.plusMonths(2).getMonthValue() + ")");
+		}
+	}
+
+	/**
+	 * Queries the database to retrieve all items from the Catalog table
+	 *
+	 * @return {String} 2D array of the retrieved items
+	 */
+	public String[][] getAllTitles() {
+		return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog");
+	}
+
+	/**
+	 * Sets [Flag] of all items within the Catalog table to boolean false
+	 */
+	public void resetFlags() {
+		insert("UPDATE Catalog Set [Flag] = '" + false + "'");
+	}
+
+	/**
+	 * Inserts a new item into the Catalog table.
+	 *
+	 * @param title Full title of the new item
+	 * @param series Title of the new item's series
+	 * @param issue Issue number of the new item
+	 * @param distributor Distributor of the new item
+	 * @param tCode The unique code associated with the distributor of the new item
+	 * @param flag Indicates whether this item is new this week
+	 * @param unique Indicates whether the new item is a one-time print or make
+	 * @param release Release date of the new item
+	 * @return {int} 0 or row count, negative if error.
 	 */
 	public int insertTitle(String title, String series, String issue, String distributor, String tCode, boolean flag, boolean unique, String release) {
 		return insert("INSERT INTO Catalog([Title], [Series], [Issue], [Distributor], [Catalog ID], [Flag], [Unique Print], [Release]) VALUES('" + title
@@ -156,24 +204,28 @@ public class Controller {
 	}
 
 	/**
-	 * Deletes a title from the Catalog table
+	 * Deletes an item from the Catalog table
 	 *
-	 * @param tCode    Key for the title in the catalog table
-	 * @return {int} 	0 or row count, negative if error.
+	 * @param distributor The distributor of the item to be deleted
+	 * @param tCode The item's unique code associated with the distributor
+	 * @return {int} 0 or row count, negative if error.
 	 */
-	public int deleteTitle(String tCode) {
-		return insert("DELETE FROM Catalog WHERE [Catalog ID] = '" + tCode + "'");
+	public int deleteTitle(String distributor, String tCode) {
+		return insert("DELETE FROM Catalog WHERE ([Distributor] = '" + distributor + "' AND [Catalog ID] = '" + tCode + "')");
 	}
 
 	/**
-	 * Returns the following columns from the customer table.
+	 * Updates an item within the Catalog table.
 	 *
-	 * @param flag     New value for new release column in table for given title
-	 * @param release  Updated release date for title
-	 * @param title    New title for a given title in the Catalog table
-	 * @param unique   New unique print value
-	 * @param tCode    Key for the title in the catalog table
-	 * @return {int}   0 or row count, negative if error.
+	 * @param title Full title of the updated item
+	 * @param series Title of the updated item's series
+	 * @param issue Issue number of the updated item
+	 * @param distributor Distributor of the item
+	 * @param tCode The unique code associated with the distributor of the item
+	 * @param flag Indicates whether the updated item is new this week
+	 * @param unique Indicates whether the updated item is a one-time print or make
+	 * @param release Release date of the updated item
+	 * @return {int} 0 or row count, negative if error.
 	 */
 	public int updateTitle(String title, String series, String issue, String distributor, String tCode, boolean flag, boolean unique, String release) {
 		return insert("UPDATE Catalog Set [Title] = '" + title
@@ -287,47 +339,6 @@ public class Controller {
 			return select(String.format("SELECT DISTINCT [Series] FROM [newDLC].[dbo].[Catalog] WHERE [Series] Like '%%" + filter + "%%'"));
 		}
 	}
-
-	/**
-	 * Calls method to query the Titles from the database. Returns String[][].
-	 *
-	 * @return {String} 2D array of the titles from database.
-	 */
-	public String[][] getTimeSensitiveTitles() {
-		LocalDate today = LocalDate.now();
-		if (today.plusMonths(2).getMonthValue() == 1) {
-			return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog WHERE "
-					+ "(YEAR(Release) = " + today.getYear() + "AND MONTH(Release) = " + today.getMonthValue() + ") OR"
-					+ "(YEAR(Release) = " + (today.getYear()) + "AND MONTH(Release) = " + today.plusMonths(1).getMonthValue() + ") OR"
-					+ "(YEAR(Release) = " + (today.getYear()+1) + "AND MONTH(Release) = " + today.plusMonths(2).getMonthValue() + ")");
-		}
-		else if (today.plusMonths(1).getMonthValue() == 1) {
-			return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog WHERE "
-					+ "(YEAR(Release) = " + today.getYear() + "AND MONTH(Release) = " + today.getMonthValue() + ") OR"
-					+ "(YEAR(Release) = " + (today.getYear()+1) + "AND MONTH(Release) = " + today.plusMonths(1).getMonthValue() + ") OR"
-					+ "(YEAR(Release) = " + (today.getYear()+1) + "AND MONTH(Release) = " + today.plusMonths(2).getMonthValue() + ")");
-		}
-		else {
-			return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog WHERE "
-					+ "(YEAR(Release) = " + today.getYear() + "AND MONTH(Release) = " + today.getMonthValue() + ") OR"
-					+ "(YEAR(Release) = " + (today.getYear()) + "AND MONTH(Release) = " + today.plusMonths(1).getMonthValue() + ") OR"
-					+ "(YEAR(Release) = " + (today.getYear()) + "AND MONTH(Release) = " + today.plusMonths(2).getMonthValue() + ")");
-		}
-	}
-
-	/**
-	 * Calls method to query the Titles from the database. Returns String[][].
-	 *
-	 * @return {String} 2D array of the titles from database.
-	 */
-	public String[][] getAllTitles() {
-		return select("SELECT [Flag], [Series], [Issue], [Release], [Distributor], [Unique Print], [Title], [Catalog ID] FROM Catalog");
-	}
-
-	public void resetFlags() {
-		insert("UPDATE Catalog Set [Flag] = '" + false + "'");
-	}
-
 
 	/**
 	 * Executes a given query and returns the resultset as a String[][].
