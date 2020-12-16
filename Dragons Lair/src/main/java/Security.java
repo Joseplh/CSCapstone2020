@@ -15,13 +15,13 @@ public class Security {
 		String hash = "";
 		if(password == null)
 			return null;
-		
+
 		password = password + salt;
 		try {
 			MessageDigest digest = MessageDigest.getInstance("MD5");
-			digest.update(password.getBytes(),0,password.length());
-			hash = new BigInteger(1, digest.digest()).toString(16); 
-		}catch(NoSuchAlgorithmException err) {
+			digest.update(password.getBytes(), 0, password.length());
+			hash = new BigInteger(1, digest.digest()).toString(16);
+		} catch (NoSuchAlgorithmException err) {
 			err.printStackTrace();
 		}
 		return hash;
