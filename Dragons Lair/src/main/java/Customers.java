@@ -78,7 +78,7 @@ public class Customers extends JPanel implements Tile {
 
 		customerDetails.setLayout(null);
 
-		/* Button deceleration */		
+		/* Button deceleration */
 		JButton AddCustBtn = new JButton("Add New Customer");
 		AddCustBtn.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 		AddCustBtn.setBounds(132, 11, 174, 33);
@@ -207,8 +207,8 @@ public class Customers extends JPanel implements Tile {
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
-		        return false;
-		      }
+				return false;
+			}
 		};
 
 		customerTable = new JTable(customersModel);
@@ -862,7 +862,7 @@ public class Customers extends JPanel implements Tile {
 		});
 	}
 
-	
+
 
 	public void emailCustomer(JFrame frame) {
 		int result = JOptionPane.showConfirmDialog(frame, "Email Customer?", "Email Customer?",
@@ -911,6 +911,8 @@ public class Customers extends JPanel implements Tile {
 
 		}
 	}
+
+	//Video 1
 
 	/**
 	 * Handler for adding the request handler and populating the info box.

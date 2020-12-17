@@ -17,12 +17,12 @@ public class Controller {
 	private Connection dbConnection = null;
 	private final String jdbcDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	private String jdbcURL = "";
-	
+
 	public void connect() {
 		try {
 			URL config = getClass().getClassLoader().getResource("config.ini");
 			File file = new File(config.toURI());
-			
+
 			BufferedReader br;
 			br = new BufferedReader(new FileReader(file));
 			if (br.readLine().matches("custom=true")) {
@@ -41,26 +41,26 @@ public class Controller {
 			err.printStackTrace(System.err);
 			System.exit(0);
 		}
-        
-        try {
+
+		try {
 			Class.forName(jdbcDriver);
 		} catch (ClassNotFoundException e1) {
 			System.err.println("Error loading JDBC driver");
 			e1.printStackTrace(System.err);
 			System.exit(0);
-		} 
-        
+		}
+
 		try {
 			dbConnection = DriverManager.getConnection(jdbcURL);
-			     
+
 		} catch (SQLException e) {
 			System.err.println("Error connecting to the database");
 			e.printStackTrace(System.err);
 			System.exit(0);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Handler for adding a request to the database.
 	 *
@@ -88,16 +88,16 @@ public class Controller {
 	public int deleteCustomer(int ccode) {
 		return insert("DELETE FROM Customer WHERE [Customer Code] = " + ccode);
 	}
-	
+
 	/**
 	 * Handler for deleting an individual order.
-	 * 
+	 *
 	 * @param id The id of the order to delete.
 	 */
 	public void deleteOrder(int id) {
 		insert(String.format("DELETE FROM [newDLC].[dbo].[Order] WHERE ID=%d", id));
 	}
-	
+
 	public String[][] getTitleDetails(String title){
 		return select("SELECT [Title], [Issue] FROM [newDLC].[dbo].[Catalog] WHERE [Title] = '" + title + "'");
 	}
@@ -111,7 +111,7 @@ public class Controller {
 	public int updateCustomer(int ccode, String first, String last, String email, String phone) {
 		return insert("UPDATE [newDLC].[dbo].[Customer] Set [Last Name] = '" + last + "', [First Name] = '" + first + "', [Email] = '" + email + "', [Phone #1] = '" + phone + "' WHERE [Customer Code] = " + ccode);
 	}
-	
+
 	public String[][] getMonthlyBreakdown() {
 		return select("SELECT [Series], [Quantity], [Issue], [Flag] FROM [newDLC].[dbo].[Catalog] as [catalog] INNER JOIN (SELECT * FROM [newDLC].[dbo].[Order]) as [order] ON [order].[Title] = [catalog].[Series] WHERE MONTH([release]) = MONTH(CURRENT_TIMESTAMP) AND YEAR([release]) = YEAR(CURRENT_TIMESTAMP)");
 	}
@@ -236,11 +236,11 @@ public class Controller {
 				+ "', [Release] = CAST('" + release + "' AS DATE) "
 				+ "WHERE ([Catalog ID] = '" + tCode + "' AND [Distributor] = '" + distributor + "')");
 	}
-	
-	
+
+
 	/**
 	 * Handler for retrieving a single customer order.
-	 * 
+	 *
 	 * @param id The order id to retrieve.
 	 * @return The order by id.
 	 */
@@ -278,7 +278,7 @@ public class Controller {
 	public String[][] getCustomers() {
 		return select("SELECT [Last Name], [First Name], [Phone #1], [Email], [Customer Code] FROM [newDLC].[dbo].[Customer]");
 	}
-	
+
 	/**
 	 * Handler for updating an individual order in the database.
 	 *
@@ -296,7 +296,7 @@ public class Controller {
 		insert(String.format("UPDATE [newDLC].[dbo].[Order] SET [Store Code]='%s', [Customer Code]='%s', Title='%s', Comments='%s', "
 				+ "[Issue Start]=%d, [Issue End]=%d, Quantity=%d, Cost=%f WHERE ID=%d", storeCode, customerCode, title, comments, issueStart, issueEnd, quantity, cost, id));
 	}
-	
+
 	public String[][] getCustomerData(int customerCode) {
 		return select(String.format("SELECT [Store Code], [Last Name], [First Name], [Address-1], [City], [State], [ZIP], [Phone #1], [Phone #2], [Email] FROM [newDLC].[dbo].[Customer] WHERE [Customer Code] = %d", customerCode));
 	}
@@ -350,20 +350,20 @@ public class Controller {
 		if (!isConnected()) {
 			connect();
 		}
-		
+
 		Statement sqlStatement = null;
 		ResultSet rs = null;
-		
-		
+
+
 		try {
 			sqlStatement = dbConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		} catch (SQLException e) {
 			System.err.println("Error connecting to the database");
 			e.printStackTrace();
 			System.exit(0);
-			
-		}	
-		
+
+		}
+
 		try {
 			rs = sqlStatement.executeQuery(query);
 		} catch (SQLException e) {
@@ -371,34 +371,34 @@ public class Controller {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		
+
 		return format(rs);
 	}
 
 	/**
 	 * Method to insert, update, delete info. Returns 0 for statements that return nothing or the row count.
-	 * 
-	 * @param query		Query to execute.
+	 *
+	 * @param query        Query to execute.
 	 * @return {int} 	0 or row count, negative if error.
 	 */
 	public int insert(String query) {
 		if(!isConnected()) {
 			connect();
 		}
-		
+
 		Statement sqlStatement = null;
 		int result = 0;
-		
-		
+
+
 		try {
 			sqlStatement = dbConnection.createStatement();
 		} catch (SQLException e) {
 			System.err.println("Error connecting to the database");
 			e.printStackTrace();
 			System.exit(0);
-			
-		}	
-		
+
+		}
+
 		try {
 			result = sqlStatement.executeUpdate(query);
 		} catch (SQLException e) {
@@ -406,9 +406,9 @@ public class Controller {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		
+
 		return result;
-	}	
+	}
 	/**
 	 * Converts a given ResultSet to String[][]
 	 *
@@ -431,7 +431,7 @@ public class Controller {
 			e1.printStackTrace();
 			System.exit(0);
 		}
-		
+
 		try {
 			data = new String[rows][columns];
 			for(int j = 0; j < rows; j++) {
@@ -450,21 +450,21 @@ public class Controller {
 
 	protected boolean isAccount(String user, String pass) {
 		//Created by Joseph: This is a sql statement to check if the username and password are valid
-		if(!isConnected()) {
+		if (!isConnected()) {
 			connect();
 		}
-		
-		Statement sqlStatement = null;		
+
+		Statement sqlStatement = null;
 		ResultSet rs = null;
-		
+
 		try {
 			sqlStatement = dbConnection.createStatement();
 		} catch (SQLException e) {
 			System.err.println("Error connecting to the database");
 			e.printStackTrace();
 			System.exit(0);
-			
-		}	
+
+		}
 
 		try {
 			rs = sqlStatement.executeQuery("SELECT CASE WHEN EXISTS ( SELECT * FROM [Account] WHERE [User] = '"+user+"' AND [Pass] = '"+pass+"')THEN CAST(1 AS BIT)ELSE CAST(0 AS BIT) END");
@@ -513,32 +513,32 @@ public class Controller {
 
 		//Header font
 		Font headerFont = workbook.createFont();
-        headerFont.setBold(true);
-        headerFont.setFontHeightInPoints((short) 14);
-        headerFont.setColor(IndexedColors.RED.getIndex());
+		headerFont.setBold(true);
+		headerFont.setFontHeightInPoints((short) 14);
+		headerFont.setColor(IndexedColors.RED.getIndex());
 
-        // Header data
-        Row headerRow = sheet.createRow(0);
-        Cell headerCell;
-        for(i=0; i<columns.length; i++) {
-        	headerCell = headerRow.createCell(i);
-        	headerCell.setCellValue(columns[i]);
-        }
+		// Header data
+		Row headerRow = sheet.createRow(0);
+		Cell headerCell;
+		for (i = 0; i < columns.length; i++) {
+			headerCell = headerRow.createCell(i);
+			headerCell.setCellValue(columns[i]);
+		}
 
-        i = 0;
-        while(i < rows) {
+		i = 0;
+		while (i < rows) {
 
-        	Row row = sheet.createRow(rowCount++);
-        	columnCount = 0;
-        	for(z=0; z<columns.length; z++) {
-        		Cell cell = row.createCell(columnCount++);
-            	cell.setCellValue(result[i][z]);
+			Row row = sheet.createRow(rowCount++);
+			columnCount = 0;
+			for (z = 0; z < columns.length; z++) {
+				Cell cell = row.createCell(columnCount++);
+				cell.setCellValue(result[i][z]);
 
-        	}
-        	i++;
-        }
+			}
+			i++;
+		}
 
-        try {
+		try {
 			FileOutputStream outputStream = new FileOutputStream(path);
 			workbook.write(outputStream);
 			workbook.close();
@@ -572,11 +572,10 @@ public class Controller {
 			path = chooser.getSelectedFile().getAbsolutePath();
 			path += "\\" + name + "_" + getDate() + extension;
 
+		} else {
+			System.out.println("No Selection ");
 		}
-	    else {
-	    	System.out.println("No Selection ");
-	     }
-	    System.out.println(path);
+		System.out.println(path);
 		return path;
 	}
 
@@ -589,33 +588,33 @@ public class Controller {
 		String todaysDate = null;
 
 		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-        Date date = new Date();
-        todaysDate = dateFormat.format(date);
+		Date date = new Date();
+		todaysDate = dateFormat.format(date);
 
 		return todaysDate;
 
 	}
 	protected boolean isStore(String store) {
-		if(!isConnected()) {
+		if (!isConnected()) {
 			connect();
 		}
-		
-		Statement sqlStatement = null;		
+
+		Statement sqlStatement = null;
 		ResultSet rs = null;
-		
+
 		try {
 			sqlStatement = dbConnection.createStatement();
 		} catch (SQLException e) {
 			System.err.println("Error connecting to the database");
 			e.printStackTrace();
 			System.exit(0);
-			
-		}	
-		
+
+		}
+
 		try {
-			rs = sqlStatement.executeQuery("SELECT CASE WHEN EXISTS ( SELECT * FROM [Stores] WHERE [Store] = '"+store+"')THEN CAST(1 AS BIT)ELSE CAST(0 AS BIT) END");
-			while(rs.next()) {
-				if(rs.getInt(1) == 1)
+			rs = sqlStatement.executeQuery("SELECT CASE WHEN EXISTS ( SELECT * FROM [Stores] WHERE [Store] = '" + store + "')THEN CAST(1 AS BIT)ELSE CAST(0 AS BIT) END");
+			while (rs.next()) {
+				if (rs.getInt(1) == 1)
 					return true;
 			}
 		} catch (SQLException e) {
@@ -629,20 +628,20 @@ public class Controller {
 		if (!isConnected()) {
 			connect();
 		}
-		
+
 		Statement sqlStatement = null;
 		ResultSet rs = null;
-		
-		
+
+
 		try {
 			sqlStatement = dbConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		} catch (SQLException e) {
 			System.err.println("Error connecting to the database");
 			e.printStackTrace();
 			System.exit(0);
-			
+
 		}
-		
+
 		try {
 			rs = sqlStatement.executeQuery("SELECT COUNT(*) AS result FROM Stores;");
 		} catch (SQLException e) {
@@ -650,7 +649,7 @@ public class Controller {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		
+
 		try {
 			rs.next();
 			return Integer.parseInt(rs.getString("result"));
@@ -665,20 +664,20 @@ public class Controller {
 		if (!isConnected()) {
 			connect();
 		}
-		
+
 		Statement sqlStatement = null;
 		ResultSet rs = null;
-		
-		
+
+
 		try {
 			sqlStatement = dbConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		} catch (SQLException e) {
 			System.err.println("Error connecting to the database");
 			e.printStackTrace();
 			System.exit(0);
-			
+
 		}
-		
+
 		try {
 			rs = sqlStatement.executeQuery("SELECT * FROM Stores;");
 		} catch (SQLException e) {
@@ -686,7 +685,7 @@ public class Controller {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		
+
 		try {
 			int columns = getStoreCount();
 			String[] list = new String[columns];
@@ -703,4 +702,3 @@ public class Controller {
 		return null;
 	}
 }
-
