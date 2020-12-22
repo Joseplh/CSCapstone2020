@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['getalltitles_12',['getAllTitles',['../classmain_1_1java_1_1_controller.html#ae1ffa4c3cf0465c4a945411e47294f1a',1,'main::java::Controller']]],
+  ['getcustomerdata_13',['getCustomerData',['../classmain_1_1java_1_1_controller.html#a1d37a2b4829516c4a67ae176d116581f',1,'main::java::Controller']]],
+  ['getcustomerorders_14',['getCustomerOrders',['../classmain_1_1java_1_1_controller.html#adfdb8efd55c25bdc5756a0f30c8443ce',1,'main::java::Controller']]],
+  ['getcustomers_15',['getCustomers',['../classmain_1_1java_1_1_controller.html#a7d5d67a2467b5b53f9ee12f99a3569fb',1,'main::java::Controller']]],
+  ['getdate_16',['getDate',['../classmain_1_1java_1_1_controller.html#af93b81739ee5e80c146343fa4637fe4e',1,'main::java::Controller']]],
+  ['getdistincttitles_17',['getDistinctTitles',['../classmain_1_1java_1_1_controller.html#a84b0718a2df3f1269825b12fb4284c23',1,'main::java::Controller']]],
+  ['getframe_18',['getFrame',['../classmain_1_1java_1_1lair_g_u_i.html#a92a88d73df82bc58f8fc784d532c7ce1',1,'main::java::lairGUI']]],
+  ['gethomeframe_19',['getHomeFrame',['../classmain_1_1java_1_1lair_g_u_i.html#a121efb0cd3aafd952c273fc426dea5c7',1,'main.java.lairGUI.getHomeFrame()'],['../classmain_1_1java_1_1reader.html#ab3c0fb990c787a8d9172fae83c80defc',1,'main.java.reader.getHomeFrame()']]],
+  ['getindividualtitles_20',['getIndividualTitles',['../classmain_1_1java_1_1_controller.html#aa66f887cb2fdd92b0f00a3e1162fbfcb',1,'main::java::Controller']]],
+  ['getmonthlybreakdown_21',['getMonthlyBreakdown',['../classmain_1_1java_1_1_controller.html#abd7dbca3747bbb013cf807586381690e',1,'main::java::Controller']]],
+  ['getnumcustomers_22',['getNumCustomers',['../classmain_1_1java_1_1_controller.html#a427781422324aafa74fa70e80044cc29',1,'main::java::Controller']]],
+  ['getnumspecialcomments_23',['getNumSpecialComments',['../classmain_1_1java_1_1_controller.html#aefdd7c2bb6fa00a03e3be1835f6c245b',1,'main::java::Controller']]],
+  ['getnumtitles_24',['getNumTitles',['../classmain_1_1java_1_1_controller.html#ae595a355da3d5946cea47e19099922e6',1,'main::java::Controller']]],
+  ['getnumtitlespendingissue_25',['getNumTitlesPendingIssue',['../classmain_1_1java_1_1_controller.html#a1af7ba8dc2cd2dccfa1a7ce96057962b',1,'main::java::Controller']]],
+  ['getorder_26',['getOrder',['../classmain_1_1java_1_1_controller.html#a8b98561fa624c81dc1b31ef5a9fb998d',1,'main::java::Controller']]],
+  ['getordersbytitle_27',['getOrdersByTitle',['../classmain_1_1java_1_1_controller.html#aeb0f0c009db3b3dc6a9a4d788e92c006',1,'main::java::Controller']]],
+  ['getqty_28',['getQty',['../classmain_1_1java_1_1_controller.html#ab4ae4de64d400706726362f42281dccb',1,'main::java::Controller']]],
+  ['getreports_29',['getReports',['../classmain_1_1java_1_1_controller.html#a3f69bc7e292345544d73f67477369cd7',1,'main::java::Controller']]],
+  ['getrequests_30',['getRequests',['../classmain_1_1java_1_1_controller.html#a8c907cfa68d79268e500d60225fc3443',1,'main::java::Controller']]],
+  ['getstorecount_31',['getStoreCount',['../classmain_1_1java_1_1_controller.html#a207774bae93217f28d1cac778b6d9af5',1,'main::java::Controller']]],
+  ['getstorelist_32',['getStoreList',['../classmain_1_1java_1_1_controller.html#ac69aa58414f6857f24e6b3defe4e4b1d',1,'main::java::Controller']]],
+  ['gettimesensitivetitles_33',['getTimeSensitiveTitles',['../classmain_1_1java_1_1_controller.html#a46f06d5ddb50771fe304fa8df80e7b78',1,'main::java::Controller']]],
+  ['gettitledetails_34',['getTitleDetails',['../classmain_1_1java_1_1_controller.html#a385e2eab7d70ae8292b956fc65198f8a',1,'main::java::Controller']]]
+];

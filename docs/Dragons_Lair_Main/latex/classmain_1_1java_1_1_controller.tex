@@ -1,0 +1,590 @@
+\hypertarget{classmain_1_1java_1_1_controller}{}\doxysection{main.\+java.\+Controller Class Reference}
+\label{classmain_1_1java_1_1_controller}\index{main.java.Controller@{main.java.Controller}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classmain_1_1java_1_1_controller_a62f074bdb4f01652c4a0e652c4f9b9f6}{connect}} ()
+\item 
+void \mbox{\hyperlink{classmain_1_1java_1_1_controller_ac1463d81116ff64113fa8d9de4dc856f}{add\+Request}} (String store\+Code, String customer\+Code, String title, String comments, int issue\+Start, int issue\+End, int quantity, float cost)
+\item 
+int \mbox{\hyperlink{classmain_1_1java_1_1_controller_aa2ca317c2460efa9141fb1689824ecd8}{insert\+Customer}} (String first, String last, String email, String phone)
+\item 
+int \mbox{\hyperlink{classmain_1_1java_1_1_controller_a54cabea986aee4a69f6a7a6f06f07025}{delete\+Customer}} (int ccode)
+\item 
+void \mbox{\hyperlink{classmain_1_1java_1_1_controller_a1949b0d3892fd0b37120f5ea3f3d5c58}{delete\+Order}} (int id)
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_a385e2eab7d70ae8292b956fc65198f8a}{get\+Title\+Details}} (String title)
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_ab4ae4de64d400706726362f42281dccb}{get\+Qty}} (String title)
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_a84b0718a2df3f1269825b12fb4284c23}{get\+Distinct\+Titles}} ()
+\item 
+int \mbox{\hyperlink{classmain_1_1java_1_1_controller_ac84ce6907a60952b8e8d07f185fba413}{update\+Customer}} (int ccode, String first, String last, String email, String phone)
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_abd7dbca3747bbb013cf807586381690e}{get\+Monthly\+Breakdown}} ()
+\item 
+int \mbox{\hyperlink{classmain_1_1java_1_1_controller_a08e08ddc0109a890ec616a3d248331b8}{update\+Customer\+Full}} (String store\+Code, String l\+Name, String f\+Name, String address, String city, String state, String zip, String phone1, String phone2, String email, int ccode)
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_a46f06d5ddb50771fe304fa8df80e7b78}{get\+Time\+Sensitive\+Titles}} ()
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_ae1ffa4c3cf0465c4a945411e47294f1a}{get\+All\+Titles}} ()
+\item 
+void \mbox{\hyperlink{classmain_1_1java_1_1_controller_a20c5bb2d5ac0ba843c9edb85e7f8cbc7}{reset\+Flags}} ()
+\item 
+int \mbox{\hyperlink{classmain_1_1java_1_1_controller_a917402fab8e1e623854fbcbbd3518e8a}{insert\+Title}} (String title, String series, String issue, String distributor, String t\+Code, boolean flag, boolean unique, String release)
+\item 
+int \mbox{\hyperlink{classmain_1_1java_1_1_controller_ad7b0e1aeccb5db7fdfb34caca7a3255c}{delete\+Title}} (String distributor, String t\+Code)
+\item 
+int \mbox{\hyperlink{classmain_1_1java_1_1_controller_af6ee4f11565a1d2899a66bf65f36a4bb}{update\+Title}} (String title, String series, String issue, String distributor, String t\+Code, boolean flag, boolean unique, String release)
+\item 
+String\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_a8b98561fa624c81dc1b31ef5a9fb998d}{get\+Order}} (int id)
+\item 
+boolean \mbox{\hyperlink{classmain_1_1java_1_1_controller_aa867701a8f94348a3d9941a0aa809409}{is\+Connected}} ()
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_a1af7ba8dc2cd2dccfa1a7ce96057962b}{get\+Num\+Titles\+Pending\+Issue}} ()
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_ae595a355da3d5946cea47e19099922e6}{get\+Num\+Titles}} ()
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_a427781422324aafa74fa70e80044cc29}{get\+Num\+Customers}} ()
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_aefdd7c2bb6fa00a03e3be1835f6c245b}{get\+Num\+Special\+Comments}} ()
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_a7d5d67a2467b5b53f9ee12f99a3569fb}{get\+Customers}} ()
+\item 
+void \mbox{\hyperlink{classmain_1_1java_1_1_controller_a11fc798107c042d327cf2f690c48b1d3}{update\+Order}} (String store\+Code, String customer\+Code, String title, String comments, int issue\+Start, int issue\+End, int quantity, float cost, int id)
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_a1d37a2b4829516c4a67ae176d116581f}{get\+Customer\+Data}} (int customer\+Code)
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_a3f69bc7e292345544d73f67477369cd7}{get\+Reports}} ()
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_aeb0f0c009db3b3dc6a9a4d788e92c006}{get\+Orders\+By\+Title}} (String title)
+\item 
+String\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_adfdb8efd55c25bdc5756a0f30c8443ce}{get\+Customer\+Orders}} (int customer\+Code)
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_a8c907cfa68d79268e500d60225fc3443}{get\+Requests}} (String customer\+Code)
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_aa66f887cb2fdd92b0f00a3e1162fbfcb}{get\+Individual\+Titles}} (String filter)
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_ae19150edd336f5913f1a2256474bed6c}{select}} (String query)
+\item 
+int \mbox{\hyperlink{classmain_1_1java_1_1_controller_aa7fe1093fdd50872a974c996067a355b}{insert}} (String query)
+\item 
+String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_a7b85036f53a6788115078c124f509a89}{format}} (Result\+Set rs)
+\item 
+boolean \mbox{\hyperlink{classmain_1_1java_1_1_controller_ad226805893d1b47b6c955a273f73e57e}{export\+X\+L\+SX}} (String\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} in, String query, String path, String name, String\mbox{[}$\,$\mbox{]} columns)
+\item 
+String \mbox{\hyperlink{classmain_1_1java_1_1_controller_a45dca154ed3e3127e1cb8040702927a4}{save\+File}} (J\+Panel panel, String name, String extension)
+\item 
+String \mbox{\hyperlink{classmain_1_1java_1_1_controller_af93b81739ee5e80c146343fa4637fe4e}{get\+Date}} ()
+\item 
+int \mbox{\hyperlink{classmain_1_1java_1_1_controller_a207774bae93217f28d1cac778b6d9af5}{get\+Store\+Count}} ()
+\item 
+String\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classmain_1_1java_1_1_controller_ac69aa58414f6857f24e6b3defe4e4b1d}{get\+Store\+List}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \mbox{\hyperlink{classmain_1_1java_1_1_controller_ac1d0c42fd39fb4976945c235d1a449ef}{is\+Account}} (String user, String pass)
+\item 
+boolean \mbox{\hyperlink{classmain_1_1java_1_1_controller_a900132bd27629a256ac6dd12e350de22}{is\+Store}} (String store)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_ac1463d81116ff64113fa8d9de4dc856f}\label{classmain_1_1java_1_1_controller_ac1463d81116ff64113fa8d9de4dc856f}} 
+\index{main.java.Controller@{main.java.Controller}!addRequest@{addRequest}}
+\index{addRequest@{addRequest}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{addRequest()}{addRequest()}}
+{\footnotesize\ttfamily void main.\+java.\+Controller.\+add\+Request (\begin{DoxyParamCaption}\item[{String}]{store\+Code,  }\item[{String}]{customer\+Code,  }\item[{String}]{title,  }\item[{String}]{comments,  }\item[{int}]{issue\+Start,  }\item[{int}]{issue\+End,  }\item[{int}]{quantity,  }\item[{float}]{cost }\end{DoxyParamCaption})}
+
+Handler for adding a request to the database.
+
+
+\begin{DoxyParams}{Parameters}
+{\em store\+Code} & The unique store code. \\
+\hline
+{\em customer\+Code} & The unique customer code. \\
+\hline
+{\em title} & The request title. \\
+\hline
+{\em comments} & Any additional comments. \\
+\hline
+{\em issue\+Start} & The first requested issue number (-\/1 means no specified start issue). \\
+\hline
+{\em issue\+End} & The last requested issue number (-\/1 means ongoing indefinitely). \\
+\hline
+{\em quantity} & The request quantity. \\
+\hline
+{\em cost} & The cost of the requested title. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a62f074bdb4f01652c4a0e652c4f9b9f6}\label{classmain_1_1java_1_1_controller_a62f074bdb4f01652c4a0e652c4f9b9f6}} 
+\index{main.java.Controller@{main.java.Controller}!connect@{connect}}
+\index{connect@{connect}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{connect()}{connect()}}
+{\footnotesize\ttfamily void main.\+java.\+Controller.\+connect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a54cabea986aee4a69f6a7a6f06f07025}\label{classmain_1_1java_1_1_controller_a54cabea986aee4a69f6a7a6f06f07025}} 
+\index{main.java.Controller@{main.java.Controller}!deleteCustomer@{deleteCustomer}}
+\index{deleteCustomer@{deleteCustomer}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{deleteCustomer()}{deleteCustomer()}}
+{\footnotesize\ttfamily int main.\+java.\+Controller.\+delete\+Customer (\begin{DoxyParamCaption}\item[{int}]{ccode }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a1949b0d3892fd0b37120f5ea3f3d5c58}\label{classmain_1_1java_1_1_controller_a1949b0d3892fd0b37120f5ea3f3d5c58}} 
+\index{main.java.Controller@{main.java.Controller}!deleteOrder@{deleteOrder}}
+\index{deleteOrder@{deleteOrder}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{deleteOrder()}{deleteOrder()}}
+{\footnotesize\ttfamily void main.\+java.\+Controller.\+delete\+Order (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+Handler for deleting an individual order.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The id of the order to delete. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_ad7b0e1aeccb5db7fdfb34caca7a3255c}\label{classmain_1_1java_1_1_controller_ad7b0e1aeccb5db7fdfb34caca7a3255c}} 
+\index{main.java.Controller@{main.java.Controller}!deleteTitle@{deleteTitle}}
+\index{deleteTitle@{deleteTitle}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{deleteTitle()}{deleteTitle()}}
+{\footnotesize\ttfamily int main.\+java.\+Controller.\+delete\+Title (\begin{DoxyParamCaption}\item[{String}]{distributor,  }\item[{String}]{t\+Code }\end{DoxyParamCaption})}
+
+Deletes an item from the Catalog table
+
+
+\begin{DoxyParams}{Parameters}
+{\em distributor} & The distributor of the item to be deleted \\
+\hline
+{\em t\+Code} & The item\textquotesingle{}s unique code associated with the distributor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{int\} 0 or row count, negative if error. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_ad226805893d1b47b6c955a273f73e57e}\label{classmain_1_1java_1_1_controller_ad226805893d1b47b6c955a273f73e57e}} 
+\index{main.java.Controller@{main.java.Controller}!exportXLSX@{exportXLSX}}
+\index{exportXLSX@{exportXLSX}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{exportXLSX()}{exportXLSX()}}
+{\footnotesize\ttfamily boolean main.\+java.\+Controller.\+export\+X\+L\+SX (\begin{DoxyParamCaption}\item[{String}]{in\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]},  }\item[{String}]{query,  }\item[{String}]{path,  }\item[{String}]{name,  }\item[{String\mbox{[}$\,$\mbox{]}}]{columns }\end{DoxyParamCaption})}
+
+Exports given data to an .xlsx file, written to a specified destination \textquotesingle{}path\textquotesingle{}
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & String\mbox{[}\mbox{]}\mbox{[}\mbox{]} dataset to export to excel, null if using \textquotesingle{}query\textquotesingle{} \\
+\hline
+{\em query} & Query to execute, null if using \textquotesingle{}in\textquotesingle{} \\
+\hline
+{\em path} & Directory path where file is saved \\
+\hline
+{\em name} & Name of file \\
+\hline
+{\em columns} & Column names. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{boolean\} True if export was succesful, false otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a7b85036f53a6788115078c124f509a89}\label{classmain_1_1java_1_1_controller_a7b85036f53a6788115078c124f509a89}} 
+\index{main.java.Controller@{main.java.Controller}!format@{format}}
+\index{format@{format}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{format()}{format()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+format (\begin{DoxyParamCaption}\item[{Result\+Set}]{rs }\end{DoxyParamCaption})}
+
+Converts a given Result\+Set to String\mbox{[}\mbox{]}\mbox{[}\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em rs} & Result\+Set to be converted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{String\mbox{[}\mbox{]}\mbox{[}\mbox{]}\} Given Result\+Set converted 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_ae1ffa4c3cf0465c4a945411e47294f1a}\label{classmain_1_1java_1_1_controller_ae1ffa4c3cf0465c4a945411e47294f1a}} 
+\index{main.java.Controller@{main.java.Controller}!getAllTitles@{getAllTitles}}
+\index{getAllTitles@{getAllTitles}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getAllTitles()}{getAllTitles()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+All\+Titles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Queries the database to retrieve all items from the Catalog table
+
+\begin{DoxyReturn}{Returns}
+\{String\} 2D array of the retrieved items 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a1d37a2b4829516c4a67ae176d116581f}\label{classmain_1_1java_1_1_controller_a1d37a2b4829516c4a67ae176d116581f}} 
+\index{main.java.Controller@{main.java.Controller}!getCustomerData@{getCustomerData}}
+\index{getCustomerData@{getCustomerData}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getCustomerData()}{getCustomerData()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Customer\+Data (\begin{DoxyParamCaption}\item[{int}]{customer\+Code }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_adfdb8efd55c25bdc5756a0f30c8443ce}\label{classmain_1_1java_1_1_controller_adfdb8efd55c25bdc5756a0f30c8443ce}} 
+\index{main.java.Controller@{main.java.Controller}!getCustomerOrders@{getCustomerOrders}}
+\index{getCustomerOrders@{getCustomerOrders}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getCustomerOrders()}{getCustomerOrders()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Customer\+Orders (\begin{DoxyParamCaption}\item[{int}]{customer\+Code }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a7d5d67a2467b5b53f9ee12f99a3569fb}\label{classmain_1_1java_1_1_controller_a7d5d67a2467b5b53f9ee12f99a3569fb}} 
+\index{main.java.Controller@{main.java.Controller}!getCustomers@{getCustomers}}
+\index{getCustomers@{getCustomers}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getCustomers()}{getCustomers()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Customers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Returns the following columns from the customer table.
+
+\begin{DoxyReturn}{Returns}
+\{String\mbox{[}\mbox{]}\mbox{[}\mbox{]}\} Contains the given query Result\+Set. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_af93b81739ee5e80c146343fa4637fe4e}\label{classmain_1_1java_1_1_controller_af93b81739ee5e80c146343fa4637fe4e}} 
+\index{main.java.Controller@{main.java.Controller}!getDate@{getDate}}
+\index{getDate@{getDate}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getDate()}{getDate()}}
+{\footnotesize\ttfamily String main.\+java.\+Controller.\+get\+Date (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Returns todays date(string) in the format \char`\"{}\+M\+M-\/\+D\+D-\/\+Y\+Y\+Y\+Y\char`\"{}
+
+\begin{DoxyReturn}{Returns}
+\{String\} Todays date \char`\"{}\+M\+M-\/\+D\+D-\/\+Y\+Y\+Y\+Y\char`\"{} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a84b0718a2df3f1269825b12fb4284c23}\label{classmain_1_1java_1_1_controller_a84b0718a2df3f1269825b12fb4284c23}} 
+\index{main.java.Controller@{main.java.Controller}!getDistinctTitles@{getDistinctTitles}}
+\index{getDistinctTitles@{getDistinctTitles}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getDistinctTitles()}{getDistinctTitles()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Distinct\+Titles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_aa66f887cb2fdd92b0f00a3e1162fbfcb}\label{classmain_1_1java_1_1_controller_aa66f887cb2fdd92b0f00a3e1162fbfcb}} 
+\index{main.java.Controller@{main.java.Controller}!getIndividualTitles@{getIndividualTitles}}
+\index{getIndividualTitles@{getIndividualTitles}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getIndividualTitles()}{getIndividualTitles()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Individual\+Titles (\begin{DoxyParamCaption}\item[{String}]{filter }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_abd7dbca3747bbb013cf807586381690e}\label{classmain_1_1java_1_1_controller_abd7dbca3747bbb013cf807586381690e}} 
+\index{main.java.Controller@{main.java.Controller}!getMonthlyBreakdown@{getMonthlyBreakdown}}
+\index{getMonthlyBreakdown@{getMonthlyBreakdown}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getMonthlyBreakdown()}{getMonthlyBreakdown()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Monthly\+Breakdown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a427781422324aafa74fa70e80044cc29}\label{classmain_1_1java_1_1_controller_a427781422324aafa74fa70e80044cc29}} 
+\index{main.java.Controller@{main.java.Controller}!getNumCustomers@{getNumCustomers}}
+\index{getNumCustomers@{getNumCustomers}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getNumCustomers()}{getNumCustomers()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Num\+Customers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_aefdd7c2bb6fa00a03e3be1835f6c245b}\label{classmain_1_1java_1_1_controller_aefdd7c2bb6fa00a03e3be1835f6c245b}} 
+\index{main.java.Controller@{main.java.Controller}!getNumSpecialComments@{getNumSpecialComments}}
+\index{getNumSpecialComments@{getNumSpecialComments}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getNumSpecialComments()}{getNumSpecialComments()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Num\+Special\+Comments (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_ae595a355da3d5946cea47e19099922e6}\label{classmain_1_1java_1_1_controller_ae595a355da3d5946cea47e19099922e6}} 
+\index{main.java.Controller@{main.java.Controller}!getNumTitles@{getNumTitles}}
+\index{getNumTitles@{getNumTitles}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getNumTitles()}{getNumTitles()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Num\+Titles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a1af7ba8dc2cd2dccfa1a7ce96057962b}\label{classmain_1_1java_1_1_controller_a1af7ba8dc2cd2dccfa1a7ce96057962b}} 
+\index{main.java.Controller@{main.java.Controller}!getNumTitlesPendingIssue@{getNumTitlesPendingIssue}}
+\index{getNumTitlesPendingIssue@{getNumTitlesPendingIssue}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getNumTitlesPendingIssue()}{getNumTitlesPendingIssue()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Num\+Titles\+Pending\+Issue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a8b98561fa624c81dc1b31ef5a9fb998d}\label{classmain_1_1java_1_1_controller_a8b98561fa624c81dc1b31ef5a9fb998d}} 
+\index{main.java.Controller@{main.java.Controller}!getOrder@{getOrder}}
+\index{getOrder@{getOrder}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getOrder()}{getOrder()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Order (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+Handler for retrieving a single customer order.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The order id to retrieve. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The order by id. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_aeb0f0c009db3b3dc6a9a4d788e92c006}\label{classmain_1_1java_1_1_controller_aeb0f0c009db3b3dc6a9a4d788e92c006}} 
+\index{main.java.Controller@{main.java.Controller}!getOrdersByTitle@{getOrdersByTitle}}
+\index{getOrdersByTitle@{getOrdersByTitle}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getOrdersByTitle()}{getOrdersByTitle()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Orders\+By\+Title (\begin{DoxyParamCaption}\item[{String}]{title }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_ab4ae4de64d400706726362f42281dccb}\label{classmain_1_1java_1_1_controller_ab4ae4de64d400706726362f42281dccb}} 
+\index{main.java.Controller@{main.java.Controller}!getQty@{getQty}}
+\index{getQty@{getQty}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getQty()}{getQty()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Qty (\begin{DoxyParamCaption}\item[{String}]{title }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a3f69bc7e292345544d73f67477369cd7}\label{classmain_1_1java_1_1_controller_a3f69bc7e292345544d73f67477369cd7}} 
+\index{main.java.Controller@{main.java.Controller}!getReports@{getReports}}
+\index{getReports@{getReports}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getReports()}{getReports()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Reports (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a8c907cfa68d79268e500d60225fc3443}\label{classmain_1_1java_1_1_controller_a8c907cfa68d79268e500d60225fc3443}} 
+\index{main.java.Controller@{main.java.Controller}!getRequests@{getRequests}}
+\index{getRequests@{getRequests}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getRequests()}{getRequests()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Requests (\begin{DoxyParamCaption}\item[{String}]{customer\+Code }\end{DoxyParamCaption})}
+
+Handler for fetching the requests for a given customer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Code} & The customer code. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{String\mbox{[}\mbox{]}\mbox{[}\mbox{]}\} Contains the given query Result\+Set. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a207774bae93217f28d1cac778b6d9af5}\label{classmain_1_1java_1_1_controller_a207774bae93217f28d1cac778b6d9af5}} 
+\index{main.java.Controller@{main.java.Controller}!getStoreCount@{getStoreCount}}
+\index{getStoreCount@{getStoreCount}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getStoreCount()}{getStoreCount()}}
+{\footnotesize\ttfamily int main.\+java.\+Controller.\+get\+Store\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_ac69aa58414f6857f24e6b3defe4e4b1d}\label{classmain_1_1java_1_1_controller_ac69aa58414f6857f24e6b3defe4e4b1d}} 
+\index{main.java.Controller@{main.java.Controller}!getStoreList@{getStoreList}}
+\index{getStoreList@{getStoreList}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getStoreList()}{getStoreList()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Store\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a46f06d5ddb50771fe304fa8df80e7b78}\label{classmain_1_1java_1_1_controller_a46f06d5ddb50771fe304fa8df80e7b78}} 
+\index{main.java.Controller@{main.java.Controller}!getTimeSensitiveTitles@{getTimeSensitiveTitles}}
+\index{getTimeSensitiveTitles@{getTimeSensitiveTitles}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getTimeSensitiveTitles()}{getTimeSensitiveTitles()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Time\+Sensitive\+Titles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Queries the database to retrieve items from the Catalog table such that the retrieved items have release dates within the next two months
+
+\begin{DoxyReturn}{Returns}
+\{String\} 2D array of the retrieved items 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a385e2eab7d70ae8292b956fc65198f8a}\label{classmain_1_1java_1_1_controller_a385e2eab7d70ae8292b956fc65198f8a}} 
+\index{main.java.Controller@{main.java.Controller}!getTitleDetails@{getTitleDetails}}
+\index{getTitleDetails@{getTitleDetails}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{getTitleDetails()}{getTitleDetails()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+get\+Title\+Details (\begin{DoxyParamCaption}\item[{String}]{title }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_aa7fe1093fdd50872a974c996067a355b}\label{classmain_1_1java_1_1_controller_aa7fe1093fdd50872a974c996067a355b}} 
+\index{main.java.Controller@{main.java.Controller}!insert@{insert}}
+\index{insert@{insert}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily int main.\+java.\+Controller.\+insert (\begin{DoxyParamCaption}\item[{String}]{query }\end{DoxyParamCaption})}
+
+Method to insert, update, delete info. Returns 0 for statements that return nothing or the row count.
+
+
+\begin{DoxyParams}{Parameters}
+{\em query} & Query to execute. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{int\} 0 or row count, negative if error. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_aa2ca317c2460efa9141fb1689824ecd8}\label{classmain_1_1java_1_1_controller_aa2ca317c2460efa9141fb1689824ecd8}} 
+\index{main.java.Controller@{main.java.Controller}!insertCustomer@{insertCustomer}}
+\index{insertCustomer@{insertCustomer}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{insertCustomer()}{insertCustomer()}}
+{\footnotesize\ttfamily int main.\+java.\+Controller.\+insert\+Customer (\begin{DoxyParamCaption}\item[{String}]{first,  }\item[{String}]{last,  }\item[{String}]{email,  }\item[{String}]{phone }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a917402fab8e1e623854fbcbbd3518e8a}\label{classmain_1_1java_1_1_controller_a917402fab8e1e623854fbcbbd3518e8a}} 
+\index{main.java.Controller@{main.java.Controller}!insertTitle@{insertTitle}}
+\index{insertTitle@{insertTitle}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{insertTitle()}{insertTitle()}}
+{\footnotesize\ttfamily int main.\+java.\+Controller.\+insert\+Title (\begin{DoxyParamCaption}\item[{String}]{title,  }\item[{String}]{series,  }\item[{String}]{issue,  }\item[{String}]{distributor,  }\item[{String}]{t\+Code,  }\item[{boolean}]{flag,  }\item[{boolean}]{unique,  }\item[{String}]{release }\end{DoxyParamCaption})}
+
+Inserts a new item into the Catalog table.
+
+
+\begin{DoxyParams}{Parameters}
+{\em title} & Full title of the new item \\
+\hline
+{\em series} & Title of the new item\textquotesingle{}s series \\
+\hline
+{\em issue} & Issue number of the new item \\
+\hline
+{\em distributor} & Distributor of the new item \\
+\hline
+{\em t\+Code} & The unique code associated with the distributor of the new item \\
+\hline
+{\em flag} & Indicates whether this item is new this week \\
+\hline
+{\em unique} & Indicates whether the new item is a one-\/time print or make \\
+\hline
+{\em release} & Release date of the new item \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{int\} 0 or row count, negative if error. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_ac1d0c42fd39fb4976945c235d1a449ef}\label{classmain_1_1java_1_1_controller_ac1d0c42fd39fb4976945c235d1a449ef}} 
+\index{main.java.Controller@{main.java.Controller}!isAccount@{isAccount}}
+\index{isAccount@{isAccount}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{isAccount()}{isAccount()}}
+{\footnotesize\ttfamily boolean main.\+java.\+Controller.\+is\+Account (\begin{DoxyParamCaption}\item[{String}]{user,  }\item[{String}]{pass }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_aa867701a8f94348a3d9941a0aa809409}\label{classmain_1_1java_1_1_controller_aa867701a8f94348a3d9941a0aa809409}} 
+\index{main.java.Controller@{main.java.Controller}!isConnected@{isConnected}}
+\index{isConnected@{isConnected}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{isConnected()}{isConnected()}}
+{\footnotesize\ttfamily boolean main.\+java.\+Controller.\+is\+Connected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Determines whether the database is connected of not
+
+\begin{DoxyReturn}{Returns}
+\{boolean\} True if connected, false if not 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a900132bd27629a256ac6dd12e350de22}\label{classmain_1_1java_1_1_controller_a900132bd27629a256ac6dd12e350de22}} 
+\index{main.java.Controller@{main.java.Controller}!isStore@{isStore}}
+\index{isStore@{isStore}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{isStore()}{isStore()}}
+{\footnotesize\ttfamily boolean main.\+java.\+Controller.\+is\+Store (\begin{DoxyParamCaption}\item[{String}]{store }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a20c5bb2d5ac0ba843c9edb85e7f8cbc7}\label{classmain_1_1java_1_1_controller_a20c5bb2d5ac0ba843c9edb85e7f8cbc7}} 
+\index{main.java.Controller@{main.java.Controller}!resetFlags@{resetFlags}}
+\index{resetFlags@{resetFlags}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{resetFlags()}{resetFlags()}}
+{\footnotesize\ttfamily void main.\+java.\+Controller.\+reset\+Flags (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Sets \mbox{[}Flag\mbox{]} of all items within the Catalog table to boolean false \mbox{\Hypertarget{classmain_1_1java_1_1_controller_a45dca154ed3e3127e1cb8040702927a4}\label{classmain_1_1java_1_1_controller_a45dca154ed3e3127e1cb8040702927a4}} 
+\index{main.java.Controller@{main.java.Controller}!saveFile@{saveFile}}
+\index{saveFile@{saveFile}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{saveFile()}{saveFile()}}
+{\footnotesize\ttfamily String main.\+java.\+Controller.\+save\+File (\begin{DoxyParamCaption}\item[{J\+Panel}]{panel,  }\item[{String}]{name,  }\item[{String}]{extension }\end{DoxyParamCaption})}
+
+Opens up a file chooser for a user to select save destination. Returns path
+
+
+\begin{DoxyParams}{Parameters}
+{\em panel} & Parent component of the dialog \\
+\hline
+{\em name} & String to name saved file \\
+\hline
+{\em extension} & File extension (\char`\"{}.\+xlsx\char`\"{}, \char`\"{}.\+pdf\char`\"{}) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{String\} Full path to save location 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_ae19150edd336f5913f1a2256474bed6c}\label{classmain_1_1java_1_1_controller_ae19150edd336f5913f1a2256474bed6c}} 
+\index{main.java.Controller@{main.java.Controller}!select@{select}}
+\index{select@{select}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{select()}{select()}}
+{\footnotesize\ttfamily String \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} main.\+java.\+Controller.\+select (\begin{DoxyParamCaption}\item[{String}]{query }\end{DoxyParamCaption})}
+
+Executes a given query and returns the resultset as a String\mbox{[}\mbox{]}\mbox{[}\mbox{]}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em query} & Query to be executed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{String\mbox{[}\mbox{]}\mbox{[}\mbox{]}\} 2D array of the given query. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_ac84ce6907a60952b8e8d07f185fba413}\label{classmain_1_1java_1_1_controller_ac84ce6907a60952b8e8d07f185fba413}} 
+\index{main.java.Controller@{main.java.Controller}!updateCustomer@{updateCustomer}}
+\index{updateCustomer@{updateCustomer}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{updateCustomer()}{updateCustomer()}}
+{\footnotesize\ttfamily int main.\+java.\+Controller.\+update\+Customer (\begin{DoxyParamCaption}\item[{int}]{ccode,  }\item[{String}]{first,  }\item[{String}]{last,  }\item[{String}]{email,  }\item[{String}]{phone }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a08e08ddc0109a890ec616a3d248331b8}\label{classmain_1_1java_1_1_controller_a08e08ddc0109a890ec616a3d248331b8}} 
+\index{main.java.Controller@{main.java.Controller}!updateCustomerFull@{updateCustomerFull}}
+\index{updateCustomerFull@{updateCustomerFull}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{updateCustomerFull()}{updateCustomerFull()}}
+{\footnotesize\ttfamily int main.\+java.\+Controller.\+update\+Customer\+Full (\begin{DoxyParamCaption}\item[{String}]{store\+Code,  }\item[{String}]{l\+Name,  }\item[{String}]{f\+Name,  }\item[{String}]{address,  }\item[{String}]{city,  }\item[{String}]{state,  }\item[{String}]{zip,  }\item[{String}]{phone1,  }\item[{String}]{phone2,  }\item[{String}]{email,  }\item[{int}]{ccode }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em store\+Code} & \\
+\hline
+{\em l\+Name} & \\
+\hline
+{\em f\+Name} & \\
+\hline
+{\em address} & \\
+\hline
+{\em city} & \\
+\hline
+{\em state} & \\
+\hline
+{\em zip} & \\
+\hline
+{\em phone1} & \\
+\hline
+{\em phone2} & \\
+\hline
+{\em email} & \\
+\hline
+{\em ccode} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_a11fc798107c042d327cf2f690c48b1d3}\label{classmain_1_1java_1_1_controller_a11fc798107c042d327cf2f690c48b1d3}} 
+\index{main.java.Controller@{main.java.Controller}!updateOrder@{updateOrder}}
+\index{updateOrder@{updateOrder}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{updateOrder()}{updateOrder()}}
+{\footnotesize\ttfamily void main.\+java.\+Controller.\+update\+Order (\begin{DoxyParamCaption}\item[{String}]{store\+Code,  }\item[{String}]{customer\+Code,  }\item[{String}]{title,  }\item[{String}]{comments,  }\item[{int}]{issue\+Start,  }\item[{int}]{issue\+End,  }\item[{int}]{quantity,  }\item[{float}]{cost,  }\item[{int}]{id }\end{DoxyParamCaption})}
+
+Handler for updating an individual order in the database.
+
+
+\begin{DoxyParams}{Parameters}
+{\em store\+Code} & The unique store code. \\
+\hline
+{\em customer\+Code} & The unique customer code. \\
+\hline
+{\em title} & The request title. \\
+\hline
+{\em comments} & Any additional comments. \\
+\hline
+{\em issue\+Start} & The first requested issue number (-\/1 means no specified start issue). \\
+\hline
+{\em issue\+End} & The last requested issue number (-\/1 means ongoing indefinitely). \\
+\hline
+{\em quantity} & The request quantity. \\
+\hline
+{\em cost} & The cost of the requested title. \\
+\hline
+{\em id} & The order id. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmain_1_1java_1_1_controller_af6ee4f11565a1d2899a66bf65f36a4bb}\label{classmain_1_1java_1_1_controller_af6ee4f11565a1d2899a66bf65f36a4bb}} 
+\index{main.java.Controller@{main.java.Controller}!updateTitle@{updateTitle}}
+\index{updateTitle@{updateTitle}!main.java.Controller@{main.java.Controller}}
+\doxysubsubsection{\texorpdfstring{updateTitle()}{updateTitle()}}
+{\footnotesize\ttfamily int main.\+java.\+Controller.\+update\+Title (\begin{DoxyParamCaption}\item[{String}]{title,  }\item[{String}]{series,  }\item[{String}]{issue,  }\item[{String}]{distributor,  }\item[{String}]{t\+Code,  }\item[{boolean}]{flag,  }\item[{boolean}]{unique,  }\item[{String}]{release }\end{DoxyParamCaption})}
+
+Updates an item within the Catalog table.
+
+
+\begin{DoxyParams}{Parameters}
+{\em title} & Full title of the updated item \\
+\hline
+{\em series} & Title of the updated item\textquotesingle{}s series \\
+\hline
+{\em issue} & Issue number of the updated item \\
+\hline
+{\em distributor} & Distributor of the item \\
+\hline
+{\em t\+Code} & The unique code associated with the distributor of the item \\
+\hline
+{\em flag} & Indicates whether the updated item is new this week \\
+\hline
+{\em unique} & Indicates whether the updated item is a one-\/time print or make \\
+\hline
+{\em release} & Release date of the updated item \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{int\} 0 or row count, negative if error. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Joseph/workspace/\+C\+S\+Capstone2020/\+Dragons Lair/src/main/java/\mbox{\hyperlink{_controller_8java}{Controller.\+java}}\end{DoxyCompactItemize}
