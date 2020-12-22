@@ -12,7 +12,7 @@ public class Controller {
 	private String jdbcURL = "";
 	public void connect() {
 		try {
-			File file = new File("config.ini");
+			File file = new File("codedConfig.ini");
 			
 			BufferedReader br;
 			br = new BufferedReader(new FileReader(file));
